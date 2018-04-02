@@ -67,11 +67,8 @@ public class RoleController {
 		} else {
 			role = new Role();
 		}
-		System.out.println(StringUtils.getInteger(id));
 		role.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createTime));
 		role.setName(name);
-		System.out.println(name);
-		System.out.println(createTime);
 		return roleService.addOrUpdateRole(role);
 	}
 	
