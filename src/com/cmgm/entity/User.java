@@ -31,8 +31,8 @@ public class User {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user")
-	@SequenceGenerator(name = "seq_user", sequenceName = "seq_user", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_CMGMuser")
+	@SequenceGenerator(name = "seq_CMGMuser", sequenceName = "seq_CMGMuser", allocationSize = 1, initialValue = 1)
 	public Integer getId() {
 		return id;
 	}

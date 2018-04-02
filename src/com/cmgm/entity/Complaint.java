@@ -11,9 +11,12 @@ package com.cmgm.entity;
 import java.time.LocalTime;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -57,6 +60,8 @@ public class Complaint {
 		this.createTime = createTime;
 	}
 
+	@JoinColumn(name="propertyManagerId",foreignKey=@ForeignKey(name="propertyManager_complaint_Id"))
+	@ManyToOne
 	public PropertyManager getPropertyManager() {
 		return propertyManager;
 	}
@@ -65,6 +70,8 @@ public class Complaint {
 		this.propertyManager = propertyManager;
 	}
 
+	@JoinColumn(name="OwnerId",foreignKey=@ForeignKey(name="Owner_complaint_Id"))
+	@ManyToOne
 	public Owner getOwner() {
 		return owner;
 	}

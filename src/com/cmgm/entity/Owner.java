@@ -3,9 +3,12 @@ package com.cmgm.entity;
 import java.time.LocalTime;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -91,6 +94,8 @@ public class Owner {
 		this.address = address;
 	}
 
+	@OneToOne
+	@JoinColumn(name="userId", foreignKey=@ForeignKey(name="User_Owner_Id"))
 	public User getUser() {
 		return user;
 	}

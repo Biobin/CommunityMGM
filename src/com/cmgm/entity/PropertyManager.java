@@ -7,9 +7,12 @@ package com.cmgm.entity;
  */
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,7 +31,7 @@ public class PropertyManager {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq_propertyManage")
-	@SequenceGenerator(name = "seq_propretyManage", sequenceName = "seq_propretyManage", allocationSize = 1, initialValue = 1)
+	@SequenceGenerator(name = "seq_propertyManage", sequenceName = "seq_propertyManage", allocationSize = 1, initialValue = 1)
 	public Integer getId() {
 		return id;
 	}
@@ -61,6 +64,8 @@ public class PropertyManager {
 		this.email = email;
 	}
 
+	@JoinColumn(name="userId", foreignKey=@ForeignKey(name="user_propertyManager_Id"))
+    @OneToOne
 	public User getUser() {
 		return user;
 	}

@@ -1,9 +1,12 @@
 package com.cmgm.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -24,6 +27,7 @@ public class Contact {
 	private String name;
 	private String phone;
 	private String email;
+	private User user;
 	
 	public Contact() {
 	}
@@ -61,6 +65,16 @@ public class Contact {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@JoinColumn(name="userId", foreignKey=@ForeignKey(name="CONTACT_USER_ID_FK"))
+    @ManyToOne
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

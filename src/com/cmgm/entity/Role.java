@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -55,8 +53,8 @@ public class Role {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_role")
-	@SequenceGenerator(name = "seq_role", sequenceName = "seq_role", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_CMGMrole")
+	@SequenceGenerator(name = "seq_CMGMrole", sequenceName = "seq_CMGMrole", allocationSize = 1, initialValue = 1)
 	public Integer getId() {
 		return id;
 	}
@@ -80,10 +78,8 @@ public class Role {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
-	@JoinTable(name="role_user",joinColumns={@JoinColumn(name="role_id",referencedColumnName="id")},
-			inverseJoinColumns={@JoinColumn(name="user_id",referencedColumnName="id")})
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)
+	
+	@OneToMany(mappedBy="role",fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)
 	public Set<User> getUsers() {
 		return users;
 	}

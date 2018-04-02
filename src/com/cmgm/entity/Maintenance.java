@@ -1,11 +1,18 @@
 package com.cmgm.entity;
 
 import java.time.LocalTime;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -27,7 +34,7 @@ public class Maintenance {
 	private LocalTime createTime;
 	private Owner owner;	//提交报修的业主
 	private String details;	//报修信息细节
-	private CommunalFacilities communalFacilities;	//损害的公共设施
+	private Set<CommunalFacilities> communalFacilities;	//损害的公共设施
 	
 	//提交后（物业填写）
 	private String repairPersonnel;		//维修人员
@@ -66,6 +73,8 @@ public class Maintenance {
 		this.createTime = createTime;
 	}
 
+	@OneToOne
+	@JoinColumn(name="ownerId", foreignKey=@ForeignKey(name="owner_maintenance_Id"))
 	public Owner getOwner() {
 		return owner;
 	}
@@ -82,11 +91,12 @@ public class Maintenance {
 		this.details = details;
 	}
 
-	public CommunalFacilities getCommunalFacilities() {
+	@OneToMany(mappedBy="propertyManager",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	public Set<CommunalFacilities> getCommunalFacilities() {
 		return communalFacilities;
 	}
 
-	public void setCommunalFacilities(CommunalFacilities communalFacilities) {
+	public void setCommunalFacilities(Set<CommunalFacilities> communalFacilities) {
 		this.communalFacilities = communalFacilities;
 	}
 
@@ -122,6 +132,8 @@ public class Maintenance {
 		this.repairRemarks = repairRemarks;
 	}
 
+	@OneToOne
+	@JoinColumn(name="stateId", foreignKey=@ForeignKey(name="state_maintenance_Id"))
 	public State getState() {
 		return state;
 	}

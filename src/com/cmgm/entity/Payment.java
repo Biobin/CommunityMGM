@@ -10,9 +10,13 @@ package com.cmgm.entity;
 import java.time.LocalTime;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -27,7 +31,7 @@ public class Payment {
 	private Double collectFee;	//实收金额
 	private State state;		//缴费状态
 	private Owner owner;		//需缴费业主
-	private String chargingIteml;	//收费项目
+	private String chargingItem;	//收费项目
 	private String details;		//收费详情
 	
 	public Payment() {
@@ -76,6 +80,8 @@ public class Payment {
 		this.collectFee = collectFee;
 	}
 
+	@OneToOne
+	@JoinColumn(name="stateId", foreignKey=@ForeignKey(name="state_payment_Id"))
 	public State getState() {
 		return state;
 	}
@@ -84,6 +90,8 @@ public class Payment {
 		this.state = state;
 	}
 
+	@JoinColumn(name="OwnerId",foreignKey=@ForeignKey(name="Owner_payment_Id"))
+	@ManyToOne
 	public Owner getOwner() {
 		return owner;
 	}
@@ -92,12 +100,12 @@ public class Payment {
 		this.owner = owner;
 	}
 
-	public String getChargingIteml() {
-		return chargingIteml;
+	public String getChargingItem() {
+		return chargingItem;
 	}
 
-	public void setChargingIteml(String chargingIteml) {
-		this.chargingIteml = chargingIteml;
+	public void setChargingItem(String chargingItem) {
+		this.chargingItem = chargingItem;
 	}
 
 	public String getDetails() {

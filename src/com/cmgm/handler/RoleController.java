@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmgm.common.StringUtils;
 import com.cmgm.entity.Role;
 import com.cmgm.service.RoleService;
 
@@ -60,12 +61,17 @@ public class RoleController {
 		String createTime = request.getParameter("createTime");
 		String name = request.getParameter("name");
 		String id = request.getParameter("id");
-		Role role = new Role();
+		Role role = null;
 		if (id != null && !id.equals("")) {
-			role = roleService.getRoleById(Integer.parseInt(id));
+			role = roleService.getRoleById(StringUtils.getInteger(id));
+		} else {
+			role = new Role();
 		}
+		System.out.println(StringUtils.getInteger(id));
 		role.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createTime));
 		role.setName(name);
+		System.out.println(name);
+		System.out.println(createTime);
 		return roleService.addOrUpdateRole(role);
 	}
 	

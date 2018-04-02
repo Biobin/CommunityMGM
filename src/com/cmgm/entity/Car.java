@@ -62,7 +62,7 @@ public class Car {
 		this.carStyle = carStyle;
 	}
 
-	@JoinColumn(name="Owner",foreignKey=@ForeignKey(name="OwnerId"))
+	@JoinColumn(name="OwnerId",foreignKey=@ForeignKey(name="OwnerId"))
 	@ManyToOne
 	public Owner getOwner() {
 		return owner;

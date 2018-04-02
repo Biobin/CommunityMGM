@@ -90,6 +90,7 @@ public class CommunalFacilities {
 		this.details = details;
 	}
 
+	@JoinColumn(name="propertyManagerId", foreignKey=@ForeignKey(name="propertyManagerId"))
 	@ManyToOne
 	public PropertyManager getPropertyManager() {
 		return propertyManager;
