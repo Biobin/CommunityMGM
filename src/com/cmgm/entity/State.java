@@ -26,6 +26,12 @@ public class State {
 	public State() {
 	}
 
+	public State(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq_state")
 	@SequenceGenerator(name = "seq_state", sequenceName = "seq_state", allocationSize = 1, initialValue = 1)

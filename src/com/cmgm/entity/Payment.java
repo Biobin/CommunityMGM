@@ -9,14 +9,15 @@ package com.cmgm.entity;
 
 import java.time.LocalTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -80,7 +81,8 @@ public class Payment {
 		this.collectFee = collectFee;
 	}
 
-	@OneToOne
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},  
+            fetch=FetchType.EAGER,optional=false)
 	@JoinColumn(name="stateId", foreignKey=@ForeignKey(name="state_payment_Id"))
 	public State getState() {
 		return state;

@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -73,7 +73,8 @@ public class Maintenance {
 		this.createTime = createTime;
 	}
 
-	@OneToOne
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},  
+            fetch=FetchType.EAGER,optional=false)
 	@JoinColumn(name="ownerId", foreignKey=@ForeignKey(name="owner_maintenance_Id"))
 	public Owner getOwner() {
 		return owner;
@@ -132,7 +133,8 @@ public class Maintenance {
 		this.repairRemarks = repairRemarks;
 	}
 
-	@OneToOne
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},  
+            fetch=FetchType.EAGER,optional=false)
 	@JoinColumn(name="stateId", foreignKey=@ForeignKey(name="state_maintenance_Id"))
 	public State getState() {
 		return state;

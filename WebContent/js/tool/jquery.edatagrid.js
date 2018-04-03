@@ -517,7 +517,12 @@
 		onSave: function(index, row){},
 		onSuccess: function(index, row){},
 		onDestroy: function(index, row){},
-		onError: function(index, row){}
+		onError: function(index, row){
+			var dg = $(this);
+			$.messager.alert('警告','操作错误，请重新操作！','info',function(){
+			    dg.datagrid('reload');
+			});
+		}
 	});
 	
 	////////////////////////////////

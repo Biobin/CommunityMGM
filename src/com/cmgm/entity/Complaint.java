@@ -10,7 +10,9 @@ package com.cmgm.entity;
 
 import java.time.LocalTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +31,7 @@ public class Complaint {
 	private LocalTime createTime;
 	private PropertyManager propertyManager;	//投诉受理人
 	private Owner owner;	//投诉人
+	private State state;
 	
 	public Complaint() {
 	}
@@ -78,6 +81,17 @@ public class Complaint {
 
 	public void setOwner(Owner owner) {
 		this.owner = owner;
+	}
+
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},  
+            fetch=FetchType.EAGER,optional=false)
+	@JoinColumn(name="stateId", foreignKey=@ForeignKey(name="state_complaint_Id"))
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
 	}
 	
 }
