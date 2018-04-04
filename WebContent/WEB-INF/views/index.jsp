@@ -22,7 +22,7 @@ var roleId=${sessionScope.user.getRole()};
 	
 	<div data-options="region:'north',title:'header',split:true,noheader:true" style="height:75px;background:#666;">
 		<div class="logo"> 文明苑智能小区管理系统</div>
-		<div class="logout">您好，${sessionScope.my_user.pname } &nbsp;|&nbsp; <a href="${pageContext.request.contextPath}">退出</a></div>
+		<div class="logout">您好，${sessionScope.user.username } &nbsp;|&nbsp; <a href="${pageContext.request.contextPath}">退出</a></div>
 	</div>
 	
 	<div data-options="region:'west',title:'导航',split:true" style="width:180px;">

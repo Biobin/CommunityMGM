@@ -14,81 +14,90 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cmgm.VO.PropertyManagerVO;
-import com.cmgm.service.PropertyManagerService;
+import com.cmgm.VO.OwnerVO;
+import com.cmgm.service.OwnerService;
 
 /**
  *
  * @author Bio
- * @date 2018年4月3日
- * @time 上午11:33:05
- * 用于物业管理员字典维护
+ * @date 2018年4月4日
+ * @time 下午3:12:37
+ * 业主管理页
  */
 
 @Controller
-public class PropertyManagerController {
+public class OwnerController {
 
 	@Autowired
-	private PropertyManagerService propertyManagerService;
+	private OwnerService ownerService;
 	
-	@RequestMapping("/propertyManager/propertyManagerManage")
-	public String propertyManagerManage(){
-		return "propertyManagerManage";
+	@RequestMapping("/owner/ownerManage")
+	public String ownerManage(){
+		return "ownerManage";
 	};
 	
 	@ResponseBody
-	@RequestMapping("/propertyManager/getPropertyManagers")
-	public Map<String, Object> getPropertyManagers(HttpServletRequest request) {
+	@RequestMapping("/owner/getOwners")
+	public Map<String, Object> getOwners(HttpServletRequest request) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
-		List<PropertyManagerVO> propertyManagerVOs = propertyManagerService.getPropertyManagers(pageNO,pageSize);
-		int count = propertyManagerService.getCountPropertyManager();
-		if (propertyManagerVOs == null || propertyManagerVOs.isEmpty()) {
-			propertyManagerVOs = new ArrayList<>();
+		List<OwnerVO> ownerVOs = ownerService.getOwners(pageNO,pageSize);
+		int count = ownerService.getCountOwner();
+		if (ownerVOs == null || ownerVOs.isEmpty()) {
+			ownerVOs = new ArrayList<>();
 			count = 0;
 		}
 		Map<String, Object> jsonMap = new HashMap<>();
-		jsonMap.put("rows", propertyManagerVOs);
+		jsonMap.put("rows", ownerVOs);
 		jsonMap.put("total", count);
-		return jsonMap;
+		return null;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/propertyManager/addPropertyManager", method=RequestMethod.POST)
-	public String addPropertyManager(HttpServletRequest request) {
+	@RequestMapping(value="/owner/addOwner", method=RequestMethod.POST)
+	public String addOwner(HttpServletRequest request) {
 		String name = request.getParameter("name");
 		String username = request.getParameter("username");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String IDNumber = request.getParameter("IDNumber");
+		String address = request.getParameter("address");
+		String startTime = request.getParameter("startTime");
 		Map<String, Object> params = new HashMap<String,Object>();
 		params.put("name", name);
 		params.put("username", username);
 		params.put("phone", phone);
 		params.put("email", email);
 		params.put("password", password);
-		propertyManagerService.addPropertyManager(params);
+		params.put("IDNumber", IDNumber);
+		params.put("address", address);
+		params.put("startTime", startTime);
+		ownerService.addOwner(params);
 		return "add";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/propertyManager/getPropertyManagerById/{id}", method=RequestMethod.GET)
-	public PropertyManagerVO getPropertyManagerById(@PathVariable("id")Integer id,HttpServletRequest request) {
-		PropertyManagerVO propertyManagerVO = null;
+	@RequestMapping(value="/ownerVO/getOwnerById/{id}", method=RequestMethod.GET)
+	public OwnerVO getOwnerById(@PathVariable("id")Integer id,HttpServletRequest request) {
+		OwnerVO ownerVO = null;
 		if (id != null) {
-			propertyManagerVO = propertyManagerService.getPropertyManagerById(id);
+			ownerVO = ownerService.getOwnerById(id);
 		}
-		return  propertyManagerVO;
+		return ownerVO;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/propertyManager/updatePropertyManager/{id}")
-	public String updatePropertyManager(@PathVariable("id")Integer id,HttpServletRequest request) {
+	@RequestMapping(value="/owner/updateOwner/{id}")
+	public String updateOwner(@PathVariable("id")Integer id,HttpServletRequest request) {
 		String name = request.getParameter("name");
 		String username = request.getParameter("username");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String IDNumber = request.getParameter("IDNumber");
+		String address = request.getParameter("address");
+		String startTime = request.getParameter("startTime");
 		Map<String, Object> params = new HashMap<String,Object>();
 		params.put("id", id);
 		params.put("name", name);
@@ -96,15 +105,20 @@ public class PropertyManagerController {
 		params.put("phone", phone);
 		params.put("email", email);
 		params.put("password", password);
-		propertyManagerService.updatePropertyManager(params);
+		params.put("IDNumber", IDNumber);
+		params.put("address", address);
+		params.put("startTime", startTime);
+		ownerService.updateOwner(params);
 		return "update";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/propertyManager/deletePropertyManager/{id}")
-	public String deletePropertyManager(@PathVariable("id")Integer id) {
-		propertyManagerService.deletePropertyManager(id);
+	@RequestMapping(value="/owner/deleteOwner/{id}")
+	public String deleteOwner(@PathVariable("id")Integer id) {
+		ownerService.deleteOwner(id);
 		return "delete";
 	}
+	
+	
 	
 }

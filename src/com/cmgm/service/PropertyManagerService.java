@@ -44,8 +44,14 @@ public class PropertyManagerService {
 		propertyManagerDao.updatePropertyManager(params);
 	}
 
+	@Transactional
 	public void deletePropertyManager(Integer id) {
 		propertyManagerDao.deletePropertyManager(id);
+	}
+
+	@Transactional(readOnly=true)
+	public PropertyManagerVO getPropertyManagerById(Integer id) {
+		return propertyManagerDao.getPropertyManagerById(id);
 	}
 	
 }

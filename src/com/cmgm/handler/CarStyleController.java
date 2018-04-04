@@ -55,7 +55,7 @@ public class CarStyleController {
 	
 	@ResponseBody
 	@RequestMapping(value="/carStyle/addOrUpdateCarStyle", method=RequestMethod.POST)
-	public CarStyle addOrUpdateAcrStyle(HttpServletRequest request) {
+	public CarStyle addOrUpdateCarStyle(HttpServletRequest request) {
 		String name = request.getParameter("name");
 		String idString = request.getParameter("id");
 		CarStyle carStyle = null;

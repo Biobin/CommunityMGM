@@ -82,8 +82,8 @@ public class PropertyManagerDao {
 		user.setUsername(params.get("username").toString());
 		user.setPassword(params.get("password").toString());
 		propertyManager.setName(params.get("name").toString());
-		propertyManager.setPhone(params.get("phone").toString());
-		propertyManager.setEmail(params.get("email").toString());
+		propertyManager.setPhone(StringUtils.getString(params.get("phone").toString()));
+		propertyManager.setEmail(StringUtils.getString(params.get("email").toString()));
 		propertyManager.setUser(user);
 		entityManager.merge(user);
 		entityManager.merge(propertyManager);
@@ -98,6 +98,24 @@ public class PropertyManagerDao {
 			}
 			entityManager.remove(propertyManager);
 		}
+	}
+
+	public PropertyManagerVO getPropertyManagerById(Integer id) {
+		String jpql = "SELECT pm.id, pm.name, pm.phone, pm.email, pu.id, pu.username, pu.password, pur.id, pur.name "
+				+ "FROM PropertyManager pm LEFT JOIN pm.user pu LEFT JOIN pu.role pur WHERE pm.id = :id";
+		Query query = entityManager.createQuery(jpql);
+		Object[] objects = (Object[]) query.setParameter("id", id).getSingleResult();
+		PropertyManagerVO propertyManagerVO = new PropertyManagerVO();
+		propertyManagerVO.setId(StringUtils.getInteger(String.valueOf(objects[0])));
+		propertyManagerVO.setName(StringUtils.getString(String.valueOf(objects[1])));
+		propertyManagerVO.setPhone(StringUtils.getString(String.valueOf(objects[2])));
+		propertyManagerVO.setEmail(StringUtils.getString(String.valueOf(objects[3])));
+		propertyManagerVO.setUserId(StringUtils.getInteger(String.valueOf(objects[4])));
+		propertyManagerVO.setUsername(StringUtils.getString(String.valueOf(objects[5])));
+		propertyManagerVO.setPassword(StringUtils.getString(String.valueOf(objects[6])));
+		propertyManagerVO.setRoleId(StringUtils.getInteger(String.valueOf(objects[7])));
+		propertyManagerVO.setRoleName(StringUtils.getString(String.valueOf(objects[8])));
+		return propertyManagerVO;
 	}
 	
 }

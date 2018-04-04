@@ -16,7 +16,7 @@ $(function(){
 		add:function(){
 			$('#propertyManager_dialog').panel('setTitle','新增统保方案');
 			$('#propertyManager_dialog').dialog('open');
-			this.submitUrl = basePath + "/propertyManager/addpropertyManager";
+			this.submitUrl = basePath + "/propertyManager/addPropertyManager";
 		},
 		edit:function(){
 			var row = $('#propertyManagerTb').datagrid('getSelected');
@@ -25,8 +25,8 @@ $(function(){
 				$('#propertyManager_dialog').panel('setTitle','修改材料清单');
 				$('#propertyManager_dialog').dialog('open');
 				// 加载表单数据,默认请求方式为GET
-				$('#propertyManager_form').form('load',basePath+'/propertyManager/getpropertyManager/'+id);
-				this.submitUrl=basePath+'/propertyManager/updatepropertyManager/'+id;
+				$('#propertyManager_form').form('load',basePath+'/propertyManager/getPropertyManagerById/'+id);
+				this.submitUrl=basePath+'/propertyManager/updatePropertyManager/'+id;
 			} else {
 				$.messager.alert('警告操作！', '请选择一条记录！', 'info');
 			}
@@ -39,7 +39,7 @@ $(function(){
 						var id=row.id;
 						$.ajax({
 							type : 'POST',
-							url :basePath+'/propertyManager/deletepropertyManager/'+id,
+							url :basePath+'/propertyManager/deletePropertyManager/'+id,
 							success : function (data) {
 								if (data=="delete") {
 									$.messager.alert('提示信息', '删除成功！');
@@ -81,7 +81,7 @@ $(function(){
 	};
 	
 	$("#propertyManagerTb").datagrid({
-		url:basePath+"/propertyManager/getpropertyManagers",
+		url:basePath+"/propertyManager/getPropertyManagers",
 		fit:true,
 		striped:true,
 		rownumbers:true,

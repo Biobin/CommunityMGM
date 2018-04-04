@@ -20,8 +20,8 @@
 	<table id="propertyManagerTb"></table>
 		<div id="search_propertyManager"  style="font-size:14px;padding:10px;">
 			<div style="margin-bottom:5px;">
-				<span>账号：<input id="username_search"  style="width:100px" >&nbsp;&nbsp;</span>
-				<span>姓名：<input id="name_search"  style="width:100px">&nbsp;&nbsp;</span>
+				<span>账号：<input id="username_search" class="easyui-textbox" style="width:100px" >&nbsp;&nbsp;</span>
+				<span>姓名：<input id="name_search" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;</span>
 				<span>电话：<input id="phone_search" class="easyui-textbox" name="phone_search" style="width:100px">&nbsp;&nbsp;</span>
 				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="obj.search();">查询</a>
 			</div>
@@ -33,9 +33,9 @@
 		</div>
 		<div id="propertyManager_dialog" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
 			<form id="propertyManager_form" method="post">
-				<table style="width:420px;padding:8px;height:200px;">
+				<table style="width:480px;padding:8px;height:200px;margin-left:30px;">
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名： <input name="name" class="easyui-textbox" data-options="required:true" /></td>
+						<td>姓名： <input name="name" class="easyui-textbox" data-options="required:true" /></td>
 						<td>账号： <input name="username" class="easyui-textbox" data-options="required:true" /></td>
 					</tr>
 					<tr>
@@ -44,7 +44,7 @@
 					</tr>
 					<tr>
 						<td>密码： <input name="password" type="password" class="easyui-textbox" data-options="required:true" /></td>
-						<td>再次确认密码： <input name="rePassword" type="password" class="easyui-textbox" data-options="required:true" /></td>
+						<td>再次确认密码： <input name="rePassword" type="password" class="easyui-textbox" data-options="required:true" style="width:100px;"/></td>
 					</tr>
 				</table>
 			</form>
