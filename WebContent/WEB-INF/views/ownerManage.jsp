@@ -14,11 +14,11 @@
 <script type="text/javascript">
 	var basePath="<%=basePath%>";
 </script>
-<script type="text/javascript" src="<%=basePath%>/js/propertyManagerManage.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/ownerManage.js"></script>
 </head>
 <body class="easyui-layout">
-	<table id="propertyManagerTb"></table>
-		<div id="search_propertyManager"  style="font-size:14px;padding:10px;">
+	<table id="ownerTb"></table>
+		<div id="search_owner"  style="font-size:14px;padding:10px;">
 			<div style="margin-bottom:5px;">
 				<span>账号：<input id="username_search" class="easyui-textbox" style="width:100px" >&nbsp;&nbsp;</span>
 				<span>姓名：<input id="name_search" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;</span>
@@ -31,20 +31,27 @@
 				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="obj.remove();">删除</a>			
 			</div>
 		</div>
-		<div id="propertyManager_dialog" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
-			<form id="propertyManager_form" method="post">
-				<table style="width:480px;padding:8px;height:200px;margin-left:30px;">
+		<div id="owner_dialog" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
+			<form id="owner_form" method="post">
+				<table style="width:520px;padding:8px;height:200px;">
 					<tr>
-						<td>姓名： <input name="name" class="easyui-textbox" data-options="required:true" /></td>
-						<td>账号： <input name="username" class="easyui-textbox" data-options="required:true" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名： <input name="name" class="easyui-textbox" data-options="required:true" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号： <input name="username" class="easyui-textbox" data-options="required:true" /></td>
 					</tr>
 					<tr>
-						<td>电话： <input name="phone" class="easyui-textbox" /></td>
-						<td>邮箱： <input name="email" class="easyui-textbox" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;住址： <input name="address" class="easyui-textbox" data-options="required:true" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;入住时间： <input name="startTime" class="easyui-datetimebox" data-options="required:true" /></td>
 					</tr>
 					<tr>
-						<td>密码： <input name="password" class="easyui-passwordbox" data-options="required:true" /></td>
-						<td>再次确认密码： <input name="rePassword" class="easyui-passwordbox" data-options="required:true" style="width:100px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input name="phone" class="easyui-textbox" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input name="email" class="easyui-textbox" /></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码： <input name="password" class="easyui-passwordbox" data-options="required:true" /></td>
+						<td>再次确认密码： <input name="rePassword" class="easyui-passwordbox" data-options="required:true" /></td>
+					</tr>
+					<tr>
+						<td>身份证号： <input name="IDNumber" class="easyui-textbox" style="width: 190px;" data-options="required:true" /></td>
 					</tr>
 				</table>
 			</form>

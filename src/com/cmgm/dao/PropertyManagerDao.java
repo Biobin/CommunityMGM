@@ -70,8 +70,8 @@ public class PropertyManagerDao {
 		propertyManager.setName(params.get("name").toString());
 		propertyManager.setPhone(params.get("phone").toString());
 		propertyManager.setEmail(params.get("email").toString());
-		propertyManager.setUser(user);
 		entityManager.persist(user);
+		propertyManager.setUser(user);
 		entityManager.persist(propertyManager);
 	}
 

@@ -8,7 +8,7 @@ package com.cmgm.entity;
  *
  */
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,16 +22,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="CMGM_Complaint")
 public class Complaint {
 
 	private Integer id;
 	private String content;
-	private LocalTime createTime;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime createTime;	//提交日期
 	private PropertyManager propertyManager;	//投诉受理人
 	private Owner owner;	//投诉人
 	private State state;
+	private String retrunContent;	//对投诉内容进行回应
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime finishTime;	//投诉解决日期
 	
 	public Complaint() {
 	}
@@ -55,11 +61,11 @@ public class Complaint {
 		this.content = content;
 	}
 
-	public LocalTime getCreateTime() {
+	public LocalDateTime getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(LocalTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime = createTime;
 	}
 
@@ -92,6 +98,22 @@ public class Complaint {
 
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	public String getRetrunContent() {
+		return retrunContent;
+	}
+
+	public void setRetrunContent(String retrunContent) {
+		this.retrunContent = retrunContent;
+	}
+
+	public LocalDateTime getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(LocalDateTime finishTime) {
+		this.finishTime = finishTime;
 	}
 	
 }

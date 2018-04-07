@@ -20,7 +20,6 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.cmgm.VO.OwnerVO;
-import com.cmgm.VO.PropertyManagerVO;
 import com.cmgm.common.StringUtils;
 import com.cmgm.entity.Owner;
 import com.cmgm.entity.Role;
@@ -34,22 +33,31 @@ public class OwnerDao {
 
 	@SuppressWarnings("unchecked")
 	public List<OwnerVO> getOwners(int pageNO, int pageSize) {
-		String jpql = "SELECT ";
+		String jpql = "SELECT o.id, o.name, o.phone, o.email, ou.id, ou.username, ou.password, our.id, our.name, o.address, o.IDNumber, o.startTime FROM Owner o "
+				+ "LEFT JOIN o.user ou LEFT JOIN ou.role our ";
 		Query query = entityManager.createQuery(jpql).setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize);
 		List<Object[]> owners  = query.getResultList();
 		List<OwnerVO> ownerVOs = new ArrayList<>();
 		OwnerVO ownerVO = null;
-		for(Object[] propertyManager : owners) {
+		for(Object[] owner : owners) {
 			ownerVO = new OwnerVO();
-			ownerVO.setId(StringUtils.getInteger(String.valueOf(propertyManager[0])));
-			ownerVO.setName(StringUtils.getString(String.valueOf(propertyManager[1])));
-			ownerVO.setPhone(StringUtils.getString(String.valueOf(propertyManager[2])));
-			ownerVO.setEmail(StringUtils.getString(String.valueOf(propertyManager[3])));
-			ownerVO.setUserId(StringUtils.getInteger(String.valueOf(propertyManager[4])));
-			ownerVO.setUsername(StringUtils.getString(String.valueOf(propertyManager[5])));
-			ownerVO.setPassword(StringUtils.getString(String.valueOf(propertyManager[6])));
-			ownerVO.setRoleId(StringUtils.getInteger(String.valueOf(propertyManager[7])));
-			ownerVO.setRoleName(StringUtils.getString(String.valueOf(propertyManager[8])));
+			ownerVO.setId(StringUtils.getInteger(String.valueOf(owner[0])));
+			ownerVO.setName(StringUtils.getString(String.valueOf(owner[1])));
+			ownerVO.setPhone(StringUtils.getString(String.valueOf(owner[2])));
+			ownerVO.setEmail(StringUtils.getString(String.valueOf(owner[3])));
+			ownerVO.setUserId(StringUtils.getInteger(String.valueOf(owner[4])));
+			ownerVO.setUsername(StringUtils.getString(String.valueOf(owner[5])));
+			ownerVO.setPassword(StringUtils.getString(String.valueOf(owner[6])));
+			ownerVO.setRoleId(StringUtils.getInteger(String.valueOf(owner[7])));
+			ownerVO.setRoleName(StringUtils.getString(String.valueOf(owner[8])));
+			ownerVO.setAddress(StringUtils.getString(String.valueOf(owner[9])));
+			ownerVO.setIDNumber(StringUtils.getString(String.valueOf(owner[10])));
+//			DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//			LocalDateTime startTime = null;
+//			if (String.valueOf(owner[11])!=null) {
+//				startTime = LocalDateTime.parse(StringUtils.getString(String.valueOf(owner[11])),df);
+//				ownerVO.setStartTime(startTime);
+//			}
 			ownerVOs.add(ownerVO);
 		}
 		return ownerVOs;
@@ -76,8 +84,8 @@ public class OwnerDao {
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime startTime = LocalDateTime.parse(params.get("startTime").toString(),df);
 		owner.setStartTime(startTime);
-		owner.setUser(user);
 		entityManager.persist(user);
+		owner.setUser(user);
 		entityManager.persist(owner);
 	}
 

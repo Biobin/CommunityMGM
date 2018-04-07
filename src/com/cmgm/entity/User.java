@@ -32,7 +32,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_CMGMuser")
-	@SequenceGenerator(name = "seq_CMGMuser", sequenceName = "seq_CMGMuser", allocationSize = 1, initialValue = 1)
+	@SequenceGenerator(name = "seq_CMGMuser", sequenceName = "seq_CMGMuser", allocationSize = 1, initialValue = 100)
 	public Integer getId() {
 		return id;
 	}

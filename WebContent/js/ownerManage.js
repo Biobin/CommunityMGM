@@ -1,5 +1,5 @@
 /**
- * 物业管理人员维护
+ * 业主管理
  */
 $(function(){
 	obj = {
@@ -7,43 +7,43 @@ $(function(){
 		submitUrl:'',	
 		
 		search:function(){
-			$('#propertyManagerTb').datagrid('load',{
+			$('#ownerTb').datagrid('load',{
 				name:$.trim($('#name_search').val()),
 				Username:$.trim($('#username_search').val()),
 				phone:$.trim($('#phone_search').val()),
 			});
 		},
 		add:function(){
-			$('#propertyManager_dialog').panel('setTitle','新增物业管理员信息');
-			$('#propertyManager_dialog').dialog('open');
-			this.submitUrl = basePath + "/propertyManager/addPropertyManager";
+			$('#owner_dialog').panel('setTitle','新增业主信息');
+			$('#owner_dialog').dialog('open');
+			this.submitUrl = basePath + "/owner/addOwner";
 		},
 		edit:function(){
-			var row = $('#propertyManagerTb').datagrid('getSelected');
+			var row = $('#ownerTb').datagrid('getSelected');
 			if(row!=null){
 				var id=row.id;
-				$('#propertyManager_dialog').panel('setTitle','修改物业管理员信息');
-				$('#propertyManager_dialog').dialog('open');
+				$('#owner_dialog').panel('setTitle','修改业主信息');
+				$('#owner_dialog').dialog('open');
 				// 加载表单数据,默认请求方式为GET
-				$('#propertyManager_form').form('load',basePath+'/propertyManager/getPropertyManagerById/'+id);
-				this.submitUrl=basePath+'/propertyManager/updatePropertyManager/'+id;
+				$('#owner_form').form('load',basePath+'/owner/getOwnerById/'+id);
+				this.submitUrl=basePath+'/owner/updateOwner/'+id;
 			} else {
 				$.messager.alert('警告操作！', '请选择一条记录！', 'info');
 			}
 		},
 		remove:function(){
-			var row = $('#propertyManagerTb').datagrid('getSelected');
+			var row = $('#ownerTb').datagrid('getSelected');
 			if(row!=null){
 				$.messager.confirm('确定操作', '您要删除所选的记录吗？', function (flag) {
 					if (flag) {
 						var id=row.id;
 						$.ajax({
 							type : 'POST',
-							url :basePath+'/propertyManager/deletePropertyManager/'+id,
+							url :basePath+'/owner/deleteOwner/'+id,
 							success : function (data) {
 								if (data=="delete") {
 									$.messager.alert('提示信息', '删除成功！');
-									$('#propertyManagerTb').datagrid('reload');
+									$('#ownerTb').datagrid('reload');
 								} else {
 									$.messager.alert('提示信息', '删除失败！','info');
 								}
@@ -56,7 +56,7 @@ $(function(){
 			}
 		},
 		submitForm:function(){
-			$('#propertyManager_form').form('submit',{
+			$('#owner_form').form('submit',{
 				url:obj.submitUrl,
 				onSubmit:function(){
 					return $(this).form('enableValidation').form('validate');   //检验各个编辑框是否满足设置的条件
@@ -65,7 +65,7 @@ $(function(){
 			        if(data=='add' || data=='update'){
 			        	$.messager.alert('提示信息','保存成功！','info',function(){
 			        		obj.clearForm();
-			        		$('#propertyManagerTb').datagrid('reload');
+			        		$('#ownerTb').datagrid('reload');
 			        	});
 			        } else {
 			        	$.messager.alert('提示信息','保存失败！','info');
@@ -74,14 +74,14 @@ $(function(){
 			});
 		},
 		clearForm:function(){
-			$('#propertyManager_dialog').dialog('close');
-			$('#propertyManager_form').form('clear');
-			$('#propertyManager_dialog').dialog('center');
+			$('#owner_dialog').dialog('close');
+			$('#owner_form').form('clear');
+			$('#owner_dialog').dialog('center');
 		}
 	};
 	
-	$("#propertyManagerTb").datagrid({
-		url:basePath+"/propertyManager/getPropertyManagers",
+	$("#ownerTb").datagrid({
+		url:basePath+"/owner/getOwners",
 		fit:true,
 		striped:true,
 		rownumbers:true,
@@ -94,7 +94,7 @@ $(function(){
 		sortName:'id',
 		sortOrder:'asc',
 		//remoteSort:true,
-		toolbar:'#search_propertyManager',
+		toolbar:'#search_owner',
 		columns:[[
 			{
 				field : 'id',
@@ -110,6 +110,21 @@ $(function(){
 			{
 				field : 'username',
 				title : '账号',
+				width : 120
+			},
+			{
+				field : 'IDNumber',
+				title : '身份证号码',
+				width : 120
+			},
+			{
+				field : 'address',
+				title : '住址',
+				width : 120
+			},
+			{
+				field : 'startTime',
+				title : '入住时间',
 				width : 120
 			},
 			{

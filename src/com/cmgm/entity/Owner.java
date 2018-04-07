@@ -97,8 +97,8 @@ public class Owner {
 		this.address = address;
 	}
 
-	@OneToOne
 	@JoinColumn(name="userId", foreignKey=@ForeignKey(name="User_Owner_Id"))
+	@OneToOne
 	public User getUser() {
 		return user;
 	}

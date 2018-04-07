@@ -7,7 +7,7 @@ package com.cmgm.entity;
  *
  */
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,12 +21,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="CMGM_Payment")
 public class Payment {
 
 	private Integer id;
-	private LocalTime createTime;	//账单产生日期
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime createTime;	//账单产生日期
 	private Double receivableFee;	//应收金额
 	private Double owedFee;		//欠款金额
 	private Double collectFee;	//实收金额
@@ -49,11 +52,11 @@ public class Payment {
 		this.id = id;
 	}
 
-	public LocalTime getCreateTime() {
+	public LocalDateTime getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(LocalTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime = createTime;
 	}
 

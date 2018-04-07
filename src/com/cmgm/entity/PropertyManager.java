@@ -64,7 +64,7 @@ public class PropertyManager {
 		this.email = email;
 	}
 
-	@JoinColumn(name="userId", foreignKey=@ForeignKey(name="user_propertyManager_Id"))
+	@JoinColumn(name="userId", foreignKey=@ForeignKey(name="User_PropertyManager_Id"))
     @OneToOne
 	public User getUser() {
 		return user;
