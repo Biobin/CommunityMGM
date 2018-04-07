@@ -1,6 +1,6 @@
 package com.cmgm.entity;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 
@@ -31,7 +33,8 @@ public class Maintenance {
 	private Integer id;
 	private String code;	//报修单号
 //	private String name;
-	private LocalTime createTime;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime createTime;
 	private Owner owner;	//提交报修的业主
 	private String details;	//报修信息细节
 	private Set<CommunalFacilities> communalFacilities;	//损害的公共设施
@@ -39,7 +42,8 @@ public class Maintenance {
 	//提交后（物业填写）
 	private String repairPersonnel;		//维修人员
 	private String repairPerPhone;		//维修人员电话
-	private LocalTime repairTime;		//维修时间
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime repairTime;		//维修时间
 	private String repairRemarks;		//维修后备注
 	private State state;
 	
@@ -65,11 +69,11 @@ public class Maintenance {
 		this.code = code;
 	}
 
-	public LocalTime getCreateTime() {
+	public LocalDateTime getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(LocalTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime = createTime;
 	}
 
@@ -117,11 +121,11 @@ public class Maintenance {
 		this.repairPerPhone = repairPerPhone;
 	}
 
-	public LocalTime getRepairTime() {
+	public LocalDateTime getRepairTime() {
 		return repairTime;
 	}
 
-	public void setRepairTime(LocalTime repairTime) {
+	public void setRepairTime(LocalDateTime repairTime) {
 		this.repairTime = repairTime;
 	}
 

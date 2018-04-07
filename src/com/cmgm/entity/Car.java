@@ -1,6 +1,6 @@
 package com.cmgm.entity;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  *
@@ -28,7 +30,8 @@ public class Car {
 	private String plateNumber;		//车牌号
 	private CarStyle carStyle;	//车辆类型
 	private Owner owner;	//车主
-	private LocalTime createTime;	//开始停放时间
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime createTime;	//开始停放时间
 	
 	public Car() {
 	}
@@ -72,11 +75,11 @@ public class Car {
 		this.owner = owner;
 	}
 
-	public LocalTime getCreateTime() {
+	public LocalDateTime getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(LocalTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime = createTime;
 	}
 	
