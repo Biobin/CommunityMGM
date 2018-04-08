@@ -1,6 +1,6 @@
 package com.cmgm.entity;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -30,7 +30,7 @@ public class CommunalFacilities {
 	private String name;
 	private CommunalFaStyle communalFaStyle;	//设施类型
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalTime BeginUsingTime;	//开始使用时间
+	private LocalDateTime beginUsingTime;	//开始使用时间
 	private String details;		//备注
 	private PropertyManager propertyManager;	//维修负责人
 	
@@ -74,12 +74,12 @@ public class CommunalFacilities {
 		this.communalFaStyle = communalFaStyle;
 	}
 
-	public LocalTime getBeginUsingTime() {
-		return BeginUsingTime;
+	public LocalDateTime getBeginUsingTime() {
+		return beginUsingTime;
 	}
 
-	public void setBeginUsingTime(LocalTime beginUsingTime) {
-		BeginUsingTime = beginUsingTime;
+	public void setBeginUsingTime(LocalDateTime beginUsingTime) {
+		this.beginUsingTime = beginUsingTime;
 	}
 
 	public String getDetails() {

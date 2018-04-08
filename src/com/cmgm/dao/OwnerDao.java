@@ -7,9 +7,12 @@ package com.cmgm.dao;
  *
  */
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +23,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.cmgm.VO.OwnerVO;
+import com.cmgm.common.DateUtils;
 import com.cmgm.common.StringUtils;
 import com.cmgm.entity.Owner;
 import com.cmgm.entity.Role;
@@ -33,7 +37,8 @@ public class OwnerDao {
 
 	@SuppressWarnings("unchecked")
 	public List<OwnerVO> getOwners(int pageNO, int pageSize) {
-		String jpql = "SELECT o.id, o.name, o.phone, o.email, ou.id, ou.username, ou.password, our.id, our.name, o.address, o.IDNumber, o.startTime FROM Owner o "
+		String jpql = "SELECT o.id, o.name, o.phone, o.email, ou.id, ou.username, ou.password, our.id, our.name, o.address, "
+				+ "o.IDNumber, to_char(o.startTime,'yyyy-MM-dd HH24:mm:ss') FROM Owner o "
 				+ "LEFT JOIN o.user ou LEFT JOIN ou.role our ";
 		Query query = entityManager.createQuery(jpql).setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize);
 		List<Object[]> owners  = query.getResultList();
@@ -52,6 +57,7 @@ public class OwnerDao {
 			ownerVO.setRoleName(StringUtils.getString(String.valueOf(owner[8])));
 			ownerVO.setAddress(StringUtils.getString(String.valueOf(owner[9])));
 			ownerVO.setIDNumber(StringUtils.getString(String.valueOf(owner[10])));
+			ownerVO.setStartTime(DateUtils.getDate("yyyy-MM-dd HH:mm:ss", owner[11]));
 //			DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //			LocalDateTime startTime = null;
 //			if (String.valueOf(owner[11])!=null) {
@@ -77,20 +83,48 @@ public class OwnerDao {
 		user.setPassword(params.get("password").toString());
 		user.setRole(role);
 		owner.setName(params.get("name").toString());
-		owner.setPhone(params.get("phone")==null?"":params.get("name").toString());
+		owner.setPhone(params.get("phone")==null?"":params.get("phone").toString());
 		owner.setEmail(params.get("email")==null?"":params.get("email").toString());
-		owner.setAddress(params.get("adress")==null?"":params.get("adress").toString());
+		owner.setAddress(params.get("address")==null?"":params.get("address").toString());
 		owner.setIDNumber(params.get("IDNumber")==null?"":params.get("IDNumber").toString());
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		LocalDateTime startTime = LocalDateTime.parse(params.get("startTime").toString(),df);
-		owner.setStartTime(startTime);
+		String startTime = params.get("startTime").toString();
+		Date date = null;
+		if (startTime !=null && !startTime.equals("")) {
+			try {
+				date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(startTime);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		owner.setStartTime(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
+//		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//		LocalDateTime startTime = LocalDateTime.parse(params.get("startTime").toString(),df);
+//		owner.setStartTime(startTime);
 		entityManager.persist(user);
 		owner.setUser(user);
 		entityManager.persist(owner);
 	}
 
 	public OwnerVO getOwnerById(Integer id) {
-		return null;
+		String jpql = "SELECT o.id, o.name, o.phone, o.email, ou.id, ou.username, ou.password, our.id, our.name, o.address, "
+				+ "o.IDNumber, to_char(o.startTime,'yyyy-MM-dd HH24:mm:ss') FROM Owner o "
+				+ "LEFT JOIN o.user ou LEFT JOIN ou.role our WHERE o.id = :id ";
+		Query query = entityManager.createQuery(jpql);
+		Object[] objects = (Object[]) query.setParameter("id", id).getSingleResult();
+		OwnerVO ownerVO = new OwnerVO();
+		ownerVO.setId(StringUtils.getInteger(String.valueOf(objects[0])));
+		ownerVO.setName(StringUtils.getString(String.valueOf(objects[1])));
+		ownerVO.setPhone(StringUtils.getString(String.valueOf(objects[2])));
+		ownerVO.setEmail(StringUtils.getString(String.valueOf(objects[3])));
+		ownerVO.setUserId(StringUtils.getInteger(String.valueOf(objects[4])));
+		ownerVO.setUsername(StringUtils.getString(String.valueOf(objects[5])));
+		ownerVO.setPassword(StringUtils.getString(String.valueOf(objects[6])));
+		ownerVO.setRoleId(StringUtils.getInteger(String.valueOf(objects[7])));
+		ownerVO.setRoleName(StringUtils.getString(String.valueOf(objects[8])));
+		ownerVO.setAddress(StringUtils.getString(String.valueOf(objects[9])));
+		ownerVO.setIDNumber(StringUtils.getString(String.valueOf(objects[10])));
+		ownerVO.setStartTime(DateUtils.getDate("yyyy-MM-dd HH:mm:ss", objects[11]));
+		return ownerVO;
 	}
 
 	public void updateOwner(Map<String, Object> params) {
@@ -100,13 +134,23 @@ public class OwnerDao {
 		user.setUsername(params.get("username").toString());
 		user.setPassword(params.get("password").toString());
 		owner.setName(params.get("name").toString());
-		owner.setPhone(params.get("phone")==null?"":params.get("name").toString());
+		owner.setPhone(params.get("phone")==null?"":params.get("phone").toString());
 		owner.setEmail(params.get("email")==null?"":params.get("email").toString());
-		owner.setAddress(params.get("adress")==null?"":params.get("adress").toString());
+		owner.setAddress(params.get("address")==null?"":params.get("address").toString());
 		owner.setIDNumber(params.get("IDNumber")==null?"":params.get("IDNumber").toString());
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		LocalDateTime startTime = LocalDateTime.parse(params.get("startTime").toString(),df);
-		owner.setStartTime(startTime);
+		String startTime = params.get("startTime").toString();
+		Date date = null;
+		if (startTime !=null && !startTime.equals("")) {
+			try {
+				date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(startTime);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		owner.setStartTime(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
+//		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//		LocalDateTime startTime = LocalDateTime.parse(params.get("startTime").toString(),df);
+//		owner.setStartTime(startTime);
 		owner.setUser(user);
 		entityManager.merge(user);
 		entityManager.merge(owner);

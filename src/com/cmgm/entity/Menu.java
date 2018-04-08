@@ -3,14 +3,19 @@ package com.cmgm.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,6 +28,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @time   下午10:38:33
  * 菜单实体类
  */
+
+@Entity
+@Table(name="CMGM_MENU")
 public class Menu {
 
 	@JsonProperty(value="menuId")
@@ -31,7 +39,7 @@ public class Menu {
 	private State state;
 	private String iconCls;
 	private String url;
-	private Role role;	//物业管理人员为1，业主为2，超级管理员暂时不用
+	private Set<Role> roles;	//物业管理人员为1，业主为2，超级管理员暂时不用
 	private Menu parent;	//父节点
 	@JsonIgnoreProperties(value={ "children", "parent" })
 	private Set<Menu> children = new HashSet<>();//子节点
@@ -55,6 +63,9 @@ public class Menu {
 		this.text = text;
 	}
 	
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},  
+            fetch=FetchType.EAGER,optional=false)
+	@JoinColumn(name="stateId", foreignKey=@ForeignKey(name="state_Menu_Id"))
 	public State getState() {
 		return state;
 	}
@@ -79,12 +90,14 @@ public class Menu {
 		this.url = url;
 	}
 	
-	public Role getRole() {
-		return role;
+	@JsonIgnore
+	@ManyToMany(mappedBy = "menus")
+	public Set<Role> getRole() {
+		return roles;
 	}
 	
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRole(Set<Role> role) {
+		this.roles = role;
 	}
 	
 	@JsonIgnore

@@ -7,9 +7,13 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -35,7 +39,8 @@ public class Role {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date createTime;
 	private Set<User> users;
-
+	private Set<Menu> menus;
+	
 	public Role() {
 	}
 
@@ -86,6 +91,25 @@ public class Role {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+
+	//使用 @ManyToMany 注解来映射多对多关联关系
+	//使用 @JoinTable 来映射中间表
+	//1. name 指向中间表的名字
+	//2. joinColumns 映射当前类所在的表在中间表中的外键
+	//2.1 name 指定外键列的列名
+	//2.2 referencedColumnName 指定外键列关联当前表的哪一列
+	//3. inverseJoinColumns 映射关联的类所在中间表的外键
+	@JoinTable(name="cmgm_role_menu",
+		joinColumns={@JoinColumn(name="roleId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_m_role"))},
+		inverseJoinColumns={@JoinColumn(name="menuId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_r_menu"))})
+	@ManyToMany //(fetch=FetchType.EAGER)
+	public Set<Menu> getMenus() {
+		return menus;
+	}
+
+	public void setMenus(Set<Menu> menus) {
+		this.menus = menus;
 	}
 	
 }

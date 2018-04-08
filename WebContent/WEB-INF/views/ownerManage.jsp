@@ -51,7 +51,7 @@
 						<td>再次确认密码： <input name="rePassword" class="easyui-passwordbox" data-options="required:true" /></td>
 					</tr>
 					<tr>
-						<td>身份证号： <input name="IDNumber" class="easyui-textbox" style="width: 190px;" data-options="required:true" /></td>
+						<td>身份证号： <input name="idnumber" class="easyui-textbox" style="width: 190px;" data-options="required:true" /></td>
 					</tr>
 				</table>
 			</form>

@@ -28,8 +28,8 @@ public class MenuDao {
 	@SuppressWarnings("unchecked")
 	public List<MenuVO> getMenus(Integer roleId, Integer pid) {
 		String jpql = "SELECT m.id,m.text,ms.id,ms.name,m.iconCls,m.url FROM Menu m "
-				+ "LFFT JOIN m.state ms LEFT JOIN m.role mr WHERE mr.id = :roleId AND m.parent.id = :pid ";
-		List<Menu> menus = entityManager.createQuery(jpql).setParameter("pid", pid).setParameter("myRole", roleId).getResultList();
+				+ "LEFT JOIN m.state ms LEFT JOIN m.role mr WHERE mr.id = :roleId AND m.parent.id = :pid ";
+		List<Menu> menus = entityManager.createQuery(jpql).setParameter("pid", pid).setParameter("roleId", roleId).getResultList();
 		List<MenuVO> menuVOs = null;
 		if (menus.size() > 0) {
 			menuVOs = new ArrayList<>();

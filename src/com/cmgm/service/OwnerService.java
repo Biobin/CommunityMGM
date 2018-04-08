@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmgm.VO.OwnerVO;
@@ -18,7 +18,7 @@ import com.cmgm.dao.OwnerDao;
  *
  */
 
-@Controller
+@Service
 public class OwnerService {
 
 	@Autowired

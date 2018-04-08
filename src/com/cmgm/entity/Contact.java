@@ -32,6 +32,14 @@ public class Contact {
 	public Contact() {
 	}
 
+	public Contact(Integer id, String name, String phone, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq_contact")
 	@SequenceGenerator(name = "seq_contact", sequenceName = "seq_contact", allocationSize = 1, initialValue = 1)

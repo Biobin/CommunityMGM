@@ -8,9 +8,10 @@
 <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js" ></script>
 
+<script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript">
 var basePath='<%=request.getContextPath()%>';
-var roleId=${sessionScope.user.getRole()};
+var roleId=${sessionScope.user.getRole().getId()};
 </script>
 <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css" />
@@ -22,7 +23,7 @@ var roleId=${sessionScope.user.getRole()};
 	
 	<div data-options="region:'north',title:'header',split:true,noheader:true" style="height:75px;background:#666;">
 		<div class="logo"> 文明苑智能小区管理系统</div>
-		<div class="logout">您好，${sessionScope.user.username } &nbsp;|&nbsp; <a href="${pageContext.request.contextPath}">退出</a></div>
+		<div class="logout">您好，${sessionScope.user.getRole().getName() } &nbsp;|&nbsp; <a href="${pageContext.request.contextPath}">退出</a></div>
 	</div>
 	
 	<div data-options="region:'west',title:'导航',split:true" style="width:180px;">

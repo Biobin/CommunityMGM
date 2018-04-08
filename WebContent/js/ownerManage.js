@@ -105,7 +105,7 @@ $(function(){
 			{
 				field : 'name',
 				title : '姓名',
-				width : 120,
+				width : 80,
 			},
 			{
 				field : 'username',
@@ -113,19 +113,19 @@ $(function(){
 				width : 120
 			},
 			{
-				field : 'IDNumber',
+				field : 'idnumber',
 				title : '身份证号码',
-				width : 120
+				width : 150
 			},
 			{
 				field : 'address',
 				title : '住址',
-				width : 120
+				width : 150
 			},
 			{
 				field : 'startTime',
 				title : '入住时间',
-				width : 120
+				width : 160
 			},
 			{
 				field : 'phone',

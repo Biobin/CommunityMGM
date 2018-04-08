@@ -1,6 +1,8 @@
 package com.cmgm.VO;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,8 +20,8 @@ public class OwnerVO {
 	private String phone;
 	private String email;
 	private String IDNumber;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime startTime;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+	private Date startTime;
 	private String address;
 	private Integer userId;
 	private String username;
@@ -62,10 +64,11 @@ public class OwnerVO {
 		IDNumber = iDNumber;
 	}
 	
-	public LocalDateTime getStartTime() {
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	public Date getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(LocalDateTime startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 	

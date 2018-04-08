@@ -34,7 +34,7 @@ public class OwnerController {
 	@RequestMapping("/owner/ownerManage")
 	public String ownerManage(){
 		return "ownerManage";
-	};
+	}
 	
 	@ResponseBody
 	@RequestMapping("/owner/getOwners")
@@ -50,7 +50,7 @@ public class OwnerController {
 		Map<String, Object> jsonMap = new HashMap<>();
 		jsonMap.put("rows", ownerVOs);
 		jsonMap.put("total", count);
-		return null;
+		return jsonMap;
 	}
 	
 	@ResponseBody
@@ -61,7 +61,7 @@ public class OwnerController {
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String IDNumber = request.getParameter("IDNumber");
+		String IDNumber = request.getParameter("idnumber");
 		String address = request.getParameter("address");
 		String startTime = request.getParameter("startTime");
 		Map<String, Object> params = new HashMap<String,Object>();
@@ -78,7 +78,7 @@ public class OwnerController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/ownerVO/getOwnerById/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/owner/getOwnerById/{id}", method=RequestMethod.GET)
 	public OwnerVO getOwnerById(@PathVariable("id")Integer id,HttpServletRequest request) {
 		OwnerVO ownerVO = null;
 		if (id != null) {
@@ -95,7 +95,7 @@ public class OwnerController {
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String IDNumber = request.getParameter("IDNumber");
+		String IDNumber = request.getParameter("idnumber");
 		String address = request.getParameter("address");
 		String startTime = request.getParameter("startTime");
 		Map<String, Object> params = new HashMap<String,Object>();
