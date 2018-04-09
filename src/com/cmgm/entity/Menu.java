@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -39,14 +40,14 @@ public class Menu {
 	private State state;
 	private String iconCls;
 	private String url;
-	private Set<Role> roles;	//物业管理人员为1，业主为2，超级管理员暂时不用
+	private Set<Role> roles = new HashSet<>();	//物业管理人员为1，业主为2，超级管理员暂时不用
 	private Menu parent;	//父节点
 	@JsonIgnoreProperties(value={ "children", "parent" })
 	private Set<Menu> children = new HashSet<>();//子节点
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_menu")
-	@SequenceGenerator(name = "seq_menu", sequenceName = "seq_menu", allocationSize = 1, initialValue = 1)	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cmgm_menu")
+	@SequenceGenerator(name = "seq_cmgm_menu", sequenceName = "seq_cmgm_menu", allocationSize = 1, initialValue = 1)	
 	public Integer getId() {
 		return id;
 	}
@@ -90,8 +91,10 @@ public class Menu {
 		this.url = url;
 	}
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "menus")
+	@JoinTable(name="cmgm_role_menu",
+		joinColumns={@JoinColumn(name="menuId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_r_menu"))},
+		inverseJoinColumns={@JoinColumn(name="roleId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_m_role"))})
+	@ManyToMany
 	public Set<Role> getRole() {
 		return roles;
 	}
@@ -101,7 +104,7 @@ public class Menu {
 	}
 	
 	@JsonIgnore
-	@JoinColumn(name="pId", foreignKey=@ForeignKey(name="fk_menu"))
+	@JoinColumn(name="pId", foreignKey=@ForeignKey(name="fk_p_menu"))
 	@ManyToOne
 	public Menu getParent() {
 		return parent;
@@ -122,6 +125,12 @@ public class Menu {
 	}
 
 	public Menu() {
+	}
+
+	public Menu(Integer id, String text) {
+		super();
+		this.id = id;
+		this.text = text;
 	}
 	
 }

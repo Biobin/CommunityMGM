@@ -1,4 +1,8 @@
 package com.cmgm.VO;
+
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Bio
@@ -16,7 +20,10 @@ public class MenuVO {
 	private String iconCls;		//树节点前显示的图标
 	private Integer sortNum;	//用于目录树排序
 	private Integer pid; //指向父节点id
+	private String pname;
 	private boolean checked; // 节点是否选中
+	private Set<String> roleNames = new HashSet<>();
+	private Set<Integer> rolesIds = new HashSet<>();
 	
 	public Integer getId() {
 		return id;
@@ -82,12 +89,36 @@ public class MenuVO {
 		this.pid = pid;
 	}
 
+	public String getPname() {
+		return pname;
+	}
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+
 	public boolean isChecked() {
 		return checked;
 	}
 	
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+
+	public Set<String> getRoleNames() {
+		return roleNames;
+	}
+
+	public void setRoleNames(Set<String> roleNames) {
+		this.roleNames = roleNames;
+	}
+
+	public Set<Integer> getRolesIds() {
+		return rolesIds;
+	}
+
+	public void setRolesIds(Set<Integer> rolesIds) {
+		this.rolesIds = rolesIds;
 	}
 	
 }
