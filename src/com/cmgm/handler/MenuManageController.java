@@ -110,7 +110,7 @@ public class MenuManageController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/menuMange/getMenuById/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/menuManage/getMenuById/{id}", method=RequestMethod.GET)
 	public MenuVO getMenuById(@PathVariable("id")Integer id,HttpServletRequest request) {
 		MenuVO menuVO = null;
 		if (id != null) {

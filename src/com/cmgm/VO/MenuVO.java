@@ -15,7 +15,7 @@ public class MenuVO {
 	private Integer id;
 	private String text;
 	private Integer stateId;	//节点状态：open、closed
-	private String stateName;
+	private String state;
 	private String url;			//树节点指向的连接
 	private String iconCls;		//树节点前显示的图标
 	private Integer sortNum;	//用于目录树排序
@@ -49,12 +49,12 @@ public class MenuVO {
 		this.stateId = stateId;
 	}
 	
-	public String getStateName() {
-		return stateName;
+	public String getState() {
+		return state;
 	}
 	
-	public void setStateName(String stateName) {
-		this.stateName = stateName;
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	public String getUrl() {

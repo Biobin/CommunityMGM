@@ -58,12 +58,12 @@ public class MenuManageDao {
 			menuVO.setId(StringUtils.getInteger(object[0]));
 			menuVO.setText(StringUtils.getString(object[1]));
 			menuVO.setStateId(StringUtils.getInteger(object[2]));
-			menuVO.setStateName(StringUtils.getString(object[3]));
+			menuVO.setState(StringUtils.getString(object[3]));
 			menuVO.setUrl(StringUtils.getString(object[4]));
 			menuVO.setIconCls(StringUtils.getString(object[5]));
 			menuVO.setPid(StringUtils.getInteger(object[6]));
 			menuVO.setPname(StringUtils.getString(object[7]));
-			List<String> result = entityManager.createQuery("SELECT mr.name FROM Menu m LEFT JOIN m.roles mr WHERE m.id = :mid ").setParameter("mid", StringUtils.getInteger(String.valueOf(object[0]))).getResultList();
+			List<String> result = entityManager.createQuery("SELECT mr.name FROM Menu m JOIN m.roles mr WHERE m.id = :mid ").setParameter("mid", StringUtils.getInteger(String.valueOf(object[0]))).getResultList();
 			Set<String> roleNames = new HashSet<String>(result);
 			menuVO.setRoleNames(roleNames);
 			menuVOs.add(menuVO);
@@ -86,34 +86,39 @@ public class MenuManageDao {
 			roles.add(role);
 		}
 		State state = entityManager.find(State.class, StringUtils.getInteger(params.get("stateId")));
-		Menu parent = entityManager.find(Menu.class, StringUtils.getInteger(params.get("pid")));
+		Menu parent = null;
+		if (params.get("pid")!=null) {
+			parent = entityManager.find(Menu.class, StringUtils.getInteger(params.get("pid")));
+		} else {
+			parent = entityManager.find(Menu.class, -1);
+		}
 		menu.setText(params.get("text").toString());
 		menu.setState(state);
 		menu.setUrl(params.get("url").toString());
 		menu.setIconCls(params.get("iconCls").toString());
 		menu.setParent(parent);
-		menu.setRole(roles);
+		menu.setRoles(roles);
 		entityManager.persist(menu);
 	}
 
 	@SuppressWarnings("unchecked")
 	public MenuVO getMenuById(Integer id) {
-		String jpql = "SELECT m.id, m.text, ms.id, ms.name, m.url, m.iconCls, m.parent.id, m.parent.name from Menu m LEFT JOIN m.state ms ";
+		String jpql = "SELECT m.id, m.text, ms.id, ms.name, m.url, m.iconCls, m.parent.id, m.parent.text from Menu m LEFT JOIN m.state ms WHERE m.id = :id ";
 		Query query = entityManager.createQuery(jpql);
 		Object[] objects = (Object[]) query.setParameter("id", id).getSingleResult();
 		MenuVO menuVO = new MenuVO();
 		menuVO.setId(StringUtils.getInteger(objects[0]));
 		menuVO.setText(StringUtils.getString(objects[1]));
 		menuVO.setStateId(StringUtils.getInteger(objects[2]));
-		menuVO.setStateName(StringUtils.getString(objects[3]));
+		menuVO.setState(StringUtils.getString(objects[3]));
 		menuVO.setUrl(StringUtils.getString(objects[4]));
 		menuVO.setIconCls(StringUtils.getString(objects[5]));
 		menuVO.setPid(StringUtils.getInteger(objects[6]));
 		menuVO.setPname(StringUtils.getString(objects[7]));
-		List<String> result = entityManager.createQuery("SELECT mr.name FROM Menu m LEFT JOIN m.roles mr WHERE m.id = :mid ").setParameter("mid", StringUtils.getInteger(String.valueOf(objects[0]))).getResultList();
+		List<String> result = entityManager.createQuery("SELECT mr.name FROM Menu m JOIN m.roles mr WHERE m.id = :mid ").setParameter("mid", StringUtils.getInteger(String.valueOf(objects[0]))).getResultList();
 		Set<String> roleNames = new HashSet<String>(result);
 		menuVO.setRoleNames(roleNames);
-		List<Integer> idResult = entityManager.createQuery("SELECT mr.id FROM Menu m LEFT JOIN m.roles mr WHERE m.id = :mid ").setParameter("mid", StringUtils.getInteger(String.valueOf(objects[0]))).getResultList();
+		List<Integer> idResult = entityManager.createQuery("SELECT mr.id FROM Menu m JOIN m.roles mr WHERE m.id = :mid ").setParameter("mid", StringUtils.getInteger(String.valueOf(objects[0]))).getResultList();
 		Set<Integer> rolesIds = new HashSet<Integer>(idResult);
 		menuVO.setRolesIds(rolesIds);
 		return menuVO;
@@ -135,7 +140,7 @@ public class MenuManageDao {
 		menu.setUrl(params.get("url").toString());
 		menu.setIconCls(params.get("iconCls").toString());
 		menu.setParent(parent);
-		menu.setRole(roles);
+		menu.setRoles(roles);
 		entityManager.merge(menu);
 	}
 	

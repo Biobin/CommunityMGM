@@ -37,25 +37,17 @@
 				<table style="width:520px;padding:8px;height:200px;">
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称： <input name="text" class="easyui-textbox" data-options="required:true" /></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;父节点： <input id="parent" name="pid" data-options="required:true" style="width:150px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;父节点： <input id="pid" name="pid" style="width:150px;"/></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url： <input name="url" class="easyui-textbox" data-options="required:true" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url： <input name="url" class="easyui-textbox" /></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态： 
-							<input name="state" class="easyui-combobox" data-options="valueField: 'id',
-									textField: 'name',
-									data: [{
-										id: '4',
-										name: 'open'
-									},{
-										id: '5',
-										name: 'closed'
-									}]" />
+							<input id="stateId" name="stateId" style="width:150px;" />
 						</td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图标： <input name="iconCls" class="easyui-textbox" /></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限： <input id="role" name="role" style="width:150px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限： <input id="rolesIds" name="rolesIds" style="width:150px;"/></td>
 					</tr>
 				</table>
 			</form>

@@ -91,16 +91,18 @@ public class Menu {
 		this.url = url;
 	}
 	
+//	@OneToMany(cascade={CascadeType.REMOVE},mappedBy="menu")		//(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+//	@JoinColumn(name="roleId", foreignKey=@ForeignKey(name="role_Menu_Id"))
 	@JoinTable(name="cmgm_role_menu",
 		joinColumns={@JoinColumn(name="menuId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_r_menu"))},
 		inverseJoinColumns={@JoinColumn(name="roleId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_m_role"))})
-	@ManyToMany
-	public Set<Role> getRole() {
+	@ManyToMany(fetch=FetchType.LAZY)
+	public Set<Role> getRoles() {
 		return roles;
 	}
 	
-	public void setRole(Set<Role> role) {
-		this.roles = role;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	
 	@JsonIgnore
@@ -132,5 +134,5 @@ public class Menu {
 		this.id = id;
 		this.text = text;
 	}
-	
+
 }

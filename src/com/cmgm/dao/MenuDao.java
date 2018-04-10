@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.cmgm.VO.MenuVO;
-import com.cmgm.entity.Menu;
+import com.cmgm.common.StringUtils;
 
 /**
  *
@@ -28,22 +28,20 @@ public class MenuDao {
 	@SuppressWarnings("unchecked")
 	public List<MenuVO> getMenus(Integer roleId, Integer pid) {
 		String jpql = "SELECT m.id,m.text,ms.id,ms.name,m.iconCls,m.url FROM Menu m "
-				+ "LEFT JOIN m.state ms LEFT JOIN m.role mr WHERE mr.id = :roleId AND m.parent.id = :pid ";
-		List<Menu> menus = entityManager.createQuery(jpql).setParameter("pid", pid).setParameter("roleId", roleId).getResultList();
-		List<MenuVO> menuVOs = null;
-		if (menus.size() > 0) {
-			menuVOs = new ArrayList<>();
-			MenuVO menuVO = null;
-			for (Menu menu : menus) {
-				menuVO = new MenuVO();
-				menuVO.setId(menu.getId());
-				menuVO.setText(menu.getText());
-				menuVO.setStateId(menu.getState().getId());
-				menuVO.setUrl(menu.getUrl());
-				menuVO.setIconCls(menu.getIconCls());
-				
-				menuVOs.add(menuVO);
-			}
+				+ "LEFT JOIN m.state ms JOIN m.roles mr WHERE mr.id = :roleId AND m.parent.id = :pid ";
+		List<Object[]> objects = entityManager.createQuery(jpql).setParameter("pid", pid).setParameter("roleId", roleId).getResultList();
+		List<MenuVO> menuVOs = new ArrayList<>();
+		MenuVO menuVO = null;
+		for (Object[] object : objects) {
+			menuVO = new MenuVO();
+			menuVO.setId(StringUtils.getInteger(object[0]));
+			menuVO.setText(StringUtils.getString(object[1]));
+			menuVO.setStateId(StringUtils.getInteger(object[2]));
+			menuVO.setState(StringUtils.getString(object[3]));
+			menuVO.setIconCls(StringUtils.getString(object[4]));
+			menuVO.setUrl(StringUtils.getString(object[5]));
+			
+			menuVOs.add(menuVO);
 		}
 		return menuVOs;
 	}

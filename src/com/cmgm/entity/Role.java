@@ -2,6 +2,7 @@ package com.cmgm.entity;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -38,7 +39,7 @@ public class Role {
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date createTime;
-	private Set<User> users;
+	private Set<User> users = new HashSet<>();
 	private Set<Menu> menus;
 	
 	public Role() {
@@ -100,10 +101,12 @@ public class Role {
 	//2.1 name 指定外键列的列名
 	//2.2 referencedColumnName 指定外键列关联当前表的哪一列
 	//3. inverseJoinColumns 映射关联的类所在中间表的外键
+//	@JoinColumn(name="menuId", foreignKey=@ForeignKey(name="role_Menu_Id"))
+//	@ManyToOne(fetch=FetchType.LAZY)			
 	@JoinTable(name="cmgm_role_menu",
-		joinColumns={@JoinColumn(name="roleId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_m_role"))},
-		inverseJoinColumns={@JoinColumn(name="menuId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_r_menu"))})
-	@ManyToMany //(fetch=FetchType.EAGER)
+			joinColumns={@JoinColumn(name="roleId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_m_role"))},
+			inverseJoinColumns={@JoinColumn(name="menuId", referencedColumnName="id",foreignKey=@ForeignKey(name="fk_r_menu"))})
+	@ManyToMany(fetch=FetchType.LAZY)	//(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST) //(fetch=FetchType.EAGER)
 	public Set<Menu> getMenus() {
 		return menus;
 	}

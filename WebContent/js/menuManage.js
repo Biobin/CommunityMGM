@@ -8,9 +8,8 @@ $(function(){
 		
 		search:function(){
 			$('#menuTb').datagrid('load',{
-				name:$.trim($('#name_search').val()),
-				Username:$.trim($('#username_search').val()),
-				phone:$.trim($('#phone_search').val()),
+				name:$.trim($('#text_search').val()),
+				role:$.trim($('#role_search').val()),
 			});
 		},
 		add:function(){
@@ -123,7 +122,7 @@ $(function(){
 				width : 150
 			},
 			{
-				field : 'state',
+				field : 'stateName',
 				title : '状态',
 				width : 160
 			},
@@ -142,30 +141,31 @@ $(function(){
 		url : basePath+'/menuManage/roleList',
 	});
 	
-	$('#role').combobox({
+	$('#rolesIds').combobox({
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
+		multiple:true,
 		url : basePath+'/menuManage/roleList',
 	});
 	
-	$('#parent').combobox({
-		valueField : 'id',
-		textField : 'name',
+	$('#pid').combobox({
+		valueField : 'menuId',
+		textField : 'text',
 		limitToList : true,
 		url : basePath+'/menuManage/menuList',
 	});
 	
-	$('#state').combobox({
+	$('#stateId').combobox({
 		valueField : 'stateId',
-		textField : 'stateName',
+		textField : 'state',
 		limitToList : true,
 		data : [{
-			label: 'open',
-			value: '4'
+			stateId: '4',
+			state: 'open'
 		},{
-			label: 'closed',
-			value: '5'
+			stateId: '5',
+			state: 'closed'
 		}]
 	});
 
