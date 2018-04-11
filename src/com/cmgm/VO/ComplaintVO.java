@@ -7,7 +7,7 @@ package com.cmgm.VO;
  * 投诉信息VO
  */
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -16,7 +16,7 @@ public class ComplaintVO {
 	private Integer id;
 	private String content;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime createTime;
+	private Date createTime;
 	private Integer ownerId;
 	private String ownerName;
 	private String ownerPhone;
@@ -29,7 +29,7 @@ public class ComplaintVO {
 	private String stateName;
 	private String returnContent;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime finishTime;
+	private Date finishTime;
 	
 	
 	public Integer getId() {
@@ -48,11 +48,11 @@ public class ComplaintVO {
 		this.content = content;
 	}
 	
-	public LocalDateTime getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	
@@ -144,11 +144,11 @@ public class ComplaintVO {
 		this.returnContent = returnContent;
 	}
 
-	public LocalDateTime getFinishTime() {
+	public Date getFinishTime() {
 		return finishTime;
 	}
 
-	public void setFinishTime(LocalDateTime finishTime) {
+	public void setFinishTime(Date finishTime) {
 		this.finishTime = finishTime;
 	}
 	

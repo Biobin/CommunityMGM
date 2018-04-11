@@ -14,7 +14,7 @@
 <script type="text/javascript">
 	var basePath="<%=basePath%>";
 </script>
-<script type="text/javascript" src="<%=basePath%>/js/carManage.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/carInfo.js"></script>
 </head>
 <body class="easyui-layout">
 	<table id="carTb"></table>

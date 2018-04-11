@@ -38,6 +38,14 @@ public class Owner {
 	public Owner() {
 	}
 
+	public Owner(Integer id, String name, String phone, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq_owner")
 	@SequenceGenerator(name = "seq_owner", sequenceName = "seq_owner", allocationSize = 1, initialValue = 1)

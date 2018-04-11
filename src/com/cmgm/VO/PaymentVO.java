@@ -7,7 +7,7 @@ package com.cmgm.VO;
  * 账单VO类
  */
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -15,7 +15,7 @@ public class PaymentVO {
 
 	private Integer id;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime createTime;
+	private Date createTime;
 	private Double receivableFee;	//应收金额
 	private Double owedFee;		//欠款金额
 	private Double collectFee;	//实收金额
@@ -36,11 +36,11 @@ public class PaymentVO {
 		this.id = id;
 	}
 	
-	public LocalDateTime getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 	
-	public void setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

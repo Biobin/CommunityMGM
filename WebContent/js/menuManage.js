@@ -104,12 +104,12 @@ $(function(){
 			{
 				field : 'text',
 				title : '名称',
-				width : 80,
+				width : 120,
 			},
 			{
 				field : 'iconCls',
 				title : '图标',
-				width : 120
+				width : 80
 			},
 			{
 				field : 'url',

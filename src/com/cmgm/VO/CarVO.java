@@ -7,7 +7,7 @@ package com.cmgm.VO;
  * 车辆信息VO类
  */
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,7 +22,7 @@ public class CarVO {
 	private String ownerPhone;
 	private String ownerEmail;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime createTime;
+	private Date createTime;
 	
 	public Integer getId() {
 		return id;
@@ -88,11 +88,11 @@ public class CarVO {
 		this.ownerEmail = ownerEmail;
 	}
 	
-	public LocalDateTime getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 	
-	public void setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmgm.VO.CarVO;
 import com.cmgm.common.StringUtils;
+import com.cmgm.entity.CarStyle;
+import com.cmgm.entity.Owner;
 import com.cmgm.service.CarService;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
@@ -35,6 +41,37 @@ public class CarController {
 	@RequestMapping("/car/carManage")
 	public String carManage() {
 		return "carManage";
+	}
+	
+	@RequestMapping("/car/carInfo")
+	public String carInfo() {
+		return "carInfo";
+	}
+	
+	//获取车主下拉列表
+	@ResponseBody
+	@RequestMapping("/car/ownerList")
+	public List<Owner> getOwnerList(Model model) throws JsonProcessingException {
+		List<Owner> ownerList = carService.getOwnerList();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		String json = "";
+		json = mapper.writeValueAsString(ownerList);
+		model.addAttribute("ownerList", json);
+		return ownerList;
+	}
+	
+	//获取车型下拉列表
+	@ResponseBody
+	@RequestMapping("/car/carStyleList")
+	public List<CarStyle> getCarStyleList(Model model) throws JsonProcessingException {
+		List<CarStyle> carStyleList = carService.getCarStyleList();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		String json = "";
+		json = mapper.writeValueAsString(carStyleList);
+		model.addAttribute("carStyleList", json);
+		return carStyleList;
 	}
 	
 	@ResponseBody
@@ -64,7 +101,7 @@ public class CarController {
 		Map<String, Object> params = new HashMap<String,Object>();
 		params.put("plateNumber", plateNumber);
 		params.put("carStyleId", carStyleId);
-		params.put("owner", ownerId);
+		params.put("ownerId", ownerId);
 		params.put("createTime", createTime);
 		carService.addCar(params);
 		return "add";

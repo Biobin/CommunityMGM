@@ -19,12 +19,8 @@
 <script type="text/javascript" src="<%=basePath%>/js/roleManage.js"></script>
 </head>
 <body class="easyui-layout">
-	<div data-options="region:'north'" style="height:50px"></div>
-    <div data-options="region:'south'" style="height:50px;"></div>
-    <div data-options="region:'west'" style="width:50px;"></div>
-    <div data-options="region:'east'" style="width:50px"></div>
 	<div data-options="region:'center'">
-		<table id="dg"toolbar="#toolbar" title="角色字典维护" pagination="true" idField="id" rownumbers="true" fit="true" singleSelect="true">
+		<table id="dg"toolbar="#toolbar" pagination="true" idField="id" rownumbers="true" fit="true" singleSelect="true">
 			<thead>
 				<tr>
 					<th field="name" width="100" editor="{type:'validatebox',options:{required:true}}">角色名称</th>
@@ -33,6 +29,11 @@
 			</thead>
 		</table>
 		<div id="toolbar">
+			<div style="padding: 5px 0 5px 5px">
+				编码：<input id="code" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;
+				名称：<input id="name" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;
+				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchOwnership()">查询</a>
+			</div>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dg').edatagrid('addRow')">新建</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">删除</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">保存</a>
