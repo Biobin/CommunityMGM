@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cmgm.VO.OwnerVO;
+import com.cmgm.common.StringUtils;
+import com.cmgm.entity.User;
 import com.cmgm.service.OwnerService;
 
 /**
@@ -25,15 +29,23 @@ import com.cmgm.service.OwnerService;
  * 业主管理页
  */
 
+@SessionAttributes(value={"user"})
 @Controller
 public class OwnerController {
 
 	@Autowired
 	private OwnerService ownerService;
 	
+	//用于页面跳转(ownerManage.jsp)
 	@RequestMapping("/owner/ownerManage")
 	public String ownerManage(){
 		return "ownerManage";
+	}
+	
+	//用于页面跳转(ownerInfo.jsp)
+	@RequestMapping("/owner/ownerInfo")
+	public String ownerInfo() {
+		return "ownerInfo";
 	}
 	
 	@ResponseBody
@@ -119,6 +131,16 @@ public class OwnerController {
 		return "delete";
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping("/owner/showOwnerInfo")
+	public OwnerVO showOwnerInfo(HttpSession httpSession) {
+		User user = (User) httpSession.getAttribute("user");
+		Integer id = (user.getOwner().getId())==null?null:(user.getOwner().getId());
+		OwnerVO ownerVO = null;
+		if (id != null) {
+			ownerVO = ownerService.getOwnerById(StringUtils.getInteger(id));
+		}
+		return ownerVO;
+	}
 	
 }

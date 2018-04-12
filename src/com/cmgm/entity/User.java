@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,6 +27,8 @@ public class User {
 	private String username;
 	private String password;
 	private Role role;
+	private PropertyManager propertyManager;
+	private Owner owner;
 	
 	public User() {
 	}
@@ -66,6 +69,23 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
+
+	@OneToOne(mappedBy="user")
+	public PropertyManager getPropertyManager() {
+		return propertyManager;
+	}
+
+	public void setPropertyManager(PropertyManager propertyManager) {
+		this.propertyManager = propertyManager;
+	}
+
+	@OneToOne(mappedBy="user")
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
 	
 }

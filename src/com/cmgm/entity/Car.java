@@ -36,6 +36,12 @@ public class Car {
 	public Car() {
 	}
 
+	public Car(Integer id, String plateNumber) {
+		super();
+		this.id = id;
+		this.plateNumber = plateNumber;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_car")
 	@SequenceGenerator(name = "seq_car", sequenceName = "seq_car", allocationSize = 1, initialValue = 1)

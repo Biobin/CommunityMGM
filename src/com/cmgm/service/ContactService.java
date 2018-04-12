@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cmgm.dao.ContactDao;
 import com.cmgm.entity.Contact;
@@ -23,26 +24,32 @@ public class ContactService {
 	@Autowired
 	private ContactDao contactDao;
 
-	public List<Contact> getContacts(int pageNO, int pageSize) {
-		return contactDao.getContacts(pageNO,pageSize);
+	@Transactional(readOnly=true)
+	public List<Contact> getContacts(int pageNO, int pageSize, String name, Integer uid) {
+		return contactDao.getContacts(pageNO,pageSize,name,uid);
 	}
 
-	public Integer getCountContact() {
-		return contactDao.getCountContact();
+	@Transactional(readOnly=true)
+	public Integer getCountContact(String name, Integer uid) {
+		return contactDao.getCountContact(name,uid);
 	}
 
+	@Transactional
 	public void addContact(Map<String, Object> params) {
 		contactDao.addContact(params);
 	}
 
+	@Transactional(readOnly=true)
 	public Contact getContact(Integer id) {
 		return contactDao.getContact(id);
 	}
 
+	@Transactional
 	public void updateContact(Map<String, Object> params) {
 		contactDao.updateContact(params);
 	}
 
+	@Transactional
 	public void deleteContact(Integer id) {
 		contactDao.deleteContact(id);
 	}

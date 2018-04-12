@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cmgm.VO.CarVO;
 import com.cmgm.common.StringUtils;
+import com.cmgm.entity.Car;
 import com.cmgm.entity.CarStyle;
 import com.cmgm.entity.Owner;
+import com.cmgm.entity.User;
 import com.cmgm.service.CarService;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,6 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 车辆管理
  */
 
+@SessionAttributes(value={"user"})
 @Controller
 public class CarController {
 
@@ -72,6 +77,21 @@ public class CarController {
 		json = mapper.writeValueAsString(carStyleList);
 		model.addAttribute("carStyleList", json);
 		return carStyleList;
+	}
+	
+	//获取车牌下拉列表
+	@ResponseBody
+	@RequestMapping("/car/plateNumberList")
+	public List<Car> getPlateNumberList(Model model,HttpSession httpSession) throws JsonProcessingException {
+		User user = (User) httpSession.getAttribute("user");
+		Integer ownerId = (user.getOwner().getId())==null?null:(user.getOwner().getId());
+		List<Car> plateNumberList = carService.getPlateNumberList(ownerId);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		String json = "";
+		json = mapper.writeValueAsString(plateNumberList);
+		model.addAttribute("plateNumberList", json);
+		return plateNumberList;
 	}
 	
 	@ResponseBody
@@ -140,6 +160,28 @@ public class CarController {
 		return "delete";
 	}
 	
+	//车辆信息显示
+	@ResponseBody
+	@RequestMapping("/car/showCarInfo/{carId}")
+	public CarVO getCarVOByPlateNumber(@PathVariable("carId")Integer carId,HttpSession httpSession) {
+		CarVO carVO = null;
+		User user = (User) httpSession.getAttribute("user");
+		Integer ownerId = (user.getOwner().getId())==null?null:(user.getOwner().getId());
+		if (ownerId != null) {
+			carVO = carService.getCar(StringUtils.getInteger(carId));
+		}
+		return carVO;
+	}
 	
+	//车主信息显示
+	@ResponseBody
+	@RequestMapping("/car/showOwnerInfo/{ownerId}")
+	public CarVO getOwnerByOnwerId(@PathVariable("ownerId")Integer ownerId) {
+		CarVO carVO  = null;
+		if (ownerId != null) {
+			carVO = carService.getOwnerVOByOwnerId(ownerId);
+		}
+		return carVO;
+	}
 	
 }

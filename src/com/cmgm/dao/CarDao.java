@@ -51,6 +51,13 @@ public class CarDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Car> getPlateNumberList(Integer ownerId) {
+		String jpql = "SELECT new Car(c.id,c.plateNumber) FROM Car c LEFT JOIN c.owner co WHERE co.id = :ownerId ";
+		List<Car> plateNumbers = entityManager.createQuery(jpql).setParameter("ownerId", ownerId).getResultList();
+		return plateNumbers;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<CarVO> getCars(int pageNO, int pageSize) {
 		String jqpl = "SELECT c.id, c.plateNumber, ccs.id, ccs.name, co.id, co.name, co.phone, co.email, to_char(c.createTime,'yyyy-MM-dd HH24:mm:ss') "
 				+ "FROM Car c LEFT JOIN c.carStyle ccs LEFT JOIN c.owner co ";
@@ -109,7 +116,7 @@ public class CarDao {
 	}
 
 	public CarVO getCar(Integer id) {
-		String jpql = "SELECT c.id, c.plateNumber, ccs.id, ccs.name, co.id, co.name, co.phone, co.email, c.createTime \"\r\n" + 
+		String jpql = "SELECT c.id, c.plateNumber, ccs.id, ccs.name, co.id, co.name, co.phone, co.email, to_char(c.createTime,'yyyy-MM-dd HH24:mm:ss') " + 
 				"FROM Car c LEFT JOIN c.carStyle ccs LEFT JOIN c.owner co WHERE c.id = :id ";
 		Query query = entityManager.createQuery(jpql);
 		Object[] objects = (Object[]) query.setParameter("id", id).getSingleResult();
@@ -161,5 +168,16 @@ public class CarDao {
 			entityManager.remove(car);
 		}
 	}
-	
+
+	public CarVO getOwnerVOByOwnerId(Integer ownerId) {
+		String jpql = "SELECT o.phone, o.email FROM Owner o WHERE o.id = :ownerId";
+		Query query = entityManager.createQuery(jpql);
+		Object[] objects = (Object[]) query.setParameter("ownerId", ownerId).getSingleResult();
+		CarVO carVO = new CarVO();
+		carVO.setOwnerId(ownerId);
+		carVO.setOwnerPhone(StringUtils.getString(objects[0]));
+		carVO.setOwnerEmail(StringUtils.getString(objects[1]));
+		return carVO;
+	}
+
 }

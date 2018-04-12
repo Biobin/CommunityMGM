@@ -142,6 +142,9 @@ $(function(){
 		textField : 'name',
 		limitToList : true,
 		url : basePath+'/car/ownerList',
+		onChange:function(newValue,oldValue) {
+			$("#car_form").form('load', basePath+ '/car/showOwnerInfo/'+newValue);
+		}
 	});
 	
 	$('#carStyle_search').combobox({

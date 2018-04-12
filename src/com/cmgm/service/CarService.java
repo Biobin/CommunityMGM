@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmgm.VO.CarVO;
 import com.cmgm.dao.CarDao;
+import com.cmgm.entity.Car;
 import com.cmgm.entity.CarStyle;
 import com.cmgm.entity.Owner;
 
@@ -34,6 +35,11 @@ public class CarService {
 	@Transactional(readOnly=true)
 	public List<CarStyle> getCarStyleList() {
 		return carDao.getCarStyleList();
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Car> getPlateNumberList(Integer ownerId) {
+		return carDao.getPlateNumberList(ownerId);
 	}
 
 	@Transactional(readOnly=true)
@@ -64,6 +70,11 @@ public class CarService {
 	@Transactional
 	public void deleteCar(Integer id) {
 		carDao.deleteCar(id);
+	}
+
+	@Transactional(readOnly=true)
+	public CarVO getOwnerVOByOwnerId(Integer ownerId) {
+		return carDao.getOwnerVOByOwnerId(ownerId);
 	}
 
 }
