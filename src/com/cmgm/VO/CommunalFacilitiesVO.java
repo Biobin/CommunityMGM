@@ -7,16 +7,19 @@ package com.cmgm.VO;
  *
  */
 
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CommunalFacilitiesVO {
 
 	private Integer id;
 	private String code;
 	private String name;
-	private Integer CommunalFaStyleId;
-	private String CommunalFaStyleName;
-	private LocalDateTime beginUsingTime;
+	private Integer communalFaStyleId;
+	private String communalFaStyleName;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date beginUsingTime;
 	private String details;
 	private Integer propertyManagerId;
 	private String propertyManagerName;
@@ -48,26 +51,26 @@ public class CommunalFacilitiesVO {
 	}
 	
 	public Integer getCommunalFaStyleId() {
-		return CommunalFaStyleId;
+		return communalFaStyleId;
 	}
-	
+
 	public void setCommunalFaStyleId(Integer communalFaStyleId) {
-		CommunalFaStyleId = communalFaStyleId;
+		this.communalFaStyleId = communalFaStyleId;
 	}
-	
+
 	public String getCommunalFaStyleName() {
-		return CommunalFaStyleName;
+		return communalFaStyleName;
 	}
-	
+
 	public void setCommunalFaStyleName(String communalFaStyleName) {
-		CommunalFaStyleName = communalFaStyleName;
+		this.communalFaStyleName = communalFaStyleName;
 	}
-	
-	public LocalDateTime getBeginUsingTime() {
+
+	public Date getBeginUsingTime() {
 		return beginUsingTime;
 	}
 	
-	public void setBeginUsingTime(LocalDateTime beginUsingTime) {
+	public void setBeginUsingTime(Date beginUsingTime) {
 		this.beginUsingTime = beginUsingTime;
 	}
 	
@@ -113,5 +116,5 @@ public class CommunalFacilitiesVO {
 	
 	public CommunalFacilitiesVO() {
 	}
-	
+
 }

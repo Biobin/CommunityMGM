@@ -29,6 +29,14 @@ public class PropertyManager {
 	public PropertyManager() {
 	}
 
+	public PropertyManager(Integer id, String name, String phone, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq_propertyManage")
 	@SequenceGenerator(name = "seq_propertyManage", sequenceName = "seq_propertyManage", allocationSize = 1, initialValue = 1)

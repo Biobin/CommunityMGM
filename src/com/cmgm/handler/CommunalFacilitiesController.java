@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmgm.VO.CommunalFacilitiesVO;
 import com.cmgm.common.StringUtils;
+import com.cmgm.entity.CommunalFaStyle;
+import com.cmgm.entity.PropertyManager;
 import com.cmgm.service.CommunalFacilitiesService;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
@@ -37,13 +43,53 @@ public class CommunalFacilitiesController {
 		return "communalFacilitiesManage";
 	}
 	
+	//获取维修人员下拉列表
+	@ResponseBody
+	@RequestMapping("/communalFacilities/propertyManagerList")
+	public List<PropertyManager> getPropertyManagerList(Model model) throws JsonProcessingException {
+		List<PropertyManager> propertyManagerList = communalFacilitiesService.getPropertyManagerList();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		String json = "";
+		json = mapper.writeValueAsString(propertyManagerList);
+		model.addAttribute("propertyManagerList", json);
+		return propertyManagerList;
+	}
+	
+	//维修人员信息显示
+	@ResponseBody
+	@RequestMapping("/communalFacilities/showPropertyManagerInfo/{propertyManagerId}")
+	public CommunalFacilitiesVO getProperManagerByPid(@PathVariable(value="propertyManagerId")Integer propertyManagerId) {
+		CommunalFacilitiesVO communalFacilitiesVO = null;
+		if (propertyManagerId!=null) {
+			communalFacilitiesVO = communalFacilitiesService.getPropertyManagerByPid(propertyManagerId);
+		}
+		return communalFacilitiesVO;
+	}
+	
+	//设施类型下拉列表
+	@ResponseBody
+	@RequestMapping("/communalFaStyle/communalFaStyleList")
+	public List<CommunalFaStyle> GetCommunalFaStyleList(Model model) throws JsonProcessingException {
+		List<CommunalFaStyle> communalFaStyleList = communalFacilitiesService.getCommunalFaStyleList();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		String json = "";
+		json = mapper.writeValueAsString(communalFaStyleList);
+		model.addAttribute("communalFaStyleList", json);
+		return communalFaStyleList;
+	}
+	
+	//物业管理员使用，查询出全部设施，包括私人设施
 	@ResponseBody
 	@RequestMapping("/communalFacilities/getCommualFacilities")
 	public Map<String, Object> getCommualFacilities(HttpServletRequest request) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
-		List<CommunalFacilitiesVO> communalFacilitiesVOs = communalFacilitiesService.getCommunalFacilities(pageNO,pageSize);
-		int count = communalFacilitiesService.getCountCommunalFacilities();
+		String code = request.getParameter("code");
+		String name = request.getParameter("name");
+		List<CommunalFacilitiesVO> communalFacilitiesVOs = communalFacilitiesService.getCommunalFacilities(pageNO,pageSize,code,name);
+		int count = communalFacilitiesService.getCountCommunalFacilities(code,name);
 		if (communalFacilitiesVOs == null || communalFacilitiesVOs.isEmpty()) {
 			communalFacilitiesVOs = new ArrayList<>();
 			count = 0;
@@ -55,7 +101,7 @@ public class CommunalFacilitiesController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("communalFacilities/addCommunalFacilities")
+	@RequestMapping("/communalFacilities/addCommunalFacilities")
 	public String addCommunalFacilities(HttpServletRequest request) {
 		String code = request.getParameter("code");
 		String name = request.getParameter("name");
@@ -75,7 +121,7 @@ public class CommunalFacilitiesController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="communalFacilities/getCommunalFacilitiesById/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/communalFacilities/getCommunalFacilitiesById/{id}", method=RequestMethod.GET)
 	public CommunalFacilitiesVO getCommunalFacilitiesById(@PathVariable("id")Integer id) {
 		CommunalFacilitiesVO communalFacilitiesVO = null;
 		if (id != null) {
@@ -86,7 +132,7 @@ public class CommunalFacilitiesController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("communalFacilities/updateCommunalFacilities/{id}")
+	@RequestMapping("/communalFacilities/updateCommunalFacilities/{id}")
 	public String updateCommunalFacilities(@PathVariable("id")Integer id, HttpServletRequest request) {
 		String code = request.getParameter("code");
 		String name = request.getParameter("name");
@@ -107,7 +153,7 @@ public class CommunalFacilitiesController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("communalFacilities/deleteCommunalFacilities/{id}")
+	@RequestMapping("/communalFacilities/deleteCommunalFacilities/{id}")
 	public String deleteCommunalFacilities(@PathVariable("id")Integer id) {
 		communalFacilitiesService.deleteCommunalFacilities(id);
 		return "delete";

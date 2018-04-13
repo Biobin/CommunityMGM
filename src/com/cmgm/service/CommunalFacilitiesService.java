@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmgm.VO.CommunalFacilitiesVO;
 import com.cmgm.dao.CommunalFacilitiesDao;
+import com.cmgm.entity.CommunalFaStyle;
+import com.cmgm.entity.PropertyManager;
 
 /**
  *
@@ -25,13 +27,28 @@ public class CommunalFacilitiesService {
 	private CommunalFacilitiesDao communalFacilitiesDao;
 
 	@Transactional(readOnly=true)
-	public List<CommunalFacilitiesVO> getCommunalFacilities(int pageNO, int pageSize) {
-		return communalFacilitiesDao.getCommunalFacilities(pageNO,pageSize);
+	public List<PropertyManager> getPropertyManagerList() {
+		return communalFacilitiesDao.getPropertyManagerList();
+	}
+	
+	@Transactional(readOnly=true)
+	public CommunalFacilitiesVO getPropertyManagerByPid(Integer propertyManagerId) {
+		return communalFacilitiesDao.getPropertyManagerByPid(propertyManagerId);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<CommunalFaStyle> getCommunalFaStyleList() {
+		return communalFacilitiesDao.getCommunalFaStyleList();
+	}
+	
+	@Transactional(readOnly=true)
+	public List<CommunalFacilitiesVO> getCommunalFacilities(int pageNO, int pageSize, String code, String name) {
+		return communalFacilitiesDao.getCommunalFacilities(pageNO,pageSize,code,name);
 	}
 
 	@Transactional(readOnly=true)
-	public Integer getCountCommunalFacilities() {
-		return communalFacilitiesDao.getCountCommunalFacilities();
+	public Integer getCountCommunalFacilities(String code, String name) {
+		return communalFacilitiesDao.getCountCommunalFacilities(code,name);
 	}
 
 	@Transactional

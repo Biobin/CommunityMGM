@@ -35,11 +35,11 @@
 			<form id="car_form" method="post">
 				<table style="width:520px;padding:8px;height:200px;">
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;车牌号： <input name="plateNumber" class="easyui-textbox" data-options="required:true" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;车主： <input id="ownerId" name="ownerId" data-options="required:true" style="width:150px;"/></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;车型： <input id="carStyleId" name="carStyleId" data-options="required:true" style="width:150px;"/></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;车主： <input id="ownerId" name="ownerId" data-options="required:true" style="width:150px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;车牌号： <input name="plateNumber" class="easyui-textbox" data-options="required:true" /></td>
 						<td>开始停放时间： <input name="createTime" class="easyui-datetimebox" data-options="required:true" /></td>
 					</tr>
 					<tr>
