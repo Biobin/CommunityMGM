@@ -33,11 +33,11 @@
 			</div>
 	 </div>
 	 <div data-options="region:'south',title:'小区设施',split:true" style="height:450px;">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:1000px;background-color:rgb(199, 225, 245);height:415px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:1100px;background-color:rgb(199, 225, 245);height:415px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">设施详细信息</div>
 			<form id="communalFacilities_form" method="post">
 				<input id="id" name="id" type="hidden"/>
-				<table style="width:950px;height:300px">
+				<table style="width:1000px;height:300px">
 					<span style="text-align: center;display:block;">(新增设施请点击先点击上方添加按钮)</span>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修负责人：  <input id="propertyManagerId" name="propertyManagerId" style="width:180px;"/></td>
@@ -45,9 +45,9 @@
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input name="propertyManagerEmail" class="easyui-textbox" style="width:180px;"/></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编号： <input  name="code" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编号： <input  name="code" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称： <input  name="name" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施类型： <input id="communalFaStyleId" name="communalFaStyleId" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施类型： <input id="communalFaStyleId" name="communalFaStyleId" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;开始使用时间： <input name="beginUsingTime" class="easyui-datetimebox" data-options="required:true" style="width:180px;"/></td>
