@@ -33,6 +33,7 @@
 		</div>
 		<div id="car_dialog" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
 			<form id="car_form" method="post">
+				<input id="id" name="id" type="hidden"/>
 				<table style="width:520px;padding:8px;height:200px;">
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;车主： <input id="ownerId" name="ownerId" data-options="required:true" style="width:150px;"/></td>

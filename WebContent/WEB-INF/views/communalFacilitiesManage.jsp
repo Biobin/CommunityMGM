@@ -45,9 +45,9 @@
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input name="propertyManagerEmail" class="easyui-textbox" style="width:180px;"/></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编号： <input  name="code" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施类型： <input id="communalFaStyleId" name="communalFaStyleId" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编号： <input  name="code" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称： <input  name="name" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施类型： <input id="communalFaStyleId" name="communalFaStyleId" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;开始使用时间： <input name="beginUsingTime" class="easyui-datetimebox" data-options="required:true" style="width:180px;"/></td>

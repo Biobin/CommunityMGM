@@ -59,6 +59,13 @@ public class CommunalFacilitiesDao {
 		List<CommunalFaStyle> communalFaStyles = entityManager.createQuery(jpql).getResultList();
 		return communalFaStyles;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CommunalFaStyle> getPrivateFaStyleList() {
+		String jpql = "SELECT new CommunalFaStyle(cs.id,cs.name) FROM CommunalFaStyle cs WHERE cs.id = 4 ";
+		List<CommunalFaStyle> communalFaStyles = entityManager.createQuery(jpql).getResultList();
+		return communalFaStyles;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<CommunalFacilitiesVO> getCommunalFacilities(int pageNO, int pageSize, String code, String name) {
@@ -89,6 +96,36 @@ public class CommunalFacilitiesDao {
 		}
 		return communalFacilitiesVOs;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CommunalFacilitiesVO> getPrivateFacilities(int pageNO, int pageSize, String code, String name) {
+		String jpql = "SELECT cf.id, cf.code, cf.name, cfs.id, cfs.name, to_char(cf.beginUsingTime,'yyyy-MM-dd HH24:mm:ss'), "
+				+ "cf.details, cfp.id, cfp.name, cfp.phone, cfp.email FROM CommunalFacilities cf LEFT JOIN cf.communalFaStyle cfs "
+				+ "LEFT JOIN cf.propertyManager cfp WHERE (cfs.id = 4) AND (cf.code like :code or :code is null) AND (cf.name like :name or :name is null) ";
+		Query query = entityManager.createQuery(jpql);
+		code = code == null ? "" : code;
+		name = name == null ? "" : name;
+		query.setParameter("code", "%"+code+"%").setParameter("name", "%"+name+"%");
+		List<Object[]> objects = query.setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize).getResultList();
+		List<CommunalFacilitiesVO> privateFacilitiesVOs = new ArrayList<>();
+		CommunalFacilitiesVO privateFacilities = null;
+		for (Object[] object : objects) {
+			privateFacilities = new CommunalFacilitiesVO();
+			privateFacilities.setId(StringUtils.getInteger(object[0]));
+			privateFacilities.setCode(StringUtils.getString(object[1]));
+			privateFacilities.setName(StringUtils.getString(object[2]));
+			privateFacilities.setCommunalFaStyleId(StringUtils.getInteger(object[3]));
+			privateFacilities.setCommunalFaStyleName(StringUtils.getString(object[4]));
+			privateFacilities.setBeginUsingTime(DateUtils.getDate("yyyy-MM-dd HH:mm:ss", object[5]));
+			privateFacilities.setDetails(StringUtils.getString(object[6]));
+			privateFacilities.setPropertyManagerId(StringUtils.getInteger(object[7]));
+			privateFacilities.setPropertyManagerName(StringUtils.getString(object[8]));
+			privateFacilities.setPropertyManagerPhone(StringUtils.getString(object[9]));
+			privateFacilities.setPropertyManagerEmail(StringUtils.getString(object[10]));
+			privateFacilitiesVOs.add(privateFacilities);
+		}
+		return privateFacilitiesVOs;
+	}
 
 	public Integer getCountCommunalFacilities(String code, String name) {
 		String jpql = "SELECT COUNT(*) FROM CommunalFacilities cf WHERE (cf.code like :code or :code is null) AND (cf.name like :name or :name is null) ";
@@ -109,7 +146,7 @@ public class CommunalFacilitiesDao {
 		if (communalFaStyleId!=null) {
 			communalFaStyle = entityManager.find(CommunalFaStyle.class, communalFaStyleId);
 		}
-		String beginUsingTime = params.get("beginUsingTime").toString();
+		String beginUsingTime = StringUtils.getString(params.get("beginUsingTime"));
 		Date date = null;
 		if (beginUsingTime !=null && !beginUsingTime.equals("")) {
 			try {
@@ -117,6 +154,7 @@ public class CommunalFacilitiesDao {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			communalFacilities.setBeginUsingTime(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
 		}
 		String details = StringUtils.getString(params.get("details"));
 		Integer propertyManagerId = StringUtils.getInteger(params.get("propertyManagerId"));
@@ -127,7 +165,6 @@ public class CommunalFacilitiesDao {
 		communalFacilities.setCode(code);
 		communalFacilities.setName(name);
 		communalFacilities.setCommunalFaStyle(communalFaStyle);
-		communalFacilities.setBeginUsingTime(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
 		communalFacilities.setDetails(details);
 		communalFacilities.setPropertyManager(propertyManager);
 		entityManager.persist(communalFacilities);
@@ -165,7 +202,7 @@ public class CommunalFacilitiesDao {
 		if (communalFaStyleId!=null) {
 			communalFaStyle = entityManager.find(CommunalFaStyle.class, communalFaStyleId);
 		}
-		String beginUsingTime = params.get("beginUsingTime").toString();
+		String beginUsingTime = StringUtils.getString(params.get("beginUsingTime"));
 		Date date = null;
 		if (beginUsingTime !=null && !beginUsingTime.equals("")) {
 			try {
@@ -173,6 +210,7 @@ public class CommunalFacilitiesDao {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			communalFacilities.setBeginUsingTime(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
 		}
 		String details = StringUtils.getString(params.get("details"));
 		Integer propertyManagerId = StringUtils.getInteger(params.get("propertyManagerId"));
@@ -183,7 +221,6 @@ public class CommunalFacilitiesDao {
 		communalFacilities.setCode(code);
 		communalFacilities.setName(name);
 		communalFacilities.setCommunalFaStyle(communalFaStyle);
-		communalFacilities.setBeginUsingTime(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
 		communalFacilities.setDetails(details);
 		communalFacilities.setPropertyManager(propertyManager);
 		entityManager.merge(communalFacilities);

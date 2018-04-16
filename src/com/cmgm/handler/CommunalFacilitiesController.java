@@ -42,6 +42,11 @@ public class CommunalFacilitiesController {
 	public String CommunalFacilitiesManage() {
 		return "communalFacilitiesManage";
 	}
+
+	@RequestMapping("/communalFacilities/privateFacilitiesManage")
+	public String privateFacilitiesManage() {
+		return "privateFacilitiesManage";
+	}
 	
 	//获取维修人员下拉列表
 	@ResponseBody
@@ -70,7 +75,7 @@ public class CommunalFacilitiesController {
 	//设施类型下拉列表
 	@ResponseBody
 	@RequestMapping("/communalFaStyle/communalFaStyleList")
-	public List<CommunalFaStyle> GetCommunalFaStyleList(Model model) throws JsonProcessingException {
+	public List<CommunalFaStyle> getCommunalFaStyleList(Model model) throws JsonProcessingException {
 		List<CommunalFaStyle> communalFaStyleList = communalFacilitiesService.getCommunalFaStyleList();
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setSerializationInclusion(Include.NON_NULL);
@@ -78,6 +83,19 @@ public class CommunalFacilitiesController {
 		json = mapper.writeValueAsString(communalFaStyleList);
 		model.addAttribute("communalFaStyleList", json);
 		return communalFaStyleList;
+	}
+	
+	//固定私人设施类型下拉
+	@ResponseBody
+	@RequestMapping("/communalFaStyle/privateFaStyleList")
+	public List<CommunalFaStyle> getPrivateFaStyleList(Model model) throws JsonProcessingException {
+		List<CommunalFaStyle> privateFaStyleList = communalFacilitiesService.getPrivateFaStyleList();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		String json = "";
+		json = mapper.writeValueAsString(privateFaStyleList);
+		model.addAttribute("privateFaStyleList", json);
+		return privateFaStyleList;
 	}
 	
 	//物业管理员使用，查询出全部设施，包括私人设施
@@ -89,6 +107,26 @@ public class CommunalFacilitiesController {
 		String code = request.getParameter("code");
 		String name = request.getParameter("name");
 		List<CommunalFacilitiesVO> communalFacilitiesVOs = communalFacilitiesService.getCommunalFacilities(pageNO,pageSize,code,name);
+		int count = communalFacilitiesService.getCountCommunalFacilities(code,name);
+		if (communalFacilitiesVOs == null || communalFacilitiesVOs.isEmpty()) {
+			communalFacilitiesVOs = new ArrayList<>();
+			count = 0;
+		}
+		Map<String, Object> jsonMap = new HashMap<>();
+		jsonMap.put("rows", communalFacilitiesVOs);
+		jsonMap.put("total", count);
+		return jsonMap;
+	}
+	
+	//业主使用，查出所有业主添加的私人设施
+	@ResponseBody
+	@RequestMapping("/communalFacilities/getPrivateFacilities")
+	public Map<String, Object> getPrivateFacilities(HttpServletRequest request) {
+		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
+		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
+		String code = request.getParameter("code");
+		String name = request.getParameter("name");
+		List<CommunalFacilitiesVO> communalFacilitiesVOs = communalFacilitiesService.getPrivateFacilities(pageNO,pageSize,code,name);
 		int count = communalFacilitiesService.getCountCommunalFacilities(code,name);
 		if (communalFacilitiesVOs == null || communalFacilitiesVOs.isEmpty()) {
 			communalFacilitiesVOs = new ArrayList<>();

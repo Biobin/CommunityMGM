@@ -7,7 +7,7 @@ package com.cmgm.VO;
  * 报修信息VO类
  */
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +18,7 @@ public class MaintenanceVO {
 	private Integer id;
 	private String code;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime createTime;
+	private Date createTime;
 	private Integer ownerId;
 	private String ownerName;
 	private String ownerPhone;

@@ -1,6 +1,6 @@
 package com.cmgm.entity;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +27,7 @@ public class Notice {
 	private String title;
 	private String content;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime createTime;
+	private Date createTime;
 	
 	public Notice() {
 	}
@@ -67,11 +67,11 @@ public class Notice {
 		this.content = content;
 	}
 
-	public LocalDateTime getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

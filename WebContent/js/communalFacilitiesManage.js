@@ -115,7 +115,7 @@ $(function(){
 		limitToList : true,
 		url : basePath+'/communalFacilities/propertyManagerList',
 		onChange:function(newValue,oldValue) {
-			console.log(id.value);
+//			console.log(id.value);
 			if(id.value == ""){
 				$("#communalFacilities_form").form('load', basePath+ '/communalFacilities/showPropertyManagerInfo/'+newValue);
 			}

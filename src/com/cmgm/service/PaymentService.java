@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cmgm.VO.PaymentVO;
 import com.cmgm.dao.PaymentDao;
@@ -24,33 +25,44 @@ public class PaymentService {
 	@Autowired
 	private PaymentDao paymentDao;
 
+	@Transactional(readOnly=true)
 	public List<Owner> getOwnerList() {
 		return paymentDao.getOwnerList();
 	}
 
-	public List<PaymentVO> getPayments(int pageNO, int pageSize) {
-		return paymentDao.getPayments(pageNO,pageSize);
+	@Transactional(readOnly=true)
+	public List<PaymentVO> getPayments(int pageNO, int pageSize, String beginTime, String endTime, String stateId) {
+		return paymentDao.getPayments(pageNO,pageSize,beginTime,endTime,stateId);
 	}
 	
-	public Integer getCountPayment() {
-		return paymentDao.getCountPayment();
+	@Transactional(readOnly=true)
+	public Integer getCountPayment(String beginTime, String endTime, String stateId) {
+		return paymentDao.getCountPayment(beginTime,endTime,stateId);
 	}
 
+	@Transactional
 	public void addPayment(Map<String, Object> params) {
 		paymentDao.addPayment(params);
 	}
 
+	@Transactional(readOnly=true)
 	public PaymentVO getPayment(Integer id) {
 		return paymentDao.getPayment(id);
 	}
 
+	@Transactional
 	public void updatePayment(Map<String, Object> params) {
 		paymentDao.updatePayment(params);
 	}
 
+	@Transactional
 	public void deletePayment(Integer id) {
 		paymentDao.deletePayment(id);
 	}
 
-	
+	@Transactional(readOnly=true)
+	public PaymentVO getOwnerByOwnerId(Integer ownerId) {
+		return paymentDao.getOwnerVOByOwnerId(ownerId);
+	}
+
 }

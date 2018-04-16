@@ -25,13 +25,13 @@ public class NoticeService {
 	private NoticeDao noticeDao;
 
 	@Transactional(readOnly=true)
-	public List<Notice> getNotices(int pageNO, int pageSize) {
-		return noticeDao.getNotices(pageNO,pageSize);
+	public List<Notice> getNotices(int pageNO, int pageSize, String code, String title) {
+		return noticeDao.getNotices(pageNO,pageSize,code,title);
 	}
 
 	@Transactional(readOnly=true)
-	public Integer getCountNotice() {
-		return noticeDao.getCountNotice();
+	public Integer getCountNotice(String code, String title) {
+		return noticeDao.getCountNotice(code,title);
 	}
 
 	@Transactional
@@ -49,6 +49,7 @@ public class NoticeService {
 		return noticeDao.getNotice(id);
 	}
 
+	@Transactional
 	public void deleteNotice(Integer id) {
 		noticeDao.deleteNotice(id);
 	}

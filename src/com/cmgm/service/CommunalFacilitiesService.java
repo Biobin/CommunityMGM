@@ -42,8 +42,18 @@ public class CommunalFacilitiesService {
 	}
 	
 	@Transactional(readOnly=true)
+	public List<CommunalFaStyle> getPrivateFaStyleList() {
+		return communalFacilitiesDao.getPrivateFaStyleList();
+	}
+	
+	@Transactional(readOnly=true)
 	public List<CommunalFacilitiesVO> getCommunalFacilities(int pageNO, int pageSize, String code, String name) {
 		return communalFacilitiesDao.getCommunalFacilities(pageNO,pageSize,code,name);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<CommunalFacilitiesVO> getPrivateFacilities(int pageNO, int pageSize, String code, String name) {
+		return communalFacilitiesDao.getPrivateFacilities(pageNO,pageSize,code,name);
 	}
 
 	@Transactional(readOnly=true)
@@ -70,5 +80,5 @@ public class CommunalFacilitiesService {
 	public void deleteCommunalFacilities(Integer id) {
 		communalFacilitiesDao.deleteCommunalFacilities(id);
 	}
-	
+
 }

@@ -143,7 +143,9 @@ $(function(){
 		limitToList : true,
 		url : basePath+'/car/ownerList',
 		onChange:function(newValue,oldValue) {
-			$("#car_form").form('load', basePath+ '/car/showOwnerInfo/'+newValue);
+			if(id.value == ""){
+				$("#car_form").form('load', basePath+ '/car/showOwnerInfo/'+newValue);
+			}
 		}
 	});
 	

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @time   下午3:49:16
  *
  */
+
+@Controller
 public class PaymentController {
 
 	@Autowired
@@ -42,7 +45,7 @@ public class PaymentController {
 	
 	//获取业主下拉列表
 	@ResponseBody
-	@RequestMapping("payment/paymentList")
+	@RequestMapping("payment/ownerList")
 	public List<Owner> getClasssList(Model model) throws JsonProcessingException {
 		List<Owner> ownerList = paymentService.getOwnerList();
 		ObjectMapper mapper = new ObjectMapper();
@@ -50,8 +53,6 @@ public class PaymentController {
 		String json = "";
 		json = mapper.writeValueAsString(ownerList);
 		model.addAttribute("ownerList", json);
-//		System.out.println(json);
-//		System.out.println(ownerList.size());
 		return ownerList;
 	}
 	
@@ -60,8 +61,11 @@ public class PaymentController {
 	public Map<String, Object> getPayments(HttpServletRequest request) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
-		List<PaymentVO> paymentVOs = paymentService.getPayments(pageNO,pageSize);
-		int count = paymentService.getCountPayment();
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		String stateId = request.getParameter("sateId");
+		List<PaymentVO> paymentVOs = paymentService.getPayments(pageNO,pageSize,beginTime,endTime,stateId);
+		int count = paymentService.getCountPayment(beginTime,endTime,stateId);
 		if (paymentVOs == null || paymentVOs.isEmpty()) {
 			paymentVOs = new ArrayList<>();
 			count = 0;
@@ -82,6 +86,7 @@ public class PaymentController {
 		Integer ownerId = StringUtils.getInteger(request.getParameter("ownerId"));
 		String chargingItem = StringUtils.getString(request.getParameter("chargingItem"));
 		String details = StringUtils.getString(request.getParameter("chargingItem"));
+		String createTime = StringUtils.getString(request.getParameter("createTime"));
 		Map<String, Object> params = new HashMap<>();
 		params.put("receivableFee", receivableFee);
 		params.put("owedFee", owedFee);
@@ -90,6 +95,7 @@ public class PaymentController {
 		params.put("ownerId", ownerId);
 		params.put("chargingItem", chargingItem);
 		params.put("details", details);
+		params.put("createTime", createTime);
 		paymentService.addPayment(params);
 		return "add";
 	}
@@ -114,6 +120,7 @@ public class PaymentController {
 		Integer ownerId = StringUtils.getInteger(request.getParameter("ownerId"));
 		String chargingItem = StringUtils.getString(request.getParameter("chargingItem"));
 		String details = StringUtils.getString(request.getParameter("chargingItem"));
+		String createTime = StringUtils.getString(request.getParameter("createTime"));
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
 		params.put("receivableFee", receivableFee);
@@ -123,6 +130,7 @@ public class PaymentController {
 		params.put("ownerId", ownerId);
 		params.put("chargingItem", chargingItem);
 		params.put("details", details);
+		params.put("createTime", createTime);
 		paymentService.updatePayment(params);
 		return "update";
 	}
@@ -132,6 +140,17 @@ public class PaymentController {
 	public String deletePayment(@PathVariable("id")Integer id) {
 		paymentService.deletePayment(id);
 		return "delete";
+	}
+	
+	//缴费业主信息显示
+	@ResponseBody
+	@RequestMapping("/payment/showOwnerInfo/{ownerId}")
+	public PaymentVO getOwnerByOwnerId(@PathVariable("ownerId")Integer ownerId) {
+		PaymentVO paymentVO = null;
+		if (ownerId != null) {
+			paymentVO = paymentService.getOwnerByOwnerId(ownerId);
+		}
+		return paymentVO;
 	}
 	
 }

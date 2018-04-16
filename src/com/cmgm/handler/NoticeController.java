@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cmgm.entity.Notice;
 import com.cmgm.service.NoticeService;
@@ -26,6 +27,7 @@ import com.cmgm.service.NoticeService;
  * 公告管理
  */
 
+@SessionAttributes(value={"user"})
 @Controller
 public class NoticeController {
 
@@ -42,8 +44,10 @@ public class NoticeController {
 	public Map<String, Object> getNotice(HttpServletRequest request) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
-		List<Notice> notices = noticeService.getNotices(pageNO,pageSize);
-		int count = noticeService.getCountNotice();
+		String code = request.getParameter("code");
+		String title = request.getParameter("title");
+		List<Notice> notices = noticeService.getNotices(pageNO,pageSize,code,title);
+		int count = noticeService.getCountNotice(code,title);
 		if(notices == null || notices.isEmpty()) {
 			notices = new ArrayList<>();
 			count = 0;
@@ -71,7 +75,7 @@ public class NoticeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/notice/getNotice", method=RequestMethod.GET)
+	@RequestMapping(value="/notice/getNotice/{id}", method=RequestMethod.GET)
 	public Notice getNotice(@PathVariable("id")Integer id) {
 		Notice notice = null;
 		if (id != null) {
