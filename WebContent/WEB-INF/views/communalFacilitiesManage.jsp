@@ -32,8 +32,8 @@
 				</div>
 			</div>
 	 </div>
-	 <div data-options="region:'south',title:'小区设施',split:true" style="height:450px;">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:1100px;background-color:rgb(199, 225, 245);height:415px">
+	 <div data-options="region:'south',title:'小区设施',split:true" style="height:300px;">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:1165px;background-color:rgb(199, 225, 245);height:415px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">设施详细信息</div>
 			<form id="communalFacilities_form" method="post">
 				<input id="id" name="id" type="hidden"/>

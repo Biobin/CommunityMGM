@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmgm.VO.ComplaintVO;
 import com.cmgm.common.StringUtils;
+import com.cmgm.entity.Owner;
 import com.cmgm.entity.PropertyManager;
 import com.cmgm.entity.User;
 import com.cmgm.service.ComplaintService;
@@ -44,9 +45,22 @@ public class ComplaintController {
 		return "complaintManage";
 	};
 	
+	//获取业主(投诉人)下拉列表
+	@ResponseBody
+	@RequestMapping("/complaint/ownerList")
+	public List<Owner> getOwnerList(Model model) throws JsonProcessingException {
+		List<Owner> ownerList = complaintService.getOwnerList();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		String json = "";
+		json = mapper.writeValueAsString(ownerList);
+		model.addAttribute("ownerList", json);
+		return ownerList;
+	}
+	
 	//获取物业管理员(投诉受理人)下拉列表
 	@ResponseBody
-	@RequestMapping("/complaint/complaintList")
+	@RequestMapping("/complaint/propertyManagerList")
 	public List<PropertyManager> getPropertyManagerList(Model model) throws JsonProcessingException {
 		List<PropertyManager> propertyManagerList = complaintService.getPropertyManagerList();
 		ObjectMapper mapper = new ObjectMapper();
@@ -102,7 +116,7 @@ public class ComplaintController {
 	@RequestMapping("/complaint/addComplaint")
 	public String addComplaint(HttpServletRequest request,HttpSession httpSession) {
 		String content = request.getParameter("content");
-		String createTime = request.getParameter("craeteTime");
+		String createTime = request.getParameter("createTime");
 		Integer propertyManagerId = StringUtils.getInteger(request.getParameter("propertyManagerId"));
 		User user = (User) httpSession.getAttribute("user");
 		Integer ownerId = null;

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmgm.VO.ComplaintVO;
 import com.cmgm.dao.ComplaintDao;
+import com.cmgm.entity.Owner;
 import com.cmgm.entity.PropertyManager;
 
 /**
@@ -24,6 +25,11 @@ public class ComplaintService {
 
 	@Autowired
 	private ComplaintDao complaintDao;
+	
+	@Transactional(readOnly=true)
+	public List<Owner> getOwnerList() {
+		return complaintDao.getOwnerList();
+	}
 	
 	@Transactional(readOnly=true)
 	public List<PropertyManager> getPropertyManagerList() {

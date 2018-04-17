@@ -38,6 +38,13 @@ public class ComplaintDao {
 	private EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
+	public List<Owner> getOwnerList() {
+		String jpql = "SELECT new Owner(o.id, o.name, o.phone, o.email) FROM Owner o ";
+		List<Owner> owners = entityManager.createQuery(jpql).getResultList();
+		return owners;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<PropertyManager> getPropertyManagerList() {
 		String jpql = "SELECT new PropertyManager(pm.id, pm.name) FROM PropertyManager pm ";
 		List<PropertyManager> propertyManagers = entityManager.createQuery(jpql).getResultList();
@@ -59,7 +66,7 @@ public class ComplaintDao {
 	@SuppressWarnings("unchecked")
 	public List<ComplaintVO> getComplaints(int pageNO, int pageSize, String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
 		String jpql = "SELECT c.id, c.content, to_char(c.createTime,'yyyy-MM-dd HH24:mm:ss'), co.id, co.name, co.phone, co.email, "
-				+ "cpm.id, cpm.name, cpm.phone, cpm.email, cs.id, cs.name, c.returnContent, c.finishTime FROM Complaint c "
+				+ "cpm.id, cpm.name, cpm.phone, cpm.email, cs.id, cs.name, c.returnContent, to_char(c.finishTime,'yyyy-MM-dd HH24:mm:ss') FROM Complaint c "
 				+ "LEFT JOIN c.owner co LEFT JOIN c.propertyManager cpm LEFT JOIN c.state cs WHERE (co.id = :ownerId or :ownerId is null ) "
 				+ "AND (cpm.id = :propertyManagerId or :propertyManagerId is null) ";
 		StringBuffer sBuffer = new StringBuffer();
@@ -186,7 +193,7 @@ public class ComplaintDao {
 
 	public ComplaintVO getComplaintById(Integer id) {
 		String jpql = "SELECT c.id, c.content, to_char(c.createTime,'yyyy-MM-dd HH24:mm:ss'), co.id, co.name, co.phone, co.email, "
-				+ "cpm.id, cpm.name, cpm.phone, cpm.email, cs.id, cs.name, c.returnContent, c.finishTime FROM Complaint c "
+				+ "cpm.id, cpm.name, cpm.phone, cpm.email, cs.id, cs.name, c.returnContent, to_char(c.finishTime,'yyyy-MM-dd HH24:mm:ss') FROM Complaint c "
 				+ "LEFT JOIN c.owner co LEFT JOIN c.propertyManager cpm LEFT JOIN c.state cs WHERE (c.id = :id or :id is null ) ";
 		Query query = entityManager.createQuery(jpql);
 		Object[] objects = (Object[]) query.setParameter("id", id).getSingleResult();

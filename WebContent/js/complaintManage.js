@@ -134,7 +134,7 @@ $(function(){
 				width : 140,
 			},
 			{
-				field : 'state',
+				field : 'stateName',
 				title : '处理状态',
 				width : 100,
 			},
@@ -183,6 +183,13 @@ $(function(){
 			stateId: '3',
 			state: '已处理'
 		}]
+	});
+	
+	$('#ownerId').combobox({
+		valueField : 'id',
+		textField : 'name',
+		limitToList : true,
+		url : basePath+'/complaint/ownerList',
 	});
 	
 	//物业管理员不能操作

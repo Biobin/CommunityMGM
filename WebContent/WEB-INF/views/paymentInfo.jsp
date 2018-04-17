@@ -34,7 +34,7 @@
 			</div>
 	 </div>
 	<div data-options="region:'center'">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:1100px;background-color:rgb(199, 225, 245);height:600px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:1100px;background-color:rgb(199, 225, 245);height:500px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">账单详细信息</div>
 			<form id="payment_form" method="post">
 				<input id="id" name="id" type="hidden"/>

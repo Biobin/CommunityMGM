@@ -18,7 +18,7 @@
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'center'">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:550px;background-color:rgb(199, 225, 245);height:450px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:760px;background-color:rgb(199, 225, 245);height:495px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">联系人详细信息</div>
 			<form id="contact_form" method="post">
 				<table style="width:520px;height:350px">

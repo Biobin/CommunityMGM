@@ -32,14 +32,14 @@
 			</div>
 		</div>
 	<div id="complaint_dialog_add" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:800px;background-color:rgb(199, 225, 245);height:450px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:800px;background-color:rgb(199, 225, 245);height:390px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
 			<form id="complaint_form_add" method="post">
 				<input id="id" name="id" type="hidden"/>
-				<table style="width:800px;height:400px">
+				<table style="width:800px;height:340px">
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉人受理人： <input id="propertyManagerId" name="ownerId" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="propertyManagerPhone" class="easyui-textbox" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉人受理人： <input id="propertyManagerId" name="propertyManagerId" data-options="required:true" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="propertyManagerPhone" class="easyui-textbox" style="width:180px;"/></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="propertyManagerEmail" class="easyui-textbox" style="width:180px;"/></td>
@@ -57,11 +57,11 @@
 		</div> 
 	</div>
 	<div id="complaint_dialog_edit" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:1040px;background-color:rgb(199, 225, 245);height:500px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:1040px;background-color:rgb(199, 225, 245);height:400px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
-			<form id="complaint_form" method="post">
+			<form id="complaint_form_edit" method="post">
 				<input id="id" name="id" type="hidden"/>
-				<table style="width:1000px;height:400px">
+				<table style="width:1000px;height:350px">
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉人： <input id="ownerId" name="ownerId" data-options="required:true" style="width:180px;" readonly="readonly" /></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="ownerPhone" class="easyui-textbox" style="width:180px;" readonly="readonly" /></td>

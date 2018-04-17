@@ -33,11 +33,11 @@
 			</div>
 	 </div>
 	<div data-options="region:'center'">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:900px;background-color:rgb(199, 225, 245);height:600px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:780px;background-color:rgb(199, 225, 245);height:515px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">公告详细信息</div>
 			<form id="notice_form" method="post">
 				<input id="id" name="id" type="hidden"/>
-				<table style="width:800px;height:400px">
+				<table style="width:780px;height:400px">
 					<span style="text-align: center;display:block;">(新增公告请点击先点击右侧添加按钮)</span>
 					<tr style="text-align: center;">
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编号： <input  name="code" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
