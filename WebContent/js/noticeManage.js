@@ -9,7 +9,7 @@ $(function(){
 		search:function(){
 			$('#noticeTb').datagrid('load',{
 				code:$.trim($('#code').val()),
-				name:$.trim($('#name').val()),
+				title:$.trim($('#title').val()),
 			});
 		},
 		add:function(){

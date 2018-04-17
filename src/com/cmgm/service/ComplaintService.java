@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmgm.VO.ComplaintVO;
 import com.cmgm.dao.ComplaintDao;
+import com.cmgm.entity.PropertyManager;
 
 /**
  *
@@ -23,15 +24,25 @@ public class ComplaintService {
 
 	@Autowired
 	private ComplaintDao complaintDao;
-
+	
 	@Transactional(readOnly=true)
-	public List<ComplaintVO> getComplaints(int pageNO, int pageSize) {
-		return complaintDao.getComplaints(pageNO,pageSize);
+	public List<PropertyManager> getPropertyManagerList() {
+		return complaintDao.getPropertyManagerList();
+	}
+	
+	@Transactional(readOnly=true)
+	public ComplaintVO getPropertyManagerByPid(Integer propertyManagerId) {
+		return complaintDao.getPropertyManagerByPid(propertyManagerId);
 	}
 
 	@Transactional(readOnly=true)
-	public Integer getCountComplaint() {
-		return complaintDao.getCountComplaint();
+	public List<ComplaintVO> getComplaints(int pageNO, int pageSize, String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
+		return complaintDao.getComplaints(pageNO,pageSize,beginTime,endTime,stateId,ownerId,propertyManagerId);
+	}
+
+	@Transactional(readOnly=true)
+	public Integer getCountComplaint(String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
+		return complaintDao.getCountComplaint(beginTime,endTime,stateId,ownerId,propertyManagerId);
 	}
 
 	@Transactional
@@ -49,8 +60,9 @@ public class ComplaintService {
 		return complaintDao.getComplaintById(id);
 	}
 
+	@Transactional
 	public void deleteComplaint(Integer id) {
 		complaintDao.deleteComplaint(id);
 	}
-	
+
 }

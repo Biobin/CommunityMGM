@@ -41,11 +41,6 @@
 				<table style="width:1000px;height:400px">
 					<span style="text-align: center;display:block;">(新增账单请点击先点击右侧添加按钮)</span>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;缴费业主： <input id="ownerId" name="ownerId" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input name="ownerPhone" class="easyui-textbox" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="ownerEmail" class="easyui-textbox" style="width:180px;"/></td>
-					</tr>
-					<tr>
 					</tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;缴费状态： <input id="stateId" name="stateId" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
 						<td>收费项目： <input  name="chargingItem" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>

@@ -1,5 +1,5 @@
 /**
- * 账单管理js
+ * 账单管理，账单明细js
  */
 $(function(){
 	obj = {
@@ -8,8 +8,9 @@ $(function(){
 		
 		search:function(){
 			$('#paymentTb').datagrid('load',{
-				code:$.trim($('#code').val()),
-				name:$.trim($('#name').val()),
+				beginTime:$.trim($('#beginTime').val()),
+				endTime:$.trim($('#endTime').val()),
+				stateId:$.trim($('#stateId_search').val()),
 			});
 		},
 		add:function(){

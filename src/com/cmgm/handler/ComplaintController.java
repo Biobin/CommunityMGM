@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmgm.VO.ComplaintVO;
 import com.cmgm.common.StringUtils;
+import com.cmgm.entity.PropertyManager;
+import com.cmgm.entity.User;
 import com.cmgm.service.ComplaintService;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
@@ -37,13 +44,49 @@ public class ComplaintController {
 		return "complaintManage";
 	};
 	
+	//获取物业管理员(投诉受理人)下拉列表
 	@ResponseBody
-	@RequestMapping("/complaint/getComplaint")
-	public Map<String, Object> getComplaint(HttpServletRequest request) {
+	@RequestMapping("/complaint/complaintList")
+	public List<PropertyManager> getPropertyManagerList(Model model) throws JsonProcessingException {
+		List<PropertyManager> propertyManagerList = complaintService.getPropertyManagerList();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		String json = "";
+		json = mapper.writeValueAsString(propertyManagerList);
+		model.addAttribute("propertyManagerList", json);
+		return propertyManagerList;
+	}
+	
+	//物业管理员(投诉受理人)信息显示
+	@ResponseBody
+	@RequestMapping("/complaint/showPropertyManagerInfo/{propertyManagerId}")
+	public ComplaintVO getPropertyManagerByPid(@PathVariable("propertyManagerId")Integer propertyManagerId) {
+		ComplaintVO complaintVO = null;
+		if (propertyManagerId != null) {
+			complaintVO = complaintService.getPropertyManagerByPid(propertyManagerId);
+		}
+		return complaintVO;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/complaint/getComplaints")
+	public Map<String, Object> getComplaint(HttpServletRequest request,HttpSession httpSession) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
-		List<ComplaintVO> complaints = complaintService.getComplaints(pageNO,pageSize);
-		int count = complaintService.getCountComplaint();
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		String stateId = request.getParameter("stateId");
+		User user = (User) httpSession.getAttribute("user");
+		Integer ownerId = null;
+		Integer propertyManagerId = null;
+		if (user.getRole().getId()==2) {
+			ownerId = (user.getOwner().getId())==null?null:(user.getOwner().getId());
+		}
+		if (user.getRole().getId()==1) {
+			propertyManagerId = (user.getPropertyManager().getId())==null?null:(user.getPropertyManager().getId());
+		}
+		List<ComplaintVO> complaints = complaintService.getComplaints(pageNO,pageSize,beginTime,endTime,stateId,ownerId,propertyManagerId);
+		int count = complaintService.getCountComplaint(beginTime,endTime,stateId,ownerId,propertyManagerId);
 		if (complaints == null || complaints.isEmpty()) {
 			complaints = new ArrayList<>();
 			count = 0;
@@ -57,31 +100,27 @@ public class ComplaintController {
 	//业主添加投诉内容
 	@ResponseBody
 	@RequestMapping("/complaint/addComplaint")
-	public String addComplaint(HttpServletRequest request) {
+	public String addComplaint(HttpServletRequest request,HttpSession httpSession) {
 		String content = request.getParameter("content");
 		String createTime = request.getParameter("craeteTime");
-		Integer ownerId = StringUtils.getInteger(request.getParameter("ownerId"));
-		String ownerName = request.getParameter("ownerName");
-		String ownerPhone = request.getParameter("ownerPhone");
-		String ownerEmail = request.getParameter("ownerEmail");
-		Integer stateId = StringUtils.getInteger(request.getParameter("stateId"));
-		String stateName = request.getParameter("stateName");
+		Integer propertyManagerId = StringUtils.getInteger(request.getParameter("propertyManagerId"));
+		User user = (User) httpSession.getAttribute("user");
+		Integer ownerId = null;
+		if (user.getRole().getId()==2) {
+			ownerId = (user.getOwner().getId())==null?null:(user.getOwner().getId());
+		}
 		Map<String, Object> params = new HashMap<String,Object>();
 		params.put("content", content);
 		params.put("createTime", createTime);
+		params.put("propertyManagerId", propertyManagerId);
 		params.put("ownerId", ownerId);
-		params.put("ownerName", ownerName);
-		params.put("ownerPhone", ownerPhone);
-		params.put("ownerEmail", ownerEmail);
-		params.put("stateId", stateId);
-		params.put("stateName", stateName);
 		complaintService.addComplaint(params);
 		return "add";
 	}
 	
 	//回显
 	@ResponseBody
-	@RequestMapping(value="/complaint/getComplaintById/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/complaint/getComplaint/{id}", method=RequestMethod.GET)
 	public ComplaintVO getComplaint(@PathVariable("id")Integer id) {
 		ComplaintVO complaintVO = null;
 		if (id != null) {
@@ -94,22 +133,12 @@ public class ComplaintController {
 	@ResponseBody
 	@RequestMapping("/complaint/updateComplaint/{id}")
 	public String updateComplaint(@PathVariable("id")Integer id,HttpServletRequest request) {
-		Integer propertyMangerId = StringUtils.getInteger(request.getParameter("propertyManagerId"));
-		String propertyManagerName = request.getParameter("propertyManagerName");
-		String properManagerPhone = request.getParameter("propertyManagerPhone");
-		String properManagerEmail = request.getParameter("propertyManagerEmail");
 		Integer stateId = StringUtils.getInteger(request.getParameter("stateId"));
-		String stateName = request.getParameter("StateName");
 		String returnContent = request.getParameter("returnContent");
 		String finishTime = request.getParameter("finishTime");
 		Map<String, Object> params = new HashMap<String,Object>();
 		params.put("id", id);
-		params.put("propetyManagerId", propertyMangerId);
-		params.put("propetyManagerName", propertyManagerName);
-		params.put("propertyManagerPhone", properManagerPhone);
-		params.put("propertyManagerEmail", properManagerEmail);
 		params.put("stateId", stateId);
-		params.put("stateName", stateName);
 		params.put("returnContent", returnContent);
 		params.put("finishTime", finishTime);
 		complaintService.updateComplaint(params);

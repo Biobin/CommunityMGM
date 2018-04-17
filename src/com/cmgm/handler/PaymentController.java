@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cmgm.VO.PaymentVO;
 import com.cmgm.common.StringUtils;
 import com.cmgm.entity.Owner;
+import com.cmgm.entity.User;
 import com.cmgm.service.PaymentService;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,11 +39,17 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 	
-	//页面跳转
+	//账单管理页面跳转
 	@RequestMapping("/payment/paymentManage")
 	public String paymentManage(){
 		return "paymentManage";
 	};
+	
+	//账单明细页面跳转
+	@RequestMapping("/payment/paymentInfo")
+	public String paymentInfo() {
+		return "paymentInfo";
+	}
 	
 	//获取业主下拉列表
 	@ResponseBody
@@ -58,14 +66,19 @@ public class PaymentController {
 	
 	@ResponseBody
 	@RequestMapping("/payment/getPayments")
-	public Map<String, Object> getPayments(HttpServletRequest request) {
+	public Map<String, Object> getPayments(HttpServletRequest request,HttpSession httpSession) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
 		String beginTime = request.getParameter("beginTime");
 		String endTime = request.getParameter("endTime");
-		String stateId = request.getParameter("sateId");
-		List<PaymentVO> paymentVOs = paymentService.getPayments(pageNO,pageSize,beginTime,endTime,stateId);
-		int count = paymentService.getCountPayment(beginTime,endTime,stateId);
+		String stateId = request.getParameter("stateId");
+		User user = (User) httpSession.getAttribute("user");
+		Integer ownerId = null;
+		if (user.getRole().getId()==2) {
+			ownerId = (user.getOwner().getId())==null?null:(user.getOwner().getId());
+		}
+		List<PaymentVO> paymentVOs = paymentService.getPayments(pageNO,pageSize,beginTime,endTime,stateId,ownerId);
+		int count = paymentService.getCountPayment(beginTime,endTime,stateId,ownerId);
 		if (paymentVOs == null || paymentVOs.isEmpty()) {
 			paymentVOs = new ArrayList<>();
 			count = 0;
@@ -85,7 +98,7 @@ public class PaymentController {
 		Integer stateId = StringUtils.getInteger(request.getParameter("stateId"));
 		Integer ownerId = StringUtils.getInteger(request.getParameter("ownerId"));
 		String chargingItem = StringUtils.getString(request.getParameter("chargingItem"));
-		String details = StringUtils.getString(request.getParameter("chargingItem"));
+		String details = StringUtils.getString(request.getParameter("details"));
 		String createTime = StringUtils.getString(request.getParameter("createTime"));
 		Map<String, Object> params = new HashMap<>();
 		params.put("receivableFee", receivableFee);
@@ -119,7 +132,7 @@ public class PaymentController {
 		Integer stateId = StringUtils.getInteger(request.getParameter("stateId"));
 		Integer ownerId = StringUtils.getInteger(request.getParameter("ownerId"));
 		String chargingItem = StringUtils.getString(request.getParameter("chargingItem"));
-		String details = StringUtils.getString(request.getParameter("chargingItem"));
+		String details = StringUtils.getString(request.getParameter("details"));
 		String createTime = StringUtils.getString(request.getParameter("createTime"));
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);

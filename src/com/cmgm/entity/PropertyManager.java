@@ -29,6 +29,12 @@ public class PropertyManager {
 	public PropertyManager() {
 	}
 
+	public PropertyManager(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	public PropertyManager(Integer id, String name, String phone, String email) {
 		super();
 		this.id = id;

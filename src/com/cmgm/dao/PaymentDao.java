@@ -44,10 +44,10 @@ public class PaymentDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PaymentVO> getPayments(int pageNO, int pageSize, String beginTime, String endTime, String stateId) {
+	public List<PaymentVO> getPayments(int pageNO, int pageSize, String beginTime, String endTime, String stateId, Integer ownerId) {
 		String jpql = "SELECT pm.id, pmo.id, pmo.name, pmo.phone, pmo.email, pm.receivableFee, pm.collectFee, pm.owedFee, "
 				+ "pms.id, pms.name, pm.chargingItem, to_char(pm.createTime,'yyyy-MM-dd HH24:mm:ss'), pm.details FROM Payment pm "
-				+ "LEFT JOIN pm.owner pmo LEFT JOIN pm.state pms WHERE (pms.id = :stateId or :stateId is null ) ";
+				+ "LEFT JOIN pm.owner pmo LEFT JOIN pm.state pms WHERE (pmo.id = :ownerId or :ownerId is null ) AND (pms.id = :stateId or :stateId is null ) ";
 		stateId = stateId == null ? "" : stateId;
 		StringBuffer condition = new StringBuffer();
 		if (StringUtils.getString(beginTime).equals("")) {
@@ -60,6 +60,7 @@ public class PaymentDao {
 			}
 		}
 		Query query = entityManager.createQuery(jpql+condition);
+		query.setParameter("ownerId", ownerId);
 		query.setParameter("stateId", StringUtils.getInteger(stateId));
 		List<Object[]> objects = query.setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize).getResultList();
 		List<PaymentVO> paymentVOs = new ArrayList<>();
@@ -78,13 +79,14 @@ public class PaymentDao {
 			paymentVO.setStateName(StringUtils.getString(object[9]));
 			paymentVO.setChargingItem(StringUtils.getString(object[10]));
 			paymentVO.setCreateTime(DateUtils.getDate("yyyy-MM-dd HH:mm:ss", object[11]));
+			paymentVO.setDetails(StringUtils.getString(object[12]));
 			paymentVOs.add(paymentVO);
 		}
 		return paymentVOs;
 	}
 	
-	public Integer getCountPayment(String beginTime, String endTime, String stateId) {
-		String jpql = "SELECT COUNT(*) FROM Payment pm LEFT JOIN pm.state pms WHERE (pms.id = :stateId or :stateId is null ) ";
+	public Integer getCountPayment(String beginTime, String endTime, String stateId, Integer ownerId) {
+		String jpql = "SELECT COUNT(*) FROM Payment pm LEFT JOIN pm.owner pmo LEFT JOIN pm.state pms WHERE (pmo.id = :ownerId or :ownerId is null ) AND (pms.id = :stateId or :stateId is null ) ";
 		stateId = stateId == null ? "" : stateId;
 		StringBuffer condition = new StringBuffer();
 		if (StringUtils.getString(beginTime).equals("")) {
@@ -97,6 +99,7 @@ public class PaymentDao {
 			}
 		}
 		Query query = entityManager.createQuery(jpql+condition);
+		query.setParameter("ownerId", ownerId);
 		query.setParameter("stateId", StringUtils.getInteger(stateId));
 		int count = ((Number)query.getSingleResult()).intValue();
 		return count;
@@ -113,7 +116,7 @@ public class PaymentDao {
 		Owner owner = entityManager.find(Owner.class, ownerId);
 		String chargingItem = StringUtils.getString(params.get("chargingItem"));
 		String details = StringUtils.getString(params.get("details"));
-		String createTime = StringUtils.getString(params.get("ceateTime"));
+		String createTime = StringUtils.getString(params.get("createTime"));
 		Date date = null;
 		if (createTime !=null && !createTime.equals("")) {
 			try {
@@ -152,6 +155,7 @@ public class PaymentDao {
 		paymentVO.setStateName(StringUtils.getString(objects[9]));
 		paymentVO.setChargingItem(StringUtils.getString(objects[10]));
 		paymentVO.setCreateTime(DateUtils.getDate("yyyy-MM-dd HH:mm:ss", objects[11]));
+		paymentVO.setDetails(StringUtils.getString(objects[12]));
 		return paymentVO;
 	}
 
@@ -167,7 +171,7 @@ public class PaymentDao {
 		Owner owner = entityManager.find(Owner.class, ownerId);
 		String chargingItem = StringUtils.getString(params.get("chargingItem"));
 		String details = StringUtils.getString(params.get("details"));
-		String createTime = StringUtils.getString(params.get("ceateTime"));
+		String createTime = StringUtils.getString(params.get("createTime"));
 		Date date = null;
 		if (createTime !=null && !createTime.equals("")) {
 			try {

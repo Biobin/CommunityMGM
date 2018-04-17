@@ -31,13 +31,13 @@ public class PaymentService {
 	}
 
 	@Transactional(readOnly=true)
-	public List<PaymentVO> getPayments(int pageNO, int pageSize, String beginTime, String endTime, String stateId) {
-		return paymentDao.getPayments(pageNO,pageSize,beginTime,endTime,stateId);
+	public List<PaymentVO> getPayments(int pageNO, int pageSize, String beginTime, String endTime, String stateId, Integer ownerId) {
+		return paymentDao.getPayments(pageNO,pageSize,beginTime,endTime,stateId,ownerId);
 	}
 	
 	@Transactional(readOnly=true)
-	public Integer getCountPayment(String beginTime, String endTime, String stateId) {
-		return paymentDao.getCountPayment(beginTime,endTime,stateId);
+	public Integer getCountPayment(String beginTime, String endTime, String stateId, Integer ownerId) {
+		return paymentDao.getCountPayment(beginTime,endTime,stateId,ownerId);
 	}
 
 	@Transactional

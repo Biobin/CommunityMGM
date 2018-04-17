@@ -35,7 +35,7 @@ public class Complaint {
 	private PropertyManager propertyManager;	//投诉受理人
 	private Owner owner;	//投诉人
 	private State state;
-	private String retrunContent;	//对投诉内容进行回应
+	private String returnContent;	//对投诉内容进行回应
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime finishTime;	//投诉解决日期
 	
@@ -100,12 +100,12 @@ public class Complaint {
 		this.state = state;
 	}
 
-	public String getRetrunContent() {
-		return retrunContent;
+	public String getReturnContent() {
+		return returnContent;
 	}
 
-	public void setRetrunContent(String retrunContent) {
-		this.retrunContent = retrunContent;
+	public void setReturnContent(String returnContent) {
+		this.returnContent = returnContent;
 	}
 
 	public LocalDateTime getFinishTime() {
