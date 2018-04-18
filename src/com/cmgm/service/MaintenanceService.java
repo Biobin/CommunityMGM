@@ -10,6 +10,7 @@ import com.cmgm.VO.MaintenanceVO;
 import com.cmgm.dao.MaintenanceDao;
 import com.cmgm.entity.CommunalFaStyle;
 import com.cmgm.entity.CommunalFacilities;
+import com.cmgm.entity.Maintenance;
 import com.cmgm.entity.Owner;
 import com.cmgm.entity.PropertyManager;
 
@@ -50,6 +51,20 @@ public class MaintenanceService {
 	@Transactional(readOnly=true)
 	public List<CommunalFacilities> getCommunalFacilitiesList(Integer communalFaStyleId) {
 		return maintenanceDao.getCommunalFacilitiesList(communalFaStyleId);
+	}
+
+	@Transactional(readOnly=true)
+	public List<PropertyManager> getPropertyManagerList(Integer communalFacilitiesId) {
+		return maintenanceDao.getPropertyManager(communalFacilitiesId);
+	}
+
+	@Transactional(readOnly=true)
+	public List<Maintenance> getMaintenances(int pageNO, int pageSize, String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
+		return maintenanceDao.getMaintenances(pageNO,pageSize,beginTime,endTime,stateId,ownerId,propertyManagerId);
+	}
+
+	public Integer getCountMaintenance(String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
+		return maintenanceDao.getCountMaintenance(beginTime,endTime,stateId,ownerId,propertyManagerId);
 	}
 	
 }

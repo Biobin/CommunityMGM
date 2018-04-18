@@ -7,6 +7,7 @@ package com.cmgm.dao;
  *
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,6 +20,7 @@ import com.cmgm.VO.MaintenanceVO;
 import com.cmgm.common.StringUtils;
 import com.cmgm.entity.CommunalFaStyle;
 import com.cmgm.entity.CommunalFacilities;
+import com.cmgm.entity.Maintenance;
 import com.cmgm.entity.Owner;
 import com.cmgm.entity.PropertyManager;
 
@@ -66,6 +68,29 @@ public class MaintenanceDao {
 		String jpql = "SELECT new CommunalFacilities(cf.id,cf.name) FROM CommunalFacilities cf WHERE cf.communalFaStyle.id = :communalFaStyleId ";
 		List<CommunalFacilities> communalFacilities = entityManager.createQuery(jpql).setParameter("communalFaStyleId", communalFaStyleId).getResultList();
 		return communalFacilities;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PropertyManager> getPropertyManager(Integer communalFacilitiesId) {
+		String jpql = "SELECT cfpm.id,cfpm.name FROM CommunalFacilities cf LEFT JOIN cf.propertyManager cfpm WHERE cf.id = :communalFacilitiesId ";
+		List<Object[]> objects = entityManager.createQuery(jpql).setParameter("communalFacilitiesId", communalFacilitiesId).getResultList();
+		List<PropertyManager> propertyManagers = new ArrayList<>();
+		PropertyManager propertyManager = null;
+		for (Object[] object : objects) {
+			propertyManager = new PropertyManager();
+			propertyManager.setId(StringUtils.getInteger(object[0]));
+			propertyManager.setName(StringUtils.getString(object[1]));
+			propertyManagers.add(propertyManager);
+		}
+		return propertyManagers;
+	}
+
+	public List<Maintenance> getMaintenances(int pageNO, int pageSize, String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
+		return null;
+	}
+
+	public Integer getCountMaintenance(String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
+		return null;
 	}
 	
 }

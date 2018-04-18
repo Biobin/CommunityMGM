@@ -15,14 +15,14 @@ $(function(){
 		},
 		add:function(){
 			$('#maintenance_form_add').form('clear');
-			$('#maintenance_dialog_add').panel('setTitle','新增投诉信息');
+			$('#maintenance_dialog_add').panel('setTitle','新增报修信息');
 			$('#maintenance_dialog_add').dialog('open');
 			this.submitUrl = basePath + "/maintenance/addMaintenance";
 		},
 		edit:function(){
 			var row = $('#maintenanceTb').datagrid('getSelected');
 				var id=row.id;
-				$('#maintenance_dialog_edit').panel('setTitle','修改投诉信息');
+				$('#maintenance_dialog_edit').panel('setTitle','修改报修信息');
 				$('#maintenance_dialog_edit').dialog('open');
 				// 加载表单数据,默认请求方式为GET
 				$('#maintenance_form_edit').form('load',basePath+'/maintenance/getMaintenance/'+id);
@@ -153,7 +153,7 @@ $(function(){
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
-		url : basePath+'/maintenance/propertyManagerList',
+//		url : basePath+'/maintenance/propertyManagerList',
 //		onChange:function(newValue,oldValue) {
 //			if(id.value == ""){
 //				$("#maintenance_form_add").form('load', basePath+ '/maintenance/showPropertyManagerInfo/'+newValue);
@@ -165,7 +165,7 @@ $(function(){
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
-		url : basePath+'/maintenance/propertyManagerList',
+//		url : basePath+'/maintenance/propertyManagerList',
 	});
 	
 	$('#stateId').combobox({
@@ -298,18 +298,51 @@ $(function(){
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
+		onChange:function(newValue,oldValue) {
+			$('#propertyManagerId').combobox({
+				url:basePath+"/maintenance/propertyManagerList",
+				queryParams: {
+					"communalFacilitiesId" :newValue
+				},
+				valueField : 'id',
+				textField :  'name',
+				limitToList:true,
+			});
+		}
 	});
 	
 	$('#communalFacilitiesId_edit').combobox({
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
+		onChange:function(newValue,oldValue) {
+			$('#propertyManagerId').combobox({
+				url:basePath+"/maintenance/propertyManagerList",
+				queryParams: {
+					"communalFacilitiesId" :newValue
+				},
+				valueField : 'id',
+				textField :  'name',
+				limitToList:true,
+			});
+		}
 	});
 	
 	$('#communalFacilitiesId_show').combobox({
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
+		onChange:function(newValue,oldValue) {
+			$('#propertyManagerId_show').combobox({
+				url:basePath+"/maintenance/propertyManagerList",
+				queryParams: {
+					"communalFacilitiesId" :newValue
+				},
+				valueField : 'id',
+				textField :  'name',
+				limitToList:true,
+			});
+		}
 	});
 	
 	//物业管理员不能操作
