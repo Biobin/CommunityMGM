@@ -143,8 +143,16 @@ public class CommunalFacilitiesDao {
 		String name = StringUtils.getString(params.get("name"));
 		Integer communalFaStyleId = StringUtils.getInteger(params.get("communalFaStyleId"));
 		CommunalFaStyle communalFaStyle = null;
+		Integer propertyManagerId = StringUtils.getInteger(params.get("propertyManagerId"));
+		PropertyManager propertyManager = null;
+		if (propertyManagerId!=null) {
+			propertyManager = entityManager.find(PropertyManager.class, propertyManagerId);
+		}
 		if (communalFaStyleId!=null) {
 			communalFaStyle = entityManager.find(CommunalFaStyle.class, communalFaStyleId);
+		}
+		if (communalFaStyleId==4 && propertyManagerId==null) {
+			propertyManager = entityManager.find(PropertyManager.class, 22);
 		}
 		String beginUsingTime = StringUtils.getString(params.get("beginUsingTime"));
 		Date date = null;
@@ -157,11 +165,6 @@ public class CommunalFacilitiesDao {
 			communalFacilities.setBeginUsingTime(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
 		}
 		String details = StringUtils.getString(params.get("details"));
-		Integer propertyManagerId = StringUtils.getInteger(params.get("propertyManagerId"));
-		PropertyManager propertyManager = null;
-		if (propertyManagerId!=null) {
-			propertyManager = entityManager.find(PropertyManager.class, propertyManagerId);
-		}
 		communalFacilities.setCode(code);
 		communalFacilities.setName(name);
 		communalFacilities.setCommunalFaStyle(communalFaStyle);
@@ -199,8 +202,16 @@ public class CommunalFacilitiesDao {
 		String name = StringUtils.getString(params.get("name"));
 		Integer communalFaStyleId = StringUtils.getInteger(params.get("communalFaStyleId"));
 		CommunalFaStyle communalFaStyle = null;
+		Integer propertyManagerId = StringUtils.getInteger(params.get("propertyManagerId"));
+		PropertyManager propertyManager = null;
+		if (propertyManagerId!=null) {
+			propertyManager = entityManager.find(PropertyManager.class, propertyManagerId);
+		}
 		if (communalFaStyleId!=null) {
 			communalFaStyle = entityManager.find(CommunalFaStyle.class, communalFaStyleId);
+		}
+		if (communalFaStyleId==4 && propertyManagerId==null) {
+			propertyManager = entityManager.find(PropertyManager.class, 22);
 		}
 		String beginUsingTime = StringUtils.getString(params.get("beginUsingTime"));
 		Date date = null;
@@ -213,11 +224,6 @@ public class CommunalFacilitiesDao {
 			communalFacilities.setBeginUsingTime(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
 		}
 		String details = StringUtils.getString(params.get("details"));
-		Integer propertyManagerId = StringUtils.getInteger(params.get("propertyManagerId"));
-		PropertyManager propertyManager = null;
-		if (propertyManagerId!=null) {
-			propertyManager = entityManager.find(PropertyManager.class, propertyManagerId);
-		}
 		communalFacilities.setCode(code);
 		communalFacilities.setName(name);
 		communalFacilities.setCommunalFaStyle(communalFaStyle);

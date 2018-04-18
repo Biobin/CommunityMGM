@@ -37,6 +37,12 @@ public class CommunalFacilities {
 	public CommunalFacilities() {
 	}
 
+	public CommunalFacilities(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq_communalFacilities")
 	@SequenceGenerator(name = "seq_communalFacilities", sequenceName = "seq_communalFacilities", allocationSize = 1, initialValue = 1)

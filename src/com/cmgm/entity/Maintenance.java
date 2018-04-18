@@ -1,7 +1,6 @@
 package com.cmgm.entity;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -32,14 +30,13 @@ public class Maintenance {
 	//提交前（业主填写）
 	private Integer id;
 	private String code;	//报修单号
-//	private String name;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createTime;
 	private Owner owner;	//提交报修的业主
 	private String details;	//报修信息细节
-	private Set<CommunalFacilities> communalFacilities;	//损害的公共设施
+	private CommunalFacilities communalFacilities;	//损害的公共设施
 	
-	//提交后（物业填写）
+	//提交后（物业管理员填写）
 	private String repairPersonnel;		//维修人员
 	private String repairPerPhone;		//维修人员电话
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -96,12 +93,14 @@ public class Maintenance {
 		this.details = details;
 	}
 
-	@OneToMany(mappedBy="propertyManager",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	public Set<CommunalFacilities> getCommunalFacilities() {
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},  
+            fetch=FetchType.EAGER,optional=false)
+	@JoinColumn(name="communalFacilitiesId", foreignKey=@ForeignKey(name="comFa_maintenance_Id"))
+	public CommunalFacilities getCommunalFacilities() {
 		return communalFacilities;
 	}
 
-	public void setCommunalFacilities(Set<CommunalFacilities> communalFacilities) {
+	public void setCommunalFacilities(CommunalFacilities communalFacilities) {
 		this.communalFacilities = communalFacilities;
 	}
 

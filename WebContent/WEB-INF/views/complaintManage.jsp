@@ -28,7 +28,8 @@
 			<div>
 				<a id="complaint_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="obj.add();">添加</a>
 				<a id="complaint_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="obj.edit();">修改</a>
-				<a id="complaint_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="obj.remove();">删除</a>			
+				<a id="complaint_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="obj.remove();">删除</a>
+				<a id="complaint_show" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true," disabled="disabled" onclick="obj.show();">查看详情</a>
 			</div>
 		</div>
 	<div id="complaint_dialog_add" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
@@ -68,12 +69,12 @@
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="ownerEmail" class="easyui-textbox" style="width:180px;" readonly="readonly" /></td>
 					</tr>
 					<tr>
-					</tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;处理状态： <input id="stateId" name="stateId" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
 						<td>提交日期： <input name="createTime" class="easyui-datetimebox" data-options="required:true" style="width:180px;" /></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;解决日期： <input name="finishTime" class="easyui-datetimebox" style="width:180px;" /></td>
+					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true" readonly="readonly" /></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;处理回复： <input name="returnContent" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
@@ -84,6 +85,37 @@
 				<span><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',width:60,height:25" onclick="obj.submitForm();">保存</a></span>
 				<span><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',width:60,height:25" onclick="obj.clearForm()">取消</a></span>
 			</div>
+		</div> 
+	</div>
+	<div id="complaint_dialog_show" class="easyui-dialog" data-options="closed:true,modal:true,closable:true">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:1040px;background-color:rgb(199, 225, 245);height:400px">
+			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
+			<form id="complaint_form_show" method="post">
+				<input id="id" name="id" type="hidden"/>
+				<table style="width:1000px;height:350px">
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉人： <input id="ownerId_show" name="ownerId" data-options="required:true" style="width:180px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="ownerPhone" class="easyui-textbox" style="width:180px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="ownerEmail" class="easyui-textbox" style="width:180px;" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;投诉人受理人： <input id="propertyManagerId_show" name="propertyManagerId" data-options="required:true" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="propertyManagerPhone" class="easyui-textbox" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="propertyManagerEmail" class="easyui-textbox" style="width:180px;"/></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;处理状态： <input id="stateId_show" name="stateId" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
+						<td>提交日期： <input name="createTime" class="easyui-datetimebox" data-options="required:true" style="width:180px;" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;解决日期： <input name="finishTime" class="easyui-datetimebox" style="width:180px;" /></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;处理回复： <input name="returnContent" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
+					</tr>
+				</table>
+			</form>
 		</div> 
 	</div>
 </body>

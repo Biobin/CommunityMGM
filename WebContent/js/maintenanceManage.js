@@ -1,5 +1,5 @@
 /**
- * 投诉处理js
+ * 报修功能js
  */
 $(function(){
 	obj = {
@@ -7,40 +7,40 @@ $(function(){
 		submitUrl:'',	
 		
 		search:function(){
-			$('#complaintTb').datagrid('load',{
+			$('#maintenanceTb').datagrid('load',{
 				beginTime:$.trim($('#beginTime').val()),
 				endTime:$.trim($('#endTime').val()),
 				stateId:$.trim($('#stateId_search').val()),
 			});
 		},
 		add:function(){
-			$('#complaint_form_add').form('clear');
-			$('#complaint_dialog_add').panel('setTitle','新增投诉信息');
-			$('#complaint_dialog_add').dialog('open');
-			this.submitUrl = basePath + "/complaint/addComplaint";
+			$('#maintenance_form_add').form('clear');
+			$('#maintenance_dialog_add').panel('setTitle','新增投诉信息');
+			$('#maintenance_dialog_add').dialog('open');
+			this.submitUrl = basePath + "/maintenance/addMaintenance";
 		},
 		edit:function(){
-			var row = $('#complaintTb').datagrid('getSelected');
+			var row = $('#maintenanceTb').datagrid('getSelected');
 				var id=row.id;
-				$('#complaint_dialog_edit').panel('setTitle','修改投诉信息');
-				$('#complaint_dialog_edit').dialog('open');
+				$('#maintenance_dialog_edit').panel('setTitle','修改投诉信息');
+				$('#maintenance_dialog_edit').dialog('open');
 				// 加载表单数据,默认请求方式为GET
-				$('#complaint_form_edit').form('load',basePath+'/complaint/getComplaint/'+id);
-				this.submitUrl=basePath+'/complaint/updateComplaint/'+id;
+				$('#maintenance_form_edit').form('load',basePath+'/maintenance/getMaintenance/'+id);
+				this.submitUrl=basePath+'/maintenance/updateMaintenance/'+id;
 		},
 		remove:function(){
-			var row = $('#complaintTb').datagrid('getSelected');
+			var row = $('#maintenanceTb').datagrid('getSelected');
 			if(row!=null){
 				$.messager.confirm('确定操作', '您要删除所选的记录吗？', function (flag) {
 					if (flag) {
 						var id=row.id;
 						$.ajax({
 							type : 'POST',
-							url :basePath+'/complaint/deleteComplaint/'+id,
+							url :basePath+'/maintenance/deleteMaintenance/'+id,
 							success : function (data) {
 								if (data=="delete") {
 									$.messager.alert('提示信息', '删除成功！');
-									$('#complaintTb').datagrid('reload');
+									$('#maintenanceTb').datagrid('reload');
 								} else {
 									$.messager.alert('提示信息', '删除失败！','info');
 								}
@@ -53,15 +53,15 @@ $(function(){
 			}
 		},
 		show:function(){
-			var row = $('#complaintTb').datagrid('getSelected');
+			var row = $('#maintenanceTb').datagrid('getSelected');
 			var id=row.id;
-			$('#complaint_dialog_show').panel('setTitle','修改投诉信息');
-			$('#complaint_dialog_show').dialog('open');
+			$('#maintenance_dialog_show').panel('setTitle','修改投诉信息');
+			$('#maintenance_dialog_show').dialog('open');
 			// 加载表单数据,默认请求方式为GET
-			$('#complaint_form_show').form('load',basePath+'/complaint/getComplaint/'+id);
+			$('#maintenance_form_show').form('load',basePath+'/maintenance/getMaintenance/'+id);
 		},
 		submitForm:function(){
-			$('#complaint_form_add').form('submit',{
+			$('#maintenance_form_add').form('submit',{
 				url:obj.submitUrl,
 				onSubmit:function(){
 					return $(this).form('enableValidation').form('validate');   //检验各个编辑框是否满足设置的条件
@@ -70,7 +70,7 @@ $(function(){
 			        if(data=='add'){
 			        	$.messager.alert('提示信息','保存成功！','info',function(){
 			        		obj.clearForm();
-			        		$('#complaintTb').datagrid('reload');
+			        		$('#maintenanceTb').datagrid('reload');
 			        	});
 			        } else {
 			        	$.messager.alert('提示信息','保存失败！','info');
@@ -79,7 +79,7 @@ $(function(){
 			        }
 			    }
 			});
-			$('#complaint_form_edit').form('submit',{
+			$('#maintenance_form_edit').form('submit',{
 				url:obj.submitUrl,
 				onSubmit:function(){
 					return $(this).form('enableValidation').form('validate');   //检验各个编辑框是否满足设置的条件
@@ -88,7 +88,7 @@ $(function(){
 			        if(data=='update'){
 			        	$.messager.alert('提示信息','保存成功！','info',function(){
 			        		obj.clearForm();
-			        		$('#complaintTb').datagrid('reload');
+			        		$('#maintenanceTb').datagrid('reload');
 			        	});
 			        } else {
 			        	$.messager.alert('提示信息','保存失败！','info');
@@ -99,17 +99,17 @@ $(function(){
 			});
 		},
 		clearForm:function(){
-			$('#complaint_dialog_add').dialog('close');
-			$('#complaint_form_add').form('clear');
-			$('#complaint_dialog_add').dialog('center');
-			$('#complaint_dialog_edit').dialog('close');
-			$('#complaint_form_edit').form('clear');
-			$('#complaint_dialog_edit').dialog('center');
+			$('#maintenance_dialog_add').dialog('close');
+			$('#maintenance_form_add').form('clear');
+			$('#maintenance_dialog_add').dialog('center');
+			$('#maintenance_dialog_edit').dialog('close');
+			$('#maintenance_form_edit').form('clear');
+			$('#maintenance_dialog_edit').dialog('center');
 		}
 	};
 	
-	$("#complaintTb").datagrid({
-		url:basePath+"/complaint/getComplaints",
+	$("#maintenanceTb").datagrid({
+		url:basePath+"/maintenance/getMaintenances",
 		fit:true,
 		striped:true,
 		rownumbers:true,
@@ -123,7 +123,7 @@ $(function(){
 		sortName:'id',
 		sortOrder:'asc',
 		//remoteSort:true,
-		toolbar:'#search_complaint',
+		toolbar:'#search_maintenance',
 		columns:[[
 			{
 				field : 'id',
@@ -153,19 +153,19 @@ $(function(){
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
-		url : basePath+'/complaint/propertyManagerList',
-		onChange:function(newValue,oldValue) {
-			if(id.value == ""){
-				$("#complaint_form_add").form('load', basePath+ '/complaint/showPropertyManagerInfo/'+newValue);
-			}
-		}
+		url : basePath+'/maintenance/propertyManagerList',
+//		onChange:function(newValue,oldValue) {
+//			if(id.value == ""){
+//				$("#maintenance_form_add").form('load', basePath+ '/maintenance/showPropertyManagerInfo/'+newValue);
+//			}
+//		}
 	});
 	
 	$('#propertyManagerId_show').combobox({
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
-		url : basePath+'/complaint/propertyManagerList',
+		url : basePath+'/maintenance/propertyManagerList',
 	});
 	
 	$('#stateId').combobox({
@@ -201,11 +201,11 @@ $(function(){
 		onChange:function(newValue,oldValue){
 			//已处理状态下才能查看详情
 			if(newValue==1||newValue==2||newValue=='') {
-				$('#complaint_show').linkbutton('disable');
-				$('#complaint_show').hide();
+				$('#maintenance_show').linkbutton('disable');
+				$('#maintenance_show').hide();
 			} else {
-				$('#complaint_show').linkbutton('enable');
-				$('#complaint_show').show();
+				$('#maintenance_show').linkbutton('enable');
+				$('#maintenance_show').show();
 			}
 		}
 	});
@@ -230,28 +230,100 @@ $(function(){
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
-		url : basePath+'/complaint/ownerList',
+		url : basePath+'/maintenance/ownerList',
 	});
 	
 	$('#ownerId_show').combobox({
 		valueField : 'id',
 		textField : 'name',
 		limitToList : true,
-		url : basePath+'/complaint/ownerList',
+		url : basePath+'/maintenance/ownerList',
+	});
+
+	$('#communalFaStyleId').combobox({
+		valueField : 'id',
+		textField : 'name',
+		limitToList : true,
+		url : basePath+'/maintenance/communalFaStyleList',
+		onChange:function(newValue,oldValue) {
+			$('#communalFacilitiesId').combobox({
+				url:basePath+"/maintenance/communalFacilitiesList",
+				queryParams: {
+					"communalFaStyleId" :newValue
+				},
+				valueField : 'id',
+				textField :  'name',
+				limitToList:true,
+			});
+		}
+	});
+
+	$('#communalFaStyleId_edit').combobox({
+		valueField : 'id',
+		textField : 'name',
+		limitToList : true,
+		url : basePath+'/maintenance/communalFaStyleList',
+		onChange:function(newValue,oldValue) {
+			$('#communalFacilitiesId_edit').combobox({
+				url:basePath+"/maintenance/communalFacilitiesList",
+				queryParams: {
+					"communalFaStyleId" :newValue
+				},
+				valueField : 'id',
+				textField :  'name',
+				limitToList:true,
+			});
+		}
+	});
+
+	$('#communalFaStyleId_show').combobox({
+		valueField : 'id',
+		textField : 'name',
+		limitToList : true,
+		url : basePath+'/maintenance/communalFaStyleList',
+		onChange:function(newValue,oldValue) {
+			$('#communalFacilitiesId_show').combobox({
+				url:basePath+"/maintenance/communalFacilitiesList",
+				queryParams: {
+					"communalFaStyleId" :newValue
+				},
+				valueField : 'id',
+				textField :  'name',
+				limitToList:true,
+			});
+		}
+	});
+
+	$('#communalFacilitiesId').combobox({
+		valueField : 'id',
+		textField : 'name',
+		limitToList : true,
+	});
+	
+	$('#communalFacilitiesId_edit').combobox({
+		valueField : 'id',
+		textField : 'name',
+		limitToList : true,
+	});
+	
+	$('#communalFacilitiesId_show').combobox({
+		valueField : 'id',
+		textField : 'name',
+		limitToList : true,
 	});
 	
 	//物业管理员不能操作
 	if(roleId==1) {
-		$('#complaint_add').linkbutton('disable');
-		$('#complaint_delete').linkbutton('disable');
-		$('#complaint_add').hide();
-		$('#complaint_delete').hide();
+		$('#maintenance_add').linkbutton('disable');
+		$('#maintenance_delete').linkbutton('disable');
+		$('#maintenance_add').hide();
+		$('#maintenance_delete').hide();
 	}
 	
 	 //业主不能操作
 	if(roleId==2) {
-		$('#complaint_edit').linkbutton('disable');
-		$('#complaint_edit').hide();
+		$('#maintenance_edit').linkbutton('disable');
+		$('#maintenance_edit').hide();
 	};
 	
 });
