@@ -146,7 +146,16 @@ $(function(){
 				title : '处理状态',
 				width : 100,
 			},
-		]]
+		]],
+		rowStyler: function(index,row){
+			if (row.stateName == '已处理'){
+				return 'color:green;';
+			} else if (row.stateName == '待受理') {
+				return 'background-color:#ffee00;color:red';
+			} else if (row.stateName == '处理中') {
+				return 'color:blue';
+			}
+		}
 	});
 	
 	$('#propertyManagerId').combobox({

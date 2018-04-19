@@ -86,7 +86,7 @@ public class ComplaintDao {
 			}
 		}
 		Query query = entityManager.createQuery(jpql+sBuffer+condition);
-		if (stateId!=null) {
+		if (stateId!=null&&!stateId.equals("")) {
 			query.setParameter("stateId", StringUtils.getInteger(stateId));
 		}
 		query.setParameter("ownerId", ownerId);
@@ -136,7 +136,7 @@ public class ComplaintDao {
 			}
 		}
 		Query query = entityManager.createQuery(jpql+sBuffer+condition);
-		if (stateId!=null) {
+		if (stateId!=null&&!stateId.equals("")) {
 			query.setParameter("stateId", StringUtils.getInteger(stateId));
 		}
 		query.setParameter("ownerId", ownerId);
@@ -166,7 +166,7 @@ public class ComplaintDao {
 		complaint.setPropertyManager(propertyManager);
 		State state = entityManager.find(State.class, 1);//默认为待处理
 		complaint.setState(state);
-		complaint.setOwner(owner);//自动获取保存投诉业主不需要填写
+		complaint.setOwner(owner);//自动获取保存投诉业主，不需要填写
 		entityManager.persist(complaint);
 	}
 

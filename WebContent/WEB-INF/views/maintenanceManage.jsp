@@ -33,11 +33,12 @@
 			</div>
 		</div>
 	<div id="maintenance_dialog_add" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:650px;background-color:rgb(199, 225, 245);height:390px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:650px;background-color:rgb(199, 225, 245);height:480px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">报修单</div>
 			<form id="maintenance_form_add" method="post">
 				<input id="id" name="id" type="hidden"/>
-				<table style="width:650px;height:340px">
+				<table style="width:650px;height:410px">
+					<span style="text-align: center;display:block;">(报修单号格式为：设备类型缩写加日期(例如：公服20180404))</span>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修单号： <input name="code" class="easyui-textbox" data-options="required:true" style="width:130px;"/></td>
 						<td>&nbsp;&nbsp;&nbsp;设施类型： <input id="communalFaStyleId" name="communalFaStyleId" data-options="required:true" style="width:130px;"/></td>
@@ -63,31 +64,35 @@
 		</div> 
 	</div>
 	<div id="maintenance_dialog_edit" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:1040px;background-color:rgb(199, 225, 245);height:400px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:840px;background-color:rgb(199, 225, 245);height:420px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
 			<form id="maintenance_form_edit" method="post">
 				<input id="id" name="id" type="hidden"/>
-				<table style="width:1000px;height:350px">
+				<table style="width:800px;height:350px">
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修单号： <input name="code" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施类型： <input id="communalFaStyleId_edit" name="communalFaStyleId" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施名称： <input id="communalFacilitiesId_edit" name="communalFacilitiesId" data-options="required:true" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修单号： <input name="code" class="easyui-textbox" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
+						<td>设施类型： <input id="communalFaStyleId_edit" name="communalFaStyleId" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施名称： <input class="easyui-textbox" name="communalFacilitiesNames" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修人： <input id="ownerId" name="ownerId" data-options="required:true" style="width:180px;" readonly="readonly" /></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="ownerPhone" class="easyui-textbox" style="width:180px;" readonly="readonly" /></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="ownerEmail" class="easyui-textbox" style="width:180px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修人： <input id="ownerId" name="ownerId" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="ownerPhone" class="easyui-textbox" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="ownerEmail" class="easyui-textbox" style="width:130px;" readonly="readonly" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修状态： <input id="stateId" name="stateId" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
-						<td>提交日期： <input name="createTime" class="easyui-datetimebox" data-options="required:true" style="width:180px;" /></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修日期： <input name="repairTime" class="easyui-datetimebox" style="width:180px;" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修状态： <input id="stateId" name="stateId" class="easyui-textbox" data-options="required:true" style="width:130px;"/></td>
+						<td>提交日期： <input name="createTime" class="easyui-datetimebox" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修日期： <input name="repairTime" class="easyui-datetimebox" style="width:130px;" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修详情： <input name="details" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修人员： <input name="repairPersonnel" class="easyui-textbox" data-options="required:true" style="width:130px;" /></td>
+						<td>维修电话： <input  name="repairPerPhone" class="easyui-textbox"  style="width:130px;" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修备注： <input name="repairRemarks" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修详情： <input name="details" class="easyui-textbox" style="width:260px;height:80px;" data-options="multiline:true" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修备注： <input name="repairRemarks" class="easyui-textbox" style="width:260px;height:80px;" data-options="multiline:true"/></td>
 					</tr>
 				</table>
 			</form>
@@ -98,41 +103,40 @@
 		</div> 
 	</div>
 	<div id="maintenance_dialog_show" class="easyui-dialog" data-options="closed:true,modal:true,closable:true">
-	 	<div data-options="buttons:'#dlg-buttons'" style="width:1040px;background-color:rgb(199, 225, 245);height:400px">
+	 	<div data-options="buttons:'#dlg-buttons'" style="width:940px;background-color:rgb(199, 225, 245);height:420px">
 			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
 			<form id="maintenance_form_show" method="post">
 				<input id="id" name="id" type="hidden"/>
-				<table style="width:1000px;height:350px">
+				<table style="width:900px;height:350px">
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修单号： <input name="code" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施类型： <input id="communalFaStyleId_show" name="communalFaStyleId_show" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施名称： <input id="communalFacilitiesId_show" name="communalFacilitiesId_show" data-options="required:true" style="width:180px;"/></td>
-					</tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施编号： <input name="communalFacilitiesCode" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注信息： <input name="communalFacilitiesDetails" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开始使用时间： <input name="beginUsingTime" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
-					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修单号： <input name="code" class="easyui-textbox" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施类型： <input id="communalFaStyleId_show" name="communalFaStyleId" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施名称： <input class="easyui-textbox" name="communalFacilitiesNames" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修人： <input id="ownerId_show" name="ownerId" data-options="required:true" style="width:180px;" readonly="readonly" /></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="ownerPhone" class="easyui-textbox" style="width:180px;" readonly="readonly" /></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="ownerEmail" class="easyui-textbox" style="width:180px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设施编号： <input name="communalFacilitiesCode" class="easyui-textbox" data-options="required:true" style="width:130px;"/></td>
+						<td>开始使用时间： <input name="beginUsingTime" class="easyui-datetimebox" style="width:130px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注信息： <input name="communalFacilitiesDetails" class="easyui-textbox" style="width:130px;"/></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;维修负责人： <input id="propertyManagerId_show" name="propertyManagerId" data-options="required:true" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="propertyManagerPhone" class="easyui-textbox" style="width:180px;"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="propertyManagerEmail" class="easyui-textbox" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修人： <input name="ownerName" class="easyui-textbox" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="ownerPhone" class="easyui-textbox" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="ownerEmail" class="easyui-textbox" style="width:130px;" readonly="readonly" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修状态： <input id="stateId_show" name="stateId_show" class="easyui-textbox" data-options="required:true" style="width:180px;"/></td>
-						<td>提交日期： <input name="createTime" class="easyui-datetimebox" data-options="required:true" style="width:180px;" /></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修日期： <input name="repairTime" class="easyui-datetimebox" style="width:180px;" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修状态： <input id="stateId_show" name="stateId" class="easyui-textbox" data-options="required:true" style="width:130px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;提交日期： <input name="createTime" class="easyui-datetimebox" data-options="required:true" style="width:130px;" readonly="readonly" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修日期： <input name="repairTime" class="easyui-datetimebox" style="width:130px;" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修详情： <input name="details" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修人员： <input name="repairPersonnel" class="easyui-textbox" data-options="required:true" style="width:130px;" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修电话： <input  name="repairPerPhone" class="easyui-textbox"  style="width:130px;" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修备注： <input name="repairRemarks" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;报修详情： <input name="details" class="easyui-textbox" style="width:260px;height:80px;" data-options="multiline:true" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维修备注： <input name="repairRemarks" class="easyui-textbox" style="width:260px;height:80px;" data-options="multiline:true"/></td>
 					</tr>
 				</table>
 			</form>

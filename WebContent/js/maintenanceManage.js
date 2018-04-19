@@ -21,12 +21,12 @@ $(function(){
 		},
 		edit:function(){
 			var row = $('#maintenanceTb').datagrid('getSelected');
-				var id=row.id;
-				$('#maintenance_dialog_edit').panel('setTitle','修改报修信息');
-				$('#maintenance_dialog_edit').dialog('open');
-				// 加载表单数据,默认请求方式为GET
-				$('#maintenance_form_edit').form('load',basePath+'/maintenance/getMaintenance/'+id);
-				this.submitUrl=basePath+'/maintenance/updateMaintenance/'+id;
+			var id=row.id;
+			$('#maintenance_dialog_edit').panel('setTitle','修改报修信息');
+			$('#maintenance_dialog_edit').dialog('open');
+			// 加载表单数据,默认请求方式为GET
+			$('#maintenance_form_edit').form('load',basePath+'/maintenance/getMaintenance/'+id);
+			this.submitUrl=basePath+'/maintenance/updateMaintenance/'+id;
 		},
 		remove:function(){
 			var row = $('#maintenanceTb').datagrid('getSelected');
@@ -132,8 +132,8 @@ $(function(){
 				hidden:true
 			},
 			{
-				field : 'content',
-				title : '投诉内容',
+				field : 'details',
+				title : '报修详情',
 				width : 200,
 			},
 			{
@@ -145,8 +145,18 @@ $(function(){
 				field : 'stateName',
 				title : '处理状态',
 				width : 100,
+				styler: function(value,row,index){
+					if (value == '待受理'){
+						return 'background-color:#ffee00;color:red;';
+					}
+				}
 			},
-		]]
+		]],
+		rowStyler: function(index,row){
+			if (row.stateName == '已处理'){
+				return 'color:green;';
+			}
+		}
 	});
 	
 	$('#propertyManagerId').combobox({
@@ -263,17 +273,6 @@ $(function(){
 		textField : 'name',
 		limitToList : true,
 		url : basePath+'/maintenance/communalFaStyleList',
-		onChange:function(newValue,oldValue) {
-			$('#communalFacilitiesId_edit').combobox({
-				url:basePath+"/maintenance/communalFacilitiesList",
-				queryParams: {
-					"communalFaStyleId" :newValue
-				},
-				valueField : 'id',
-				textField :  'name',
-				limitToList:true,
-			});
-		}
 	});
 
 	$('#communalFaStyleId_show').combobox({
@@ -281,17 +280,6 @@ $(function(){
 		textField : 'name',
 		limitToList : true,
 		url : basePath+'/maintenance/communalFaStyleList',
-		onChange:function(newValue,oldValue) {
-			$('#communalFacilitiesId_show').combobox({
-				url:basePath+"/maintenance/communalFacilitiesList",
-				queryParams: {
-					"communalFaStyleId" :newValue
-				},
-				valueField : 'id',
-				textField :  'name',
-				limitToList:true,
-			});
-		}
 	});
 
 	$('#communalFacilitiesId').combobox({
@@ -311,39 +299,29 @@ $(function(){
 		}
 	});
 	
-	$('#communalFacilitiesId_edit').combobox({
-		valueField : 'id',
-		textField : 'name',
-		limitToList : true,
-		onChange:function(newValue,oldValue) {
-			$('#propertyManagerId').combobox({
-				url:basePath+"/maintenance/propertyManagerList",
-				queryParams: {
-					"communalFacilitiesId" :newValue
-				},
-				valueField : 'id',
-				textField :  'name',
-				limitToList:true,
-			});
-		}
-	});
+//	$('#communalFacilitiesId_edit').combobox({
+//		valueField : 'id',
+//		textField : 'name',
+//		limitToList : true,
+//		url:basePath+"/maintenance/communalFacilitiesListRead",
+//	});
 	
-	$('#communalFacilitiesId_show').combobox({
-		valueField : 'id',
-		textField : 'name',
-		limitToList : true,
-		onChange:function(newValue,oldValue) {
-			$('#propertyManagerId_show').combobox({
-				url:basePath+"/maintenance/propertyManagerList",
-				queryParams: {
-					"communalFacilitiesId" :newValue
-				},
-				valueField : 'id',
-				textField :  'name',
-				limitToList:true,
-			});
-		}
-	});
+//	$('#communalFacilitiesId_show').combobox({
+//		valueField : 'id',
+//		textField : 'name',
+//		limitToList : true,
+//		onChange:function(newValue,oldValue) {
+//			$('#propertyManagerId_show').combobox({
+//				url:basePath+"/maintenance/propertyManagerList",
+//				queryParams: {
+//					"communalFacilitiesId" :newValue
+//				},
+//				valueField : 'id',
+//				textField :  'name',
+//				limitToList:true,
+//			});
+//		}
+//	});
 	
 	//物业管理员不能操作
 	if(roleId==1) {

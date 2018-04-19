@@ -1,6 +1,7 @@
 package com.cmgm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,6 @@ import com.cmgm.VO.MaintenanceVO;
 import com.cmgm.dao.MaintenanceDao;
 import com.cmgm.entity.CommunalFaStyle;
 import com.cmgm.entity.CommunalFacilities;
-import com.cmgm.entity.Maintenance;
 import com.cmgm.entity.Owner;
 import com.cmgm.entity.PropertyManager;
 
@@ -59,12 +59,33 @@ public class MaintenanceService {
 	}
 
 	@Transactional(readOnly=true)
-	public List<Maintenance> getMaintenances(int pageNO, int pageSize, String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
+	public List<MaintenanceVO> getMaintenances(int pageNO, int pageSize, String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
 		return maintenanceDao.getMaintenances(pageNO,pageSize,beginTime,endTime,stateId,ownerId,propertyManagerId);
 	}
 
+	@Transactional(readOnly=true)
 	public Integer getCountMaintenance(String beginTime, String endTime, String stateId, Integer ownerId, Integer propertyManagerId) {
 		return maintenanceDao.getCountMaintenance(beginTime,endTime,stateId,ownerId,propertyManagerId);
+	}
+
+	@Transactional
+	public void addMaintenance(Map<String, Object> params) {
+		maintenanceDao.addMaintenance(params);
+	}
+
+	@Transactional(readOnly=true)
+	public MaintenanceVO getMaintenance(Integer id) {
+		return maintenanceDao.getMaintenance(id);
+	}
+
+	@Transactional
+	public void updateMaintenance(Map<String, Object> params) {
+		maintenanceDao.updateMaintenance(params);
+	}
+
+	@Transactional
+	public void deleteMaintenance(Integer id) {
+		maintenanceDao.deleteMaintenance(id);
 	}
 	
 }

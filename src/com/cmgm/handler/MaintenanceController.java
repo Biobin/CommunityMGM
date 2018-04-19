@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmgm.VO.MaintenanceVO;
+import com.cmgm.common.StringUtils;
 import com.cmgm.entity.CommunalFaStyle;
 import com.cmgm.entity.CommunalFacilities;
-import com.cmgm.entity.Maintenance;
 import com.cmgm.entity.Owner;
 import com.cmgm.entity.PropertyManager;
 import com.cmgm.entity.User;
@@ -119,6 +119,7 @@ public class MaintenanceController {
 		return propertyManagerList;
 	}
 	
+	//显示数据根据各个角色id，只能看到与角色相关的信息
 	@ResponseBody
 	@RequestMapping("/maintenance/getMaintenances")
 	public Map<String, Object> getMaintenances(HttpServletRequest request, HttpSession httpSession) {
@@ -136,7 +137,7 @@ public class MaintenanceController {
 		if (user.getRole().getId()==1) {
 			propertyManagerId = (user.getPropertyManager().getId())==null?null:(user.getPropertyManager().getId());
 		}
-		List<Maintenance> maintenances = maintenanceService.getMaintenances(pageNO,pageSize,beginTime,endTime,stateId,ownerId,propertyManagerId);
+		List<MaintenanceVO> maintenances = maintenanceService.getMaintenances(pageNO,pageSize,beginTime,endTime,stateId,ownerId,propertyManagerId);
 		int count = maintenanceService.getCountMaintenance(beginTime,endTime,stateId,ownerId,propertyManagerId);
 		if (maintenances == null || maintenances.isEmpty()) {
 			maintenances = new ArrayList<>();
@@ -150,9 +151,24 @@ public class MaintenanceController {
 	
 	//业主添加报修内容
 	@ResponseBody
-	@RequestMapping("/maintenance/getMaintenance")
+	@RequestMapping("/maintenance/addMaintenance")
 	public String addMaintenance(HttpServletRequest request,HttpSession httpSession) {
-		
+		String code = StringUtils.getString(request.getParameter("code"));
+		Integer communalFacilitiesId = StringUtils.getInteger(request.getParameter("communalFacilitiesId"));
+		String createTime = request.getParameter("createTime");
+		String details = StringUtils.getString(request.getParameter("details"));
+		User user = (User) httpSession.getAttribute("user");
+		Integer ownerId = null;
+		if (user.getRole().getId()==2) {
+			ownerId = (user.getOwner().getId())==null?null:(user.getOwner().getId());
+		}
+		Map<String, Object> params = new HashMap<String,Object>();
+		params.put("code", code);
+		params.put("communalFacilitiesId", communalFacilitiesId);
+		params.put("createTime", createTime);
+		params.put("details", details);
+		params.put("ownerId", ownerId);
+		maintenanceService.addMaintenance(params);
 		return "add";
 	}
 	
@@ -161,11 +177,38 @@ public class MaintenanceController {
 	@RequestMapping("/maintenance/getMaintenance/{id}")
 	public MaintenanceVO getMaintenance(@PathVariable("id")Integer id) {
 		MaintenanceVO maintenanceVO = null;
-		
+		if (id!=null) {
+			maintenanceVO = maintenanceService.getMaintenance(id);
+		}
 		return maintenanceVO;
 	}
 	
+	//物业管理员接收投诉处理后填写
+	@ResponseBody
+	@RequestMapping("/maintenance/updateMaintenance/{id}")
+	public String updateMaintenance(@PathVariable("id")Integer id,HttpServletRequest request) {
+		String repairPersonnel = StringUtils.getString(request.getParameter("repairPersonnel"));
+		String repairPerPhone = StringUtils.getString(request.getParameter("repairPerPhone"));
+		String repairTime = StringUtils.getString(request.getParameter("repairTime"));
+		String repairRemarks = StringUtils.getString(request.getParameter("repairRemarks"));
+		Integer stateId = StringUtils.getInteger(request.getParameter("stateId"));
+		Map<String, Object> params = new HashMap<String,Object>();
+		params.put("id", id);
+		params.put("repairPersonnel", repairPersonnel);
+		params.put("repairPerPhone", repairPerPhone);
+		params.put("repairTime", repairTime);
+		params.put("repairRemarks", repairRemarks);
+		params.put("stateId", stateId);
+		maintenanceService.updateMaintenance(params);
+		return "update";
+	}
 	
-	
+	//删除
+	@ResponseBody
+	@RequestMapping("/maintenance/deleteMaintenance/{id}")
+	public String deleteMaintenance(@PathVariable("id")Integer id) {
+		maintenanceService.deleteMaintenance(id);
+		return "delete";
+	}
 	
 }
