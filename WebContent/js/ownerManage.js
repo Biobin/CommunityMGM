@@ -15,10 +15,17 @@ $(function(){
 		},
 		add:function(){
 			$('#owner_dialog').panel('setTitle','新增业主信息');
+			// 新增隐藏新密码的填写框并且激活密码编辑框
+			$('#trNewPassword').hide();
+			$('#password').passwordbox('enable');
 			$('#owner_dialog').dialog('open');
 			this.submitUrl = basePath + "/owner/addOwner";
 		},
 		edit:function(){
+			// 修改只能设置新密码，不能修改原密码
+			$('#trNewPassword').show();
+			// 设置为 disable 之后，表单提交忽略该元素
+			$('#password').passwordbox('disable');
 			var row = $('#ownerTb').datagrid('getSelected');
 			if(row!=null){
 				var id=row.id;
@@ -58,7 +65,8 @@ $(function(){
 		submitForm:function(){
 			$('#owner_form').form('submit',{
 				url:obj.submitUrl,
-				onSubmit:function(){
+				onSubmit:function(param){
+					$('input[name="rePassword"]').val(MD5($('#rePassword').val()));
 					return $(this).form('enableValidation').form('validate');   //检验各个编辑框是否满足设置的条件
 				},
 				success:function(data){
@@ -76,6 +84,7 @@ $(function(){
 		clearForm:function(){
 			$('#owner_dialog').dialog('close');
 			$('#owner_form').form('clear');
+			$('#errorTip').html('');
 			$('#owner_dialog').dialog('center');
 		}
 	};

@@ -30,8 +30,10 @@ public class LoginController {
 	private LoginService loginService;
 	
 	@RequestMapping("/login")
-	public String loginNew(HttpSession httpSession){
-		
+	public String loginNew(@RequestParam(value="cancel",required=false) Integer cancel,HttpSession httpSession){
+		if (cancel!=null&&cancel==1) {
+			httpSession.removeAttribute("user");
+		}
 		return "loginNew";
 	}
 	

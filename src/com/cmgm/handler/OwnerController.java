@@ -106,7 +106,7 @@ public class OwnerController {
 		String username = request.getParameter("username");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String rePassword = request.getParameter("rePassword");
 		String IDNumber = request.getParameter("idnumber");
 		String address = request.getParameter("address");
 		String startTime = request.getParameter("startTime");
@@ -116,7 +116,7 @@ public class OwnerController {
 		params.put("username", username);
 		params.put("phone", phone);
 		params.put("email", email);
-		params.put("password", password);
+		params.put("password", rePassword);
 		params.put("IDNumber", IDNumber);
 		params.put("address", address);
 		params.put("startTime", startTime);

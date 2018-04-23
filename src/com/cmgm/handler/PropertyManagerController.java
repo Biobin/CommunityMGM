@@ -88,7 +88,7 @@ public class PropertyManagerController {
 		String username = request.getParameter("username");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String password = request.getParameter("rePassword");
 		Map<String, Object> params = new HashMap<String,Object>();
 		params.put("id", id);
 		params.put("name", name);

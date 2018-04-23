@@ -46,8 +46,8 @@ $(function(){
 			$('#password').focus();
 		} else {
 			username=$('#username').val()
-			password=$('#password').val()
-			//password=MD5($('#password').val());
+			//password=$('#password').val()
+			password=MD5($('#password').val());
 			$.ajax({
 				url : basePath+'/loginValidate',
 				type : 'post',

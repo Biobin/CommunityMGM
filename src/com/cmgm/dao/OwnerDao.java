@@ -132,7 +132,9 @@ public class OwnerDao {
 		Owner owner = entityManager.find(Owner.class, id);
 		User user = owner.getUser();
 		user.setUsername(params.get("username").toString());
-		user.setPassword(params.get("password").toString());
+		if (StringUtils.getString(params.get("password"))!=null) {
+			user.setPassword(StringUtils.getString(params.get("password")));
+		}
 		owner.setName(params.get("name").toString());
 		owner.setPhone(params.get("phone")==null?"":params.get("phone").toString());
 		owner.setEmail(params.get("email")==null?"":params.get("email").toString());

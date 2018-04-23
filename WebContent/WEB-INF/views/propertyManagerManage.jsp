@@ -8,11 +8,13 @@
 <script type="text/javascript" src="<%=basePath%>/jquery-easyui/jquery.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/jquery-easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/jquery-easyui/locale/easyui-lang-zh_CN.js" ></script>
+<script type="text/javascript" src="<%=basePath%>/js/tool/md5.js" ></script>
 <link rel="stylesheet" type="text/css" href="<%=basePath%>/jquery-easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="<%=basePath%>/jquery-easyui/themes/icon.css" />
 
 <script type="text/javascript">
 	var basePath="<%=basePath%>";
+	var propertyManagerId = ${sessionScope.user.getPropertyManager().getId()};
 </script>
 <script type="text/javascript" src="<%=basePath%>/js/propertyManagerManage.js"></script>
 </head>
@@ -43,8 +45,11 @@
 						<td>邮箱： <input name="email" class="easyui-textbox" /></td>
 					</tr>
 					<tr>
-						<td>密码： <input name="password" class="easyui-passwordbox" data-options="required:true" /></td>
-						<td>再次确认密码： <input name="rePassword" class="easyui-passwordbox" data-options="required:true" style="width:100px;"/></td>
+						<td>密码： <input id="password" name="password" class="easyui-passwordbox" data-options="required:true" /></td>
+						<td>再次确认密码： <input id="rePassword" name="rePassword" class="easyui-passwordbox" data-options="required:true" style="width:100px;"/></td>
+					</tr>
+					<tr style="height:20px;">
+						<td><div id="errorTip" style="font-size:15px"></div></td>
 					</tr>
 				</table>
 			</form>
