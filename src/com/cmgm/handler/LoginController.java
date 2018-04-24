@@ -2,6 +2,7 @@ package com.cmgm.handler;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cmgm.entity.User;
 import com.cmgm.service.LoginService;
@@ -22,7 +22,6 @@ import com.cmgm.service.LoginService;
  * 登录功能
  */
 
-@SessionAttributes(value={"user"})
 @Controller
 public class LoginController {
 
@@ -46,14 +45,16 @@ public class LoginController {
 	@ResponseBody
 	@RequestMapping("/loginValidate")
 	public String loginValidate(@RequestParam(value="username",required=true) String username,
-			@RequestParam(value="password",required=true) String password,Map<String, Object> map){
+			@RequestParam(value="password",required=true) String password,Map<String, Object> map,HttpServletRequest request){
 		User user = loginService.getUserByUsername(username);
+		HttpSession session = request.getSession();
 		if (user == null) {
 			return "2";
 		}else if(!(password.trim()).equals(user.getPassword())){
 			return "3";
 		}else {
 			map.put("user", user);
+			session.setAttribute("user", user);
 			return "1";
 		}
 	}

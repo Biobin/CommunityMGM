@@ -22,32 +22,32 @@
 			<div style="margin-bottom:5px;">
 				<span>投诉日期：<input id="beginTime" class="easyui-datetimebox" style="width:100px;">&nbsp;&nbsp;——&nbsp;&nbsp;
 					<input id="endTime" class="easyui-datetimebox" style="width:100px;"></span>
-				<span>&nbsp;&nbsp;&nbsp;&nbsp;缴费状态：<input id="stateId_search" class="easyui-textbox" style="width:100px;">&nbsp;&nbsp;</span>
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;处理状态：<input id="stateId_search" class="easyui-textbox" style="width:100px;">&nbsp;&nbsp;</span>
 				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="obj.search();">查询</a>
 			</div>
 			<div>
-				<a id="complaint_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="obj.add();">添加</a>
-				<a id="complaint_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="obj.edit();">修改</a>
+				<a id="complaint_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="obj.add();">投诉</a>
+				<a id="complaint_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="obj.edit();">处理</a>
 				<a id="complaint_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="obj.remove();">删除</a>
 				<a id="complaint_show" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true," disabled="disabled" onclick="obj.show();">查看详情</a>
 			</div>
 		</div>
 	<div id="complaint_dialog_add" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
 	 	<div data-options="buttons:'#dlg-buttons'" style="width:800px;background-color:rgb(199, 225, 245);height:390px">
-			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
+			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉(意见)信息</div>
 			<form id="complaint_form_add" method="post">
 				<input id="id" name="id" type="hidden"/>
 				<table style="width:800px;height:340px">
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉人受理人： <input id="propertyManagerId" name="propertyManagerId" data-options="required:true" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;投诉人受理人： <input id="propertyManagerId" name="propertyManagerId" data-options="required:true" style="width:180px;"/></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话： <input  name="propertyManagerPhone" class="easyui-textbox" style="width:180px;"/></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="propertyManagerEmail" class="easyui-textbox" style="width:180px;"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱： <input  name="propertyManagerEmail" class="easyui-textbox" style="width:180px;"/></td>
 						<td>提交日期： <input name="createTime" class="easyui-datetimebox" data-options="required:true" style="width:180px;" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
+						<td>&nbsp;投诉(意见)详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
 					</tr>
 				</table>
 			</form>
@@ -59,7 +59,7 @@
 	</div>
 	<div id="complaint_dialog_edit" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
 	 	<div data-options="buttons:'#dlg-buttons'" style="width:1040px;background-color:rgb(199, 225, 245);height:400px">
-			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
+			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉(意见)信息</div>
 			<form id="complaint_form_edit" method="post">
 				<input id="id" name="id" type="hidden"/>
 				<table style="width:1000px;height:350px">
@@ -74,7 +74,7 @@
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;解决日期： <input name="finishTime" class="easyui-datetimebox" style="width:180px;" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true" readonly="readonly" /></td>
+						<td>&nbsp;投诉(意见)详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true" readonly="readonly" /></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;处理回复： <input name="returnContent" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
@@ -89,7 +89,7 @@
 	</div>
 	<div id="complaint_dialog_show" class="easyui-dialog" data-options="closed:true,modal:true,closable:true">
 	 	<div data-options="buttons:'#dlg-buttons'" style="width:1040px;background-color:rgb(199, 225, 245);height:400px">
-			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
+			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉(意见)单</div>
 			<form id="complaint_form_show" method="post">
 				<input id="id" name="id" type="hidden"/>
 				<table style="width:1000px;height:350px">
@@ -109,7 +109,7 @@
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;解决日期： <input name="finishTime" class="easyui-datetimebox" style="width:180px;" /></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投诉详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
+						<td>&nbsp;投诉(意见)详情： <input name="content" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;处理回复： <input name="returnContent" class="easyui-textbox" style="width:330px;height:120px;" data-options="multiline:true"/></td>

@@ -26,10 +26,10 @@
 				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="obj.search();">查询</a>
 			</div>
 			<div>
-				<a id="maintenance_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="obj.add();">添加</a>
-				<a id="maintenance_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="obj.edit();">修改</a>
+				<a id="maintenance_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="obj.add();">报修</a>
+				<a id="maintenance_edit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="obj.edit();">处理</a>
 				<a id="maintenance_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="obj.remove();">删除</a>
-				<a id="maintenance_show" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true," disabled="disabled" onclick="obj.show();">查看详情</a>
+				<a id="maintenance_show" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true," disabled="disabled" onclick="obj.show();">查看维修单</a>
 			</div>
 		</div>
 	<div id="maintenance_dialog_add" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">

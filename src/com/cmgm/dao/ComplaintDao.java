@@ -70,10 +70,10 @@ public class ComplaintDao {
 				+ "LEFT JOIN c.owner co LEFT JOIN c.propertyManager cpm LEFT JOIN c.state cs WHERE (co.id = :ownerId or :ownerId is null ) "
 				+ "AND (cpm.id = :propertyManagerId or :propertyManagerId is null) ";
 		StringBuffer sBuffer = new StringBuffer();
-		if (stateId==null) {
+		if (stateId==null||stateId.equals("")) {
 			sBuffer.append("AND (cs.id != 3) ");
 		} else {
-			sBuffer.append("AND (cs.id = :stateId )");
+			sBuffer.append("AND (cs.id = :stateId or :stateId is null) ");
 		}
 		StringBuffer condition = new StringBuffer();
 		if (StringUtils.getString(beginTime).equals("")) {
@@ -120,10 +120,10 @@ public class ComplaintDao {
 		String jpql = "SELECT COUNT(*) FROM Complaint c LEFT JOIN c.owner co LEFT JOIN c.propertyManager cpm  LEFT JOIN c.state cs "
 				+ "WHERE (co.id = :ownerId or :ownerId is null ) AND (cpm.id = :propertyManagerId or :propertyManagerId is null) ";
 		StringBuffer sBuffer = new StringBuffer();
-		if (stateId==null) {
+		if (stateId==null||stateId.equals("")) {
 			sBuffer.append("AND (cs.id != 3) ");
 		} else {
-			sBuffer.append("AND (cs.id = :stateId )");
+			sBuffer.append("AND (cs.id = :stateId or :stateId is null) ");
 		}
 		StringBuffer condition = new StringBuffer();
 		if (StringUtils.getString(beginTime).equals("")) {

@@ -19,10 +19,14 @@ $(function(){
 		},
 		edit:function(){
 			var row = $('#paymentTb').datagrid('getSelected');
+			if(row!=null){
 				var id=row.id;
 				// 加载表单数据,默认请求方式为GET
 				$('#payment_form').form('load',basePath+'/payment/getPayment/'+id);
 				this.submitUrl=basePath+'/payment/updatePayment/'+id;
+			} else {
+				$.messager.alert('警告操作！', '请选择一条账单信息！', 'info');
+			}
 		},
 		remove:function(){
 			var row = $('#paymentTb').datagrid('getSelected');

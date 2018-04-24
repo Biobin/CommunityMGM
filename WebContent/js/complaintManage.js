@@ -7,6 +7,7 @@ $(function(){
 		submitUrl:'',	
 		
 		search:function(){
+			$('#complaint_show').linkbutton('enable');
 			$('#complaintTb').datagrid('load',{
 				beginTime:$.trim($('#beginTime').val()),
 				endTime:$.trim($('#endTime').val()),
@@ -15,18 +16,22 @@ $(function(){
 		},
 		add:function(){
 			$('#complaint_form_add').form('clear');
-			$('#complaint_dialog_add').panel('setTitle','新增投诉信息');
+			$('#complaint_dialog_add').panel('setTitle','新增投诉(意见)信息');
 			$('#complaint_dialog_add').dialog('open');
 			this.submitUrl = basePath + "/complaint/addComplaint";
 		},
 		edit:function(){
 			var row = $('#complaintTb').datagrid('getSelected');
+			if(row!=null){
 				var id=row.id;
-				$('#complaint_dialog_edit').panel('setTitle','修改投诉信息');
+				$('#complaint_dialog_edit').panel('setTitle','处理投诉(意见)信息');
 				$('#complaint_dialog_edit').dialog('open');
 				// 加载表单数据,默认请求方式为GET
 				$('#complaint_form_edit').form('load',basePath+'/complaint/getComplaint/'+id);
 				this.submitUrl=basePath+'/complaint/updateComplaint/'+id;
+			} else {
+				$.messager.alert('警告操作！', '请选择一条投诉信息！', 'info');
+			}	
 		},
 		remove:function(){
 			var row = $('#complaintTb').datagrid('getSelected');
@@ -55,7 +60,7 @@ $(function(){
 		show:function(){
 			var row = $('#complaintTb').datagrid('getSelected');
 			var id=row.id;
-			$('#complaint_dialog_show').panel('setTitle','修改投诉信息');
+			$('#complaint_dialog_show').panel('setTitle','投诉(意见)单');
 			$('#complaint_dialog_show').dialog('open');
 			// 加载表单数据,默认请求方式为GET
 			$('#complaint_form_show').form('load',basePath+'/complaint/getComplaint/'+id);
@@ -210,10 +215,10 @@ $(function(){
 		onChange:function(newValue,oldValue){
 			//已处理状态下才能查看详情
 			if(newValue==1||newValue==2||newValue=='') {
-				$('#complaint_show').linkbutton('disable');
 				$('#complaint_show').hide();
+				$('#complaint_show').linkbutton('disable');
 			} else {
-				$('#complaint_show').linkbutton('enable');
+				
 				$('#complaint_show').show();
 			}
 		}
@@ -248,6 +253,10 @@ $(function(){
 		limitToList : true,
 		url : basePath+'/complaint/ownerList',
 	});
+	
+	//默认状态为不可用
+	$('#complaint_show').hide();
+	$('#complaint_show').linkbutton('disable');
 	
 	//物业管理员不能操作
 	if(roleId==1) {

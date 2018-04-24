@@ -7,6 +7,7 @@ $(function(){
 		submitUrl:'',	
 		
 		search:function(){
+			$('#maintenance_show').linkbutton('enable');//点击查询后查看报修单按钮可用
 			$('#maintenanceTb').datagrid('load',{
 				beginTime:$.trim($('#beginTime').val()),
 				endTime:$.trim($('#endTime').val()),
@@ -21,12 +22,16 @@ $(function(){
 		},
 		edit:function(){
 			var row = $('#maintenanceTb').datagrid('getSelected');
-			var id=row.id;
-			$('#maintenance_dialog_edit').panel('setTitle','修改报修信息');
-			$('#maintenance_dialog_edit').dialog('open');
-			// 加载表单数据,默认请求方式为GET
-			$('#maintenance_form_edit').form('load',basePath+'/maintenance/getMaintenance/'+id);
-			this.submitUrl=basePath+'/maintenance/updateMaintenance/'+id;
+			if(row!=null){
+				var id=row.id;
+				$('#maintenance_dialog_edit').panel('setTitle','完善维修单');
+				$('#maintenance_dialog_edit').dialog('open');
+				// 加载表单数据,默认请求方式为GET
+				$('#maintenance_form_edit').form('load',basePath+'/maintenance/getMaintenance/'+id);
+				this.submitUrl=basePath+'/maintenance/updateMaintenance/'+id;
+			} else {
+				$.messager.alert('警告操作！', '请选择一条投诉信息！', 'info');
+			}
 		},
 		remove:function(){
 			var row = $('#maintenanceTb').datagrid('getSelected');
@@ -214,7 +219,6 @@ $(function(){
 				$('#maintenance_show').linkbutton('disable');
 				$('#maintenance_show').hide();
 			} else {
-				$('#maintenance_show').linkbutton('enable');
 				$('#maintenance_show').show();
 			}
 		}
@@ -322,6 +326,10 @@ $(function(){
 //			});
 //		}
 //	});
+	
+	//默认状态下查看维修单不可用
+	$('#maintenance_show').linkbutton('disable');
+	$('#maintenance_show').hide();
 	
 	//物业管理员不能操作
 	if(roleId==1) {

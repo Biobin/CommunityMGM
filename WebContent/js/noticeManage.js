@@ -18,10 +18,14 @@ $(function(){
 		},
 		edit:function(){
 			var row = $('#noticeTb').datagrid('getSelected');
+			if(row!=null){
 				var id=row.id;
 				// 加载表单数据,默认请求方式为GET
 				$('#notice_form').form('load',basePath+'/notice/getNotice/'+id);
 				this.submitUrl=basePath+'/notice/updateNotice/'+id;
+			} else {
+				$.messager.alert('警告操作！', '请选择一条公告！', 'info');
+			}	
 		},
 		remove:function(){
 			var row = $('#noticeTb').datagrid('getSelected');
