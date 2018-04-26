@@ -25,8 +25,8 @@ public class PropertyManagerService {
 	private PropertyManagerDao propertyManagerDao;
 
 	@Transactional(readOnly=true)
-	public List<PropertyManagerVO> getPropertyManagers(int pageNO, int pageSize) {
-		return propertyManagerDao.getPropertyManagers(pageNO,pageSize);
+	public List<PropertyManagerVO> getPropertyManagers(int pageNO, int pageSize, String username, String name, String phone) {
+		return propertyManagerDao.getPropertyManagers(pageNO,pageSize,username,name,phone);
 	}
 
 	@Transactional(readOnly=true)

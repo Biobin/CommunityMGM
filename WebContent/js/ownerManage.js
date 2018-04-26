@@ -9,7 +9,7 @@ $(function(){
 		search:function(){
 			$('#ownerTb').datagrid('load',{
 				name:$.trim($('#name_search').val()),
-				Username:$.trim($('#username_search').val()),
+				username:$.trim($('#username_search').val()),
 				phone:$.trim($('#phone_search').val()),
 			});
 		},

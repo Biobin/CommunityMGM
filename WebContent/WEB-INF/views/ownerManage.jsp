@@ -21,9 +21,9 @@
 	<table id="ownerTb"></table>
 		<div id="search_owner"  style="font-size:14px;padding:10px;">
 			<div style="margin-bottom:5px;">
-				<span>账号：<input id="username_search" class="easyui-textbox" style="width:100px" >&nbsp;&nbsp;</span>
-				<span>姓名：<input id="name_search" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;</span>
-				<span>电话：<input id="phone_search" class="easyui-textbox" name="phone_search" style="width:100px">&nbsp;&nbsp;</span>
+				<span>账号：<input id="username_search" name="username" class="easyui-textbox" style="width:100px" >&nbsp;&nbsp;</span>
+				<span>姓名：<input id="name_search" name="name" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;</span>
+				<span>电话：<input id="phone_search" class="easyui-textbox" name="phone" style="width:100px">&nbsp;&nbsp;</span>
 				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="obj.search();">查询</a>
 			</div>
 			<div>

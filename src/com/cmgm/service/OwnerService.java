@@ -25,8 +25,8 @@ public class OwnerService {
 	private OwnerDao ownerDao;
 
 	@Transactional(readOnly=true)
-	public List<OwnerVO> getOwners(int pageNO, int pageSize) {
-		return ownerDao.getOwners(pageNO,pageSize);
+	public List<OwnerVO> getOwners(int pageNO, int pageSize,String username,String name, String phone) {
+		return ownerDao.getOwners(pageNO,pageSize,username,name,phone);
 	}
 
 	@Transactional(readOnly=true)

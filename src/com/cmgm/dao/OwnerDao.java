@@ -36,12 +36,19 @@ public class OwnerDao {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<OwnerVO> getOwners(int pageNO, int pageSize) {
+	public List<OwnerVO> getOwners(int pageNO, int pageSize,String username, String name, String phone) {
 		String jpql = "SELECT o.id, o.name, o.phone, o.email, ou.id, ou.username, ou.password, our.id, our.name, o.address, "
 				+ "o.IDNumber, to_char(o.startTime,'yyyy-MM-dd HH24:mm:ss') FROM Owner o "
-				+ "LEFT JOIN o.user ou LEFT JOIN ou.role our ";
-		Query query = entityManager.createQuery(jpql).setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize);
-		List<Object[]> owners  = query.getResultList();
+				+ "LEFT JOIN o.user ou LEFT JOIN ou.role our WHERE (ou.username like :username or :username is null) "
+				+ "AND (o.name like :name or :name is null) AND (o.phone like :phone or :phone is null) ";
+		Query query = entityManager.createQuery(jpql);
+		username = username == null ? "" : username;
+		name = name == null ? "" : name;
+		phone = phone == null ? "" : phone;
+		query.setParameter("username", "%"+username+"%");
+		query.setParameter("name", "%"+name+"%");
+		query.setParameter("phone", "%"+phone+"%");
+		List<Object[]> owners  = query.setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize).getResultList();
 		List<OwnerVO> ownerVOs = new ArrayList<>();
 		OwnerVO ownerVO = null;
 		for(Object[] owner : owners) {

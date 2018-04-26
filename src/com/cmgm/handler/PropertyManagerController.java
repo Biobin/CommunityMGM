@@ -41,7 +41,10 @@ public class PropertyManagerController {
 	public Map<String, Object> getPropertyManagers(HttpServletRequest request) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
-		List<PropertyManagerVO> propertyManagerVOs = propertyManagerService.getPropertyManagers(pageNO,pageSize);
+		String username = request.getParameter("username");
+		String name = request.getParameter("name");
+		String phone = request.getParameter("phone");
+		List<PropertyManagerVO> propertyManagerVOs = propertyManagerService.getPropertyManagers(pageNO,pageSize,username,name,phone);
 		int count = propertyManagerService.getCountPropertyManager();
 		if (propertyManagerVOs == null || propertyManagerVOs.isEmpty()) {
 			propertyManagerVOs = new ArrayList<>();

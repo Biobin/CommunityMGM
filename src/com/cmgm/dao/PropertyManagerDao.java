@@ -31,11 +31,18 @@ public class PropertyManagerDao {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<PropertyManagerVO> getPropertyManagers(int pageNO, int pageSize) {
+	public List<PropertyManagerVO> getPropertyManagers(int pageNO, int pageSize,String username,String name, String phone) {
 		String jpql = "SELECT pm.id, pm.name, pm.phone, pm.email, pu.id, pu.username, pu.password, pur.id, pur.name "
-				+ "FROM PropertyManager pm LEFT JOIN pm.user pu LEFT JOIN pu.role pur ";
-		Query query = entityManager.createQuery(jpql).setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize);
-		List<Object[]> propertyManagers  = query.getResultList();
+				+ "FROM PropertyManager pm LEFT JOIN pm.user pu LEFT JOIN pu.role pur WHERE (pu.username like :username or :username is null) "
+				+ "AND (pm.name like :name or :name is null) AND (pm.phone like :phone or :phone is null) ";
+		Query query = entityManager.createQuery(jpql);
+		username = username == null ? "" : username;
+		name = name == null ? "" : name;
+		phone = phone == null ? "" : phone;
+		query.setParameter("username", "%"+username+"%");
+		query.setParameter("name", "%"+name+"%");
+		query.setParameter("phone", "%"+phone+"%");
+		List<Object[]> propertyManagers  = query.setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize).getResultList();
 		List<PropertyManagerVO> propertyManagerVOs = new ArrayList<>();
 		PropertyManagerVO propertyManagerVO = null;
 		for(Object[] propertyManager : propertyManagers) {
