@@ -1,10 +1,10 @@
 package com.cmgm.entity;
 /**
  *
- *@author Bio
- *@date   2018年3月25日
- *@time   上午12:39:44
- *
+ * @author Bio
+ * @date   2018年3月25日
+ * @time   上午12:39:44
+ * 账单实体类
  */
 
 import java.time.LocalDateTime;

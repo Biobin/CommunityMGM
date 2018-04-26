@@ -58,11 +58,16 @@ public class CarDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<CarVO> getCars(int pageNO, int pageSize) {
+	public List<CarVO> getCars(int pageNO, int pageSize, Integer ownerId, String plateNumber, Integer carStyleId) {
 		String jqpl = "SELECT c.id, c.plateNumber, ccs.id, ccs.name, co.id, co.name, co.phone, co.email, to_char(c.createTime,'yyyy-MM-dd HH24:mm:ss') "
-				+ "FROM Car c LEFT JOIN c.carStyle ccs LEFT JOIN c.owner co ";
-		Query query = entityManager.createQuery(jqpl).setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize); 
-		List<Object[]> objects = query.getResultList();
+				+ "FROM Car c LEFT JOIN c.carStyle ccs LEFT JOIN c.owner co WHERE (co.id = :ownerId or :ownerId is null ) AND "
+				+ "(c.plateNumber like :plateNumber or :plateNumber is null ) AND (ccs.id = :carStyleId or :carStyleId is null ) ";
+		Query query = entityManager.createQuery(jqpl);
+		plateNumber = plateNumber == null ? "" : plateNumber;
+		query.setParameter("plateNumber", "%"+plateNumber+"%");
+		query.setParameter("ownerId", ownerId);
+		query.setParameter("carStyleId", carStyleId);
+		List<Object[]> objects = query.setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize).getResultList();
 		List<CarVO> carVOs = new ArrayList<>();
 		CarVO carVO = null;
 		for (Object[] object : objects) {

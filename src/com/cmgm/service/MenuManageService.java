@@ -37,8 +37,8 @@ public class MenuManageService {
 	}
 
 	@Transactional(readOnly=true)
-	public List<MenuVO> getMenus(int pageNO, int pageSize) {
-		return menuManageDao.getMenus(pageNO,pageSize);
+	public List<MenuVO> getMenus(int pageNO, int pageSize, Integer roleId, String text) {
+		return menuManageDao.getMenus(pageNO,pageSize,roleId,text);
 	}
 
 	@Transactional(readOnly=true)

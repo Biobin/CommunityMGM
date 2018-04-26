@@ -30,7 +30,7 @@ $(function(){
 				$('#maintenance_form_edit').form('load',basePath+'/maintenance/getMaintenance/'+id);
 				this.submitUrl=basePath+'/maintenance/updateMaintenance/'+id;
 			} else {
-				$.messager.alert('警告操作！', '请选择一条投诉信息！', 'info');
+				$.messager.alert('警告操作！', '请选择一条维修记录！', 'info');
 			}
 		},
 		remove:function(){
@@ -60,7 +60,7 @@ $(function(){
 		show:function(){
 			var row = $('#maintenanceTb').datagrid('getSelected');
 			var id=row.id;
-			$('#maintenance_dialog_show').panel('setTitle','修改投诉信息');
+			$('#maintenance_dialog_show').panel('setTitle','维修单信息');
 			$('#maintenance_dialog_show').dialog('open');
 			// 加载表单数据,默认请求方式为GET
 			$('#maintenance_form_show').form('load',basePath+'/maintenance/getMaintenance/'+id);

@@ -20,7 +20,7 @@
 	<table id="carTb"></table>
 		<div id="search_car"  style="font-size:14px;padding:10px;">
 			<div style="margin-bottom:5px;">
-				<span>车主：<input id="owner_search" class="easyui-textbox" style="width:100px" >&nbsp;&nbsp;</span>
+				<span>车主：<input id="owner_search" name="ownerId" class="easyui-textbox" style="width:100px" >&nbsp;&nbsp;</span>
 				<span>车牌号：<input id="plateNumber_search" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;</span>
 				<span>车型：<input id="carStyle_search" class="easyui-textbox" name="carStyle_search" style="width:100px">&nbsp;&nbsp;</span>
 				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="obj.search();">查询</a>

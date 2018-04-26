@@ -22,8 +22,8 @@
 	<table id="menuTb"></table>
 		<div id="search_menu"  style="font-size:14px;padding:10px;">
 			<div style="margin-bottom:5px;">
-				<span>名称：<input id="text_search" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;</span>
-				<span>角色：<input id="role_search" name="role_search" style="width:100px">&nbsp;&nbsp;</span>
+				<span>名称：<input id="text_search"  name="text" class="easyui-textbox" style="width:100px">&nbsp;&nbsp;</span>
+				<span>角色：<input id="role_search" name="roleId" style="width:100px">&nbsp;&nbsp;</span>
 				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="obj.search();">查询</a>
 			</div>
 			<div>

@@ -99,7 +99,10 @@ public class CarController {
 	public Map<String, Object> getCars(HttpServletRequest request) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
-		List<CarVO> carVOs = carService.getCars(pageNO,pageSize);
+		Integer ownerId = StringUtils.getInteger(request.getParameter("ownerId"));
+		String plateNumber = request.getParameter("plateNumber");
+		Integer carStyleId = StringUtils.getInteger(request.getParameter("carStyleId"));
+		List<CarVO> carVOs = carService.getCars(pageNO,pageSize,ownerId,plateNumber,carStyleId);
 		int count = carService.getCountCar();
 		if (carVOs == null || carVOs.isEmpty()) {
 			carVOs = new ArrayList<>();

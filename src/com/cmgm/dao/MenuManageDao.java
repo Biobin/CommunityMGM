@@ -47,10 +47,24 @@ public class MenuManageDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<MenuVO> getMenus(int pageNO, int pageSize) {
-		String jpql = "SELECT m.id, m.text, ms.id, ms.name, m.url, m.iconCls, m.parent.id, m.parent.text from Menu m LEFT JOIN m.state ms ";
-		Query query = entityManager.createQuery(jpql).setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize);
-		List<Object[]> objects = query.getResultList();
+	public List<MenuVO> getMenus(int pageNO, int pageSize, Integer roleId, String text) {
+		String sql = "SELECT rm.menuId FROM cmgm_role_menu rm WHERE rm.roleId = :roleId";
+		Query rQuery = entityManager.createNativeQuery(sql).setParameter("roleId", roleId);;
+		List<Integer[]> menuIds = null;
+		StringBuffer condition = new StringBuffer();
+		String jpql = "SELECT m.id, m.text, ms.id, ms.name, m.url, m.iconCls, m.parent.id, m.parent.text "
+				+ "from Menu m LEFT JOIN m.state ms WHERE (m.text like :text or :text is null) ";
+		Query query = entityManager.createQuery(jpql);
+		if (roleId!=null) {
+			menuIds = rQuery.getResultList();
+			String menuId = menuIds.toString().replace("[", "(").replace("]", ")");
+			condition.append("AND m.id in "+ menuId +" ");
+			query = entityManager.createQuery(jpql+condition);
+			System.out.println(menuId);
+		}
+		text = text == null ? "" : text;
+		query.setParameter("text", "%"+text+"%");
+		List<Object[]> objects = query.setFirstResult((pageNO - 1)*pageSize).setMaxResults(pageSize).getResultList();
 		List<MenuVO> menuVOs = new ArrayList<>();
 		MenuVO menuVO = null;
 		for (Object[] object : objects) {

@@ -8,8 +8,8 @@ $(function(){
 		
 		search:function(){
 			$('#menuTb').datagrid('load',{
-				name:$.trim($('#text_search').val()),
-				role:$.trim($('#role_search').val()),
+				text:$.trim($('#text_search').val()),
+				roleId:$.trim($('#role_search').val()),
 			});
 		},
 		add:function(){
@@ -87,7 +87,7 @@ $(function(){
 		border:false,
 		pagination:true,
 		singleSelect:true,
-		pageSize:20,
+		pageSize:30,
 		pageList:[10,20,30],
 		pageNumber:1,
 		sortName:'id',

@@ -43,8 +43,8 @@ public class CarService {
 	}
 
 	@Transactional(readOnly=true)
-	public List<CarVO> getCars(int pageNO, int pageSize) {
-		return carDao.getCars(pageNO,pageSize);
+	public List<CarVO> getCars(int pageNO, int pageSize, Integer ownerId, String plateNumber, Integer carStyleId) {
+		return carDao.getCars(pageNO,pageSize,ownerId,plateNumber,carStyleId);
 	}
 
 	@Transactional(readOnly=true)

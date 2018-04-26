@@ -76,9 +76,9 @@ public class MenuManageController {
 	public Map<String, Object> getMenus(HttpServletRequest request) {
 		int pageNO = Integer.parseInt(request.getParameter("page"));	//当前页
 		int pageSize = Integer.parseInt(request.getParameter("rows"));	//每页行数
-//		Integer roleId = StringUtils.getInteger(request.getParameter("roleId"));
-//		String text = request.getParameter("text");
-		List<MenuVO> menuVOs = menuManageService.getMenus(pageNO,pageSize);
+		Integer roleId = StringUtils.getInteger(request.getParameter("roleId"));
+		String text = request.getParameter("text");
+		List<MenuVO> menuVOs = menuManageService.getMenus(pageNO,pageSize,roleId,text);
 		int count = menuManageService.getCountMenu();
 		if (menuVOs == null || menuVOs.isEmpty()) {
 			menuVOs = new ArrayList<>();

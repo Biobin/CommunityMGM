@@ -65,7 +65,7 @@
 	</div>
 	<div id="maintenance_dialog_edit" class="easyui-dialog" data-options="closed:true,modal:true,closable:false,buttons:'#btn'">
 	 	<div data-options="buttons:'#dlg-buttons'" style="width:840px;background-color:rgb(199, 225, 245);height:420px">
-			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
+			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">维修单</div>
 			<form id="maintenance_form_edit" method="post">
 				<input id="id" name="id" type="hidden"/>
 				<table style="width:800px;height:350px">
@@ -104,7 +104,7 @@
 	</div>
 	<div id="maintenance_dialog_show" class="easyui-dialog" data-options="closed:true,modal:true,closable:true">
 	 	<div data-options="buttons:'#dlg-buttons'" style="width:940px;background-color:rgb(199, 225, 245);height:420px">
-			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">投诉信息</div>
+			<div style="font-size: 20px;font-weight: bold;padding: 5px;text-align: center;margin-bottom: 10px;border-bottom: 1px solid #ccc;">维修单</div>
 			<form id="maintenance_form_show" method="post">
 				<input id="id" name="id" type="hidden"/>
 				<table style="width:900px;height:350px">

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * 
  * @author Bio
- * 小区公共设施实体类
+ * 小区设施实体类
  *
  */
 

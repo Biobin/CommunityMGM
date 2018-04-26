@@ -8,7 +8,7 @@ $(function(){
 		
 		search:function(){
 			$('#carTb').datagrid('load',{
-				Ownername:$.trim($('#ownerName_search').val()),
+				ownerId:$.trim($('#owner_search').val()),
 				plateNumber:$.trim($('#plateNumber_search').val()),
 				carStyleId:$.trim($('#carStyle_search').val()),
 			});
